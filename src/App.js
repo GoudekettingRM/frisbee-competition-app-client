@@ -5,6 +5,7 @@ import Home from "./components/Home/Home";
 import Header from "./components/Header/Header";
 import SignUp from "./components/SignUp/SignUp";
 import "./App.css";
+import Logout from "./components/Login-out/Logout";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/login" exact component={Login} />
-        {/* <Route path="/logout" exact component={Logout} /> */}
+        <Route path="/logout" exact component={Logout} />
         <Route path="/signup" exact component={SignUp} />
       </Switch>
     </div>

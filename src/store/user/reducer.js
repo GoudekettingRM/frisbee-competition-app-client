@@ -1,4 +1,4 @@
-import { SET_SESSION } from "./actions";
+import { SET_SESSION, REMOVE_SESSION } from "./actions";
 
 const initialState = {
   jwt: "",
@@ -9,6 +9,8 @@ export default (state = initialState, { type, payload }) => {
   switch (type) {
     case SET_SESSION:
       return { ...state, jwt: payload.jwt, user: payload.player };
+    case REMOVE_SESSION:
+      return { ...state, jwt: "", user: {} };
     default:
       return state;
   }
