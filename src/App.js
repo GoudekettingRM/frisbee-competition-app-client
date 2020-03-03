@@ -1,10 +1,16 @@
 import React from "react";
+import { Switch, Route } from "react-router-dom";
+import Login from "./components/Login-out/Login";
+import Home from "./components/Home/Home";
 import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <h1>Hi app!</h1>
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/login" exact component={Login} />
+      </Switch>
     </div>
   );
 }
