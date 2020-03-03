@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { login } from "../../store/user/actions";
 
-class Login extends Component {
+class SignUp extends Component {
   state = {
+    firstName: "",
+    lastName: "",
     email: "",
     password: ""
   };
@@ -16,22 +17,25 @@ class Login extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    this.props.login(this.state);
-    this.setState({
-      email: "",
-      password: ""
-    });
+    console.log("submitting!");
   };
-
   render() {
-    if (this.props.token) {
-      setTimeout(() => {
-        this.props.history.push("/");
-      }, 500);
-      return <div>Redirecting... </div>;
-    }
     return (
       <form onSubmit={this.onSubmit}>
+        <input
+          type="text"
+          name="firstName"
+          placeholder="Enter first name"
+          value={this.state.firstName}
+          onChange={this.onChange}
+        />
+        <input
+          type="text"
+          name="lastName"
+          placeholder="Enter last name"
+          value={this.state.lastName}
+          onChange={this.onChange}
+        />
         <input
           type="text"
           name="email"
@@ -46,7 +50,7 @@ class Login extends Component {
           value={this.state.password}
           onChange={this.onChange}
         />
-        <button type="submit">Log in</button>
+        <button type="submit">Sign up</button>
       </form>
     );
   }
@@ -56,6 +60,6 @@ const mapStateToProps = state => ({
   token: state.session.jwt
 });
 
-const mapDispatchToProps = { login };
+const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

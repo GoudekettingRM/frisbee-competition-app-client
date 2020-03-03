@@ -2,8 +2,9 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Login from "./components/Login-out/Login";
 import Home from "./components/Home/Home";
-import "./App.css";
 import Header from "./components/Header/Header";
+import SignUp from "./components/SignUp/SignUp";
+import "./App.css";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
         <Route path="/" exact component={Home} />
         <Route path="/login" exact component={Login} />
         {/* <Route path="/logout" exact component={Logout} /> */}
-        {/* <Route path="/signup" exact component={Signup} /> */}
+        <Route path="/signup" exact component={SignUp} />
       </Switch>
     </div>
   );
