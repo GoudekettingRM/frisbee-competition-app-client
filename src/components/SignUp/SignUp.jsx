@@ -18,10 +18,22 @@ class SignUp extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    console.log("submitting!");
     this.props.signUp(this.state);
+    this.setState({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: ""
+    });
   };
+
   render() {
+    if (this.props.token) {
+      setTimeout(() => {
+        this.props.history.push("/");
+      }, 500);
+      return <div> Redirecting ...</div>;
+    }
     return (
       <form onSubmit={this.onSubmit}>
         <input

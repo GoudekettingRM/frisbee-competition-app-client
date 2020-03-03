@@ -8,6 +8,7 @@ export function signUp(userData) {
     try {
       const sessionData = await axios.post(`${baseUrl}/players`, userData);
       console.log("Session data . data", sessionData.data);
+      dispatch(setSessionAction(sessionData.data));
     } catch (error) {
       throw error;
     }
