@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { signUp } from "../../store/user/actions";
 
 class SignUp extends Component {
   state = {
@@ -18,6 +19,7 @@ class SignUp extends Component {
   onSubmit = event => {
     event.preventDefault();
     console.log("submitting!");
+    this.props.signUp(this.state);
   };
   render() {
     return (
@@ -60,6 +62,6 @@ const mapStateToProps = state => ({
   token: state.session.jwt
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { signUp };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

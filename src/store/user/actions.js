@@ -3,21 +3,32 @@ import { baseUrl } from "../../api";
 
 export const SET_SESSION = "users/SET_SESSION_DATA_AFTER_LOGIN";
 
-export function login(loginDetails) {
+export function signUp(userData) {
   return async (dispatch, getState) => {
     try {
-      const sessionDetails = await axios.post(`${baseUrl}/login`, loginDetails);
-      console.log("session details", sessionDetails);
-      dispatch(setSessionAction(sessionDetails.data));
+      const sessionData = await axios.post(`${baseUrl}/players`, userData);
+      console.log("Session data . data", sessionData.data);
     } catch (error) {
       throw error;
     }
   };
 }
 
-function setSessionAction(sessionDetails) {
+export function login(loginData) {
+  return async (dispatch, getState) => {
+    try {
+      const sessionData = await axios.post(`${baseUrl}/login`, loginData);
+      console.log("session details", sessionData);
+      dispatch(setSessionAction(sessionData.data));
+    } catch (error) {
+      throw error;
+    }
+  };
+}
+
+function setSessionAction(sessionData) {
   return {
     type: SET_SESSION,
-    payload: sessionDetails
+    payload: sessionData
   };
 }
