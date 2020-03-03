@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { login } from "../../store/user/actions";
 
 class Login extends Component {
   state = {
@@ -7,21 +8,30 @@ class Login extends Component {
     password: ""
   };
 
-  componentDidMount = () => {
-    console.log("Login form mounted");
-  };
   onChange = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
   };
 
+  onSubmit = event => {
+    event.preventDefault();
+    this.props.login(this.state);
+    this.setState({
+      email: "",
+      password: ""
+    });
+  };
+
   render() {
     if (this.props.token) {
-      this.props.history.push("/logout");
+      setTimeout(() => {
+        this.props.history.push("/");
+      }, 500);
+      return <div>Redirecting... </div>;
     }
     return (
-      <form>
+      <form onSubmit={this.onSubmit}>
         <label>E - Mail</label>
         <input
           type="text"
@@ -46,6 +56,6 @@ const mapStateToProps = state => ({
   token: state.session.jwt
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { login };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

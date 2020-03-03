@@ -10,6 +10,8 @@ function App() {
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/login" exact component={Login} />
+        {/* <Route path="/logout" exact component={Logout} /> */}
+        {/* <Route path="/signup" exact component={Signup} /> */}
       </Switch>
     </div>
   );
