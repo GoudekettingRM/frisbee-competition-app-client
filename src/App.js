@@ -6,6 +6,7 @@ import Header from "./components/Header/Header";
 import SignUpPlayer from "./components/SignUp/SignUpPlayer";
 import Logout from "./components/Login-out/Logout";
 import CreateOrganisation from "./components/CreateOrganisation/CreateOrganisation";
+import ProfilePage from "./components/Profile/ProfilePage";
 import "./App.css";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           exact
           component={CreateOrganisation}
         />
+        <Route path="/profile" exact component={ProfilePage} />
       </Switch>
     </div>
   );

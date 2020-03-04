@@ -16,7 +16,10 @@ class Header extends Component {
             </nav>
           ) : (
             <nav style={{ display: "inline" }}>
-              <Link to="/create-organisation">Create Club/Federation</Link>
+              {!this.props.user.organisation && (
+                <Link to="/create-organisation">Create Club/Federation</Link>
+              )}
+              <Link to="/profile">Profile</Link>
               <Link to="/logout">Log out</Link>
             </nav>
           )}
@@ -27,7 +30,8 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => ({
-  token: state.session.jwt
+  token: state.session.jwt,
+  user: state.session.user
 });
 
 export default connect(mapStateToProps)(Header);
