@@ -7,7 +7,7 @@ export const REMOVE_SESSION = "users/REMOVE_SESSION_DATA";
 export function signUp(userData) {
   return async (dispatch, getState) => {
     try {
-      const sessionData = await axios.post(`${baseUrl}/players`, userData);
+      const sessionData = await axios.post(`${baseUrl}/users`, userData);
 
       dispatch(setSessionAction(sessionData.data));
     } catch (error) {
