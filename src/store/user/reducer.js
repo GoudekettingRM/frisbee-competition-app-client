@@ -8,7 +8,7 @@ const initialState = {
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case SET_SESSION:
-      return { ...state, jwt: payload.jwt, user: payload.player };
+      return { ...state, jwt: payload.jwt, user: payload.user };
     case REMOVE_SESSION:
       return { ...state, jwt: "", user: {} };
     default:
