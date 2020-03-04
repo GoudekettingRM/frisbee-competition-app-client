@@ -4,9 +4,9 @@ import Login from "./components/Login-out/Login";
 import Home from "./components/Home/Home";
 import Header from "./components/Header/Header";
 import SignUpPlayer from "./components/SignUp/SignUpPlayer";
-import "./App.css";
 import Logout from "./components/Login-out/Logout";
 import CreateOrganisation from "./components/CreateOrganisation/CreateOrganisation";
+import "./App.css";
 
 function App() {
   return (

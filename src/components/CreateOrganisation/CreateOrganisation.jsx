@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { signUp } from "../../store/user/actions";
+import { addOrganisation } from "../../store/organisation/actions";
 
 class CreateOrganisation extends Component {
   state = {
     organisationName: "",
-    roleId: 4
-    // firstName: "",
-    // lastName: "",
-    // email: "",
-    // password: "",
+    roleId: 4,
+    organisationEmail: ""
   };
 
   onChange = event => {
@@ -22,15 +19,12 @@ class CreateOrganisation extends Component {
     event.preventDefault();
     console.log("state test in sign up admin component", this.state);
 
-    this.props.signUp(this.state);
+    this.props.addOrganisation(this.state, this.props.token);
 
     this.setState({
       organisationName: "",
-      roleId: 0
-      // firstName: "",
-      // lastName: "",
-      // email: "",
-      // password: "",
+      roleId: 0,
+      organisationEmail: ""
     });
   };
 
@@ -42,6 +36,13 @@ class CreateOrganisation extends Component {
           name="organisationName"
           placeholder="Enter organisation name"
           value={this.state.organisationName}
+          onChange={this.onChange}
+        />
+        <input
+          type="text"
+          name="organisationEmail"
+          placeholder="Enter e-mail address"
+          value={this.state.organisationEmail}
           onChange={this.onChange}
         />
         <input
@@ -60,34 +61,6 @@ class CreateOrganisation extends Component {
           onChange={this.onChange}
         />
         <label htmlFor="federation">Federation</label>
-        {/* <input
-          type="text"
-          name="firstName"
-          placeholder="Enter first name of contact person"
-          value={this.state.firstName}
-          onChange={this.onChange}
-        />
-        <input
-          type="text"
-          name="lastName"
-          placeholder="Enter last name of contact person"
-          value={this.state.lastName}
-          onChange={this.onChange}
-        />
-        <input
-          type="text"
-          name="email"
-          placeholder="Enter e-mail address"
-          value={this.state.email}
-          onChange={this.onChange}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter password"
-          value={this.state.password}
-          onChange={this.onChange}
-        /> */}
 
         <button type="submit">Sign up</button>
       </form>
@@ -96,11 +69,11 @@ class CreateOrganisation extends Component {
 }
 
 const mapStateToProps = state => ({
-  token: state.session.token
+  token: state.session.jwt
 });
 
 const mapDispatchToProps = {
-  signUp
+  addOrganisation
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateOrganisation);
