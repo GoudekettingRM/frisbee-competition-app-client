@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { signUp } from "../../store/user/actions";
 
-class SignUpAdmin extends Component {
+class CreateOrganisation extends Component {
   state = {
     organisationName: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
     roleId: 4
+    // firstName: "",
+    // lastName: "",
+    // email: "",
+    // password: "",
   };
 
   onChange = event => {
@@ -26,11 +26,11 @@ class SignUpAdmin extends Component {
 
     this.setState({
       organisationName: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
       roleId: 0
+      // firstName: "",
+      // lastName: "",
+      // email: "",
+      // password: "",
     });
   };
 
@@ -45,6 +45,22 @@ class SignUpAdmin extends Component {
           onChange={this.onChange}
         />
         <input
+          type="radio"
+          id="club"
+          name="roleId"
+          value={4}
+          onChange={this.onChange}
+        />
+        <label htmlFor="club">Club Board</label>
+        <input
+          type="radio"
+          id="federation"
+          name="roleId"
+          value={5}
+          onChange={this.onChange}
+        />
+        <label htmlFor="federation">Federation</label>
+        {/* <input
           type="text"
           name="firstName"
           placeholder="Enter first name of contact person"
@@ -71,24 +87,7 @@ class SignUpAdmin extends Component {
           placeholder="Enter password"
           value={this.state.password}
           onChange={this.onChange}
-        />
-
-        <input
-          type="radio"
-          id="club"
-          name="roleId"
-          value={4}
-          onChange={this.onChange}
-        />
-        <label htmlFor="club">Club Board</label>
-        <input
-          type="radio"
-          id="federation"
-          name="roleId"
-          value={5}
-          onChange={this.onChange}
-        />
-        <label htmlFor="federation">Federation</label>
+        /> */}
 
         <button type="submit">Sign up</button>
       </form>
@@ -104,4 +103,4 @@ const mapDispatchToProps = {
   signUp
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUpAdmin);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateOrganisation);

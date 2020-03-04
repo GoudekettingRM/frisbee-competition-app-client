@@ -6,7 +6,7 @@ import Header from "./components/Header/Header";
 import SignUpPlayer from "./components/SignUp/SignUpPlayer";
 import "./App.css";
 import Logout from "./components/Login-out/Logout";
-import SignUpAdmin from "./components/SignUp/SignUpAdmin";
+import CreateOrganisation from "./components/CreateOrganisation/CreateOrganisation";
 
 function App() {
   return (
@@ -17,7 +17,11 @@ function App() {
         <Route path="/login" exact component={Login} />
         <Route path="/logout" exact component={Logout} />
         <Route path="/player-signup" exact component={SignUpPlayer} />
-        <Route path="/admin-signup" exact component={SignUpAdmin} />
+        <Route
+          path="/create-organisation"
+          exact
+          component={CreateOrganisation}
+        />
       </Switch>
     </div>
   );
