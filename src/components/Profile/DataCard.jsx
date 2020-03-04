@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export const UserData = props => {
+export const DataCard = props => {
   const [editMode, setEditMode] = useState(false);
 
   const toggleEdit = () => {
