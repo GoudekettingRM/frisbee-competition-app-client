@@ -17,13 +17,12 @@ class CreateOrganisation extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    console.log("state test in sign up admin component", this.state);
 
     this.props.addOrganisation(this.state, this.props.token);
 
     this.setState({
       organisationName: "",
-      roleId: 0,
+      roleId: 4,
       organisationEmail: ""
     });
   };

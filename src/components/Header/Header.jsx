@@ -9,10 +9,17 @@ class Header extends Component {
         <div>R.M.G.</div>
         <nav>
           <Link to="/">Home</Link>
-          <Link to="/login">Log in</Link>
-          <Link to="/player-signup">Sign up as a player</Link>
-          <Link to="/create-organisation">Create Club/Federation</Link>
-          <Link to="/logout">Log out</Link>
+          {!this.props.token ? (
+            <nav style={{ display: "inline" }}>
+              <Link to="/login">Log in</Link>
+              <Link to="/player-signup">Sign up</Link>
+            </nav>
+          ) : (
+            <nav style={{ display: "inline" }}>
+              <Link to="/create-organisation">Create Club/Federation</Link>
+              <Link to="/logout">Log out</Link>
+            </nav>
+          )}
         </nav>
       </div>
     );
