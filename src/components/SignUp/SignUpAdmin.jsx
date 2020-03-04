@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { signUp } from "../../store/user/actions";
 
-class SignUp extends Component {
+class SignUpAdmin extends Component {
   state = {
+    organisationName: "",
     firstName: "",
     lastName: "",
     email: "",
-    password: ""
+    password: "",
+    roleId: 4
   };
 
   onChange = event => {
@@ -18,35 +20,41 @@ class SignUp extends Component {
 
   onSubmit = event => {
     event.preventDefault();
+    console.log("state test in sign up admin component", this.state);
+
     this.props.signUp(this.state);
+
     this.setState({
+      organisationName: "",
       firstName: "",
       lastName: "",
       email: "",
-      password: ""
+      password: "",
+      roleId: 0
     });
   };
 
   render() {
-    if (this.props.token) {
-      setTimeout(() => {
-        this.props.history.push("/");
-      }, 500);
-      return <div> Redirecting ...</div>;
-    }
     return (
       <form onSubmit={this.onSubmit}>
         <input
           type="text"
+          name="organisationName"
+          placeholder="Enter organisation name"
+          value={this.state.organisationName}
+          onChange={this.onChange}
+        />
+        <input
+          type="text"
           name="firstName"
-          placeholder="Enter first name"
+          placeholder="Enter first name of contact person"
           value={this.state.firstName}
           onChange={this.onChange}
         />
         <input
           type="text"
           name="lastName"
-          placeholder="Enter last name"
+          placeholder="Enter last name of contact person"
           value={this.state.lastName}
           onChange={this.onChange}
         />
@@ -64,6 +72,24 @@ class SignUp extends Component {
           value={this.state.password}
           onChange={this.onChange}
         />
+
+        <input
+          type="radio"
+          id="club"
+          name="roleId"
+          value={4}
+          onChange={this.onChange}
+        />
+        <label htmlFor="club">Club Board</label>
+        <input
+          type="radio"
+          id="federation"
+          name="roleId"
+          value={5}
+          onChange={this.onChange}
+        />
+        <label htmlFor="federation">Federation</label>
+
         <button type="submit">Sign up</button>
       </form>
     );
@@ -71,9 +97,11 @@ class SignUp extends Component {
 }
 
 const mapStateToProps = state => ({
-  token: state.session.jwt
+  token: state.session.token
 });
 
-const mapDispatchToProps = { signUp };
+const mapDispatchToProps = {
+  signUp
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpAdmin);
