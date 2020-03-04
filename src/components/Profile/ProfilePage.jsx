@@ -11,9 +11,9 @@ class ProfilePage extends Component {
     return (
       <div>
         I will be the profile page!
-        <DataCard value={firstName} label="First name" />
-        <DataCard value={lastName} label="Last name" />
-        <DataCard value={email} label="E - mail address" />
+        <DataCard value={firstName} name={"firstName"} label="First name" />
+        <DataCard value={lastName} name={"lastName"} label="Last name" />
+        <DataCard value={email} name={"email"} label="E - mail address" />
         {organisation && (
           <div>
             <p>
@@ -22,10 +22,12 @@ class ProfilePage extends Component {
             </p>
             <DataCard
               value={organisation.organisationName}
+              name={"organisationName"}
               label="Organisation name"
             />
             <DataCard
               value={organisation.organisationEmail}
+              name={"organisationEmail"}
               label="Organisation e - mail address"
             />
           </div>

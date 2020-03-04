@@ -4,6 +4,7 @@ import { updateUser } from "../../store/user/actions";
 
 const DataCard = props => {
   const [editMode, setEditMode] = useState(false);
+  const [valueName] = useState(props.name);
   const [dataValue, setDataValue] = useState(props.value);
 
   const toggleEdit = () => {
@@ -12,8 +13,9 @@ const DataCard = props => {
 
   const onSubmit = event => {
     event.preventDefault();
-    console.log("Edit form submitted!");
-    props.updateUser("hello");
+    console.log("update info tesT: ", { [valueName]: dataValue }, props.token);
+
+    props.updateUser({ [valueName]: dataValue }, props.token);
   };
 
   const onChange = event => {
@@ -48,6 +50,10 @@ const DataCard = props => {
   );
 };
 
+const mapStateToProps = state => ({
+  token: state.session.jwt
+});
+
 const mapDispatchToProps = { updateUser };
 
-export default connect(null, mapDispatchToProps)(DataCard);
+export default connect(mapStateToProps, mapDispatchToProps)(DataCard);
