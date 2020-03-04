@@ -1,18 +1,40 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { updateUser } from "../../store/user/actions";
 
-export const DataCard = props => {
+const DataCard = props => {
   const [editMode, setEditMode] = useState(false);
+  const [dataValue, setDataValue] = useState(props.value);
 
   const toggleEdit = () => {
     setEditMode(!editMode);
   };
 
+  const onSubmit = event => {
+    event.preventDefault();
+    console.log("Edit form submitted!");
+    props.updateUser("hello");
+  };
+
+  const onChange = event => {
+    setDataValue(event.target.value);
+  };
+
   if (editMode) {
     return (
-      <div>
-        You will be able to edit me, but not yet..
-        <button onClick={toggleEdit}>cancel</button>
-      </div>
+      <form onSubmit={onSubmit}>
+        <input type="text" value={dataValue} onChange={onChange} />
+
+        <button type="submit">edit</button>
+        <button
+          type="button"
+          onClick={() => {
+            toggleEdit();
+            setDataValue(props.value);
+          }}>
+          cancel
+        </button>
+      </form>
     );
   }
 
@@ -25,3 +47,7 @@ export const DataCard = props => {
     </div>
   );
 };
+
+const mapDispatchToProps = { updateUser };
+
+export default connect(null, mapDispatchToProps)(DataCard);

@@ -1,8 +1,25 @@
 import axios from "axios";
-import { baseUrl } from "../../api";
+import { baseUrl, authHeader } from "../../api";
 
 export const SET_SESSION = "users/SET_SESSION_DATA";
 export const REMOVE_SESSION = "users/REMOVE_SESSION_DATA";
+
+export function updateUser(updateData, token) {
+  return async (dispatch, getState) => {
+    try {
+      const authorization = authHeader(token);
+      const updatedUserData = await axios.patch(
+        `${baseUrl}/users`,
+        updateData,
+        authorization
+      );
+
+      console.log("Updated user data:", updatedUserData);
+    } catch (error) {
+      throw error;
+    }
+  };
+}
 
 export function signUp(userData) {
   return async (dispatch, getState) => {

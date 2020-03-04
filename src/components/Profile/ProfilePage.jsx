@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { DataCard } from "./DataCard";
+import DataCard from "./DataCard";
 
 class ProfilePage extends Component {
   render() {
@@ -40,6 +40,4 @@ const mapStateToProps = state => ({
   user: state.session.user
 });
 
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
+export default connect(mapStateToProps)(ProfilePage);
