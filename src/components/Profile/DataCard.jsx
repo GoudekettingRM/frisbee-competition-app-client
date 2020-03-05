@@ -20,6 +20,7 @@ const DataCard = props => {
     } else if (props.about === "organisation") {
       props.updateOrganisation({ [valueName]: dataValue }, props.token);
     }
+    toggleEdit();
   };
 
   const onChange = event => {
