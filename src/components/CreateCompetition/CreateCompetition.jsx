@@ -76,8 +76,12 @@ class CreateCompetition extends Component {
         return null;
       }
     }
+    const competitionData = {
+      ...this.state,
+      organisationId: this.props.organisation.id
+    };
 
-    this.props.addNewCompetition(this.state);
+    this.props.addNewCompetition(competitionData, this.props.token);
     console.log("This.state test after submit", this.state);
   };
 
