@@ -6,12 +6,12 @@ export const SET_FETCHED_COMPETITIONS =
 export const ADD_COMPETITION = "competitions/ADD_COMPETITION";
 export const ADD_COMPETITION_TO_USER =
   "competitions/ADD_COMPETITION_TO_USER_DATA";
+export const SET_SELECTED_COMPETITION = "competitions/SET_SELECTED_COMPETITION";
 
 export function getAllCompetitions() {
   return async (dispatch, getState) => {
     try {
       const competitions = await axios.get(`${baseUrl}/competitions`);
-      console.log("competition test", competitions);
       dispatch(setCompetitionsToStore(competitions.data));
     } catch (error) {
       throw error;

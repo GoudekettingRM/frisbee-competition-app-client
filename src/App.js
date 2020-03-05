@@ -9,6 +9,7 @@ import CreateOrganisation from "./components/CreateOrganisation/CreateOrganisati
 import ProfilePage from "./components/Profile/ProfilePage";
 import "./App.css";
 import CreateCompetition from "./components/CreateCompetition/CreateCompetition";
+import CompetitionDetails from "./components/CompetitionDetails/CompetitionDetails";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         />
         <Route path="/profile" exact component={ProfilePage} />
         <Route path="/create-competition" exact component={CreateCompetition} />
+        <Route path="/competitions/:id" exact component={CompetitionDetails} />
       </Switch>
     </div>
   );

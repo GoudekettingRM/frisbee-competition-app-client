@@ -1,14 +1,33 @@
-import { ADD_COMPETITION, SET_FETCHED_COMPETITIONS } from "./actions";
+import {
+  ADD_COMPETITION,
+  SET_FETCHED_COMPETITIONS,
+  SET_SELECTED_COMPETITION
+} from "./actions";
 
-const initialState = [];
+const initialState = {
+  all: [],
+  selected: {}
+};
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
+    case SET_SELECTED_COMPETITION: {
+      return {
+        ...state,
+        selected: { ...payload }
+      };
+    }
     case SET_FETCHED_COMPETITIONS: {
-      return [...payload];
+      return {
+        ...state,
+        all: [...payload]
+      };
     }
     case ADD_COMPETITION:
-      return [...state, payload];
+      return {
+        ...state,
+        all: [...state.all, payload]
+      };
 
     default:
       return state;

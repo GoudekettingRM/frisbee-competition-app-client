@@ -1,5 +1,8 @@
 import { SET_SESSION, REMOVE_SESSION, UPDATE_USER_DATA } from "./actions";
-import { UPDATE_USER_ORGANISATION } from "../organisation/actions";
+import {
+  UPDATE_USER_ORGANISATION,
+  ADD_ORGANISATION_TO_USER_DATA
+} from "../organisation/actions";
 import { ADD_COMPETITION_TO_USER } from "../competition/actions";
 
 const initialState = {
@@ -21,6 +24,16 @@ export default (state = initialState, { type, payload }) => {
             ...state.user.organisation,
             competitions: newCompetitions
           }
+        }
+      };
+    }
+    case ADD_ORGANISATION_TO_USER_DATA: {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          organisation: payload,
+          organisationId: payload.id
         }
       };
     }
