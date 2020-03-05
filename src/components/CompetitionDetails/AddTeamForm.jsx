@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { addTeam } from "../../store/team/actions";
 
 class AddTeamForm extends Component {
   state = {
@@ -14,14 +15,19 @@ class AddTeamForm extends Component {
 
   onSubmit = event => {
     event.preventDefault();
+    const { name } = this.state;
+    const { organisationId, competitionId, token } = this.props;
     console.log(
       "Form submitted. name:",
-      this.state.name,
+      name,
       "organisation id:",
-      this.props.organisationId,
+      organisationId,
       "competition id:",
-      this.props.competitionId
+      competitionId,
+      "token:",
+      token
     );
+    this.props.addTeam(name, organisationId, competitionId, token);
   };
 
   render() {
@@ -51,8 +57,8 @@ class AddTeamForm extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({ token: state.session.jwt });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { addTeam };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddTeamForm);
