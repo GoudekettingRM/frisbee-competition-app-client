@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import DataCard from "./DataCard";
-import OrganisationDataCard from "./OrganisationDataCard";
 
 class ProfilePage extends Component {
   render() {
