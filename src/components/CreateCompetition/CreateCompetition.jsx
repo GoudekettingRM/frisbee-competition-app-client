@@ -15,6 +15,10 @@ class CreateCompetition extends Component {
     competitionDayDates: []
   };
 
+  componentDidMount = () => {
+    this.addCompetitionDayComponent();
+  };
+
   onChange = event => {
     this.setState({
       [event.target.name]: event.target.value
