@@ -26,7 +26,7 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = state => ({ competitions: state.competitions });
+const mapStateToProps = state => ({ competitions: state.competitions.all });
 
 const mapDispatchToProps = { getAllCompetitions };
 
