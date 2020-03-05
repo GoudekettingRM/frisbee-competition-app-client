@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import NewCompetitionDay from "./NewCompetitionDay";
+import { addNewCompetition } from "../../store/competition/actions";
 
 class CreateCompetition extends Component {
   state = {
@@ -76,6 +77,7 @@ class CreateCompetition extends Component {
       }
     }
 
+    this.props.addNewCompetition(this.state);
     console.log("This.state test after submit", this.state);
   };
 
@@ -165,6 +167,6 @@ const mapStateToProps = state => ({
   organisation: state.session.user.organisation
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { addNewCompetition };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateCompetition);
