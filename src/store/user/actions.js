@@ -15,7 +15,6 @@ export function updateUser(updateData, token) {
         authorization
       );
 
-      console.log("Updated user data:", updatedUserData);
       dispatch(updateUserAction(updatedUserData.data));
     } catch (error) {
       throw error;

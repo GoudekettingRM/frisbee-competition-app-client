@@ -14,7 +14,6 @@ const DataCard = props => {
 
   const onSubmit = event => {
     event.preventDefault();
-    console.log("update info tesT: ", { [valueName]: dataValue }, props.token);
     if (props.about === "user") {
       props.updateUser({ [valueName]: dataValue }, props.token);
     } else if (props.about === "organisation") {
