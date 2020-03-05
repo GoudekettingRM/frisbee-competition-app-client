@@ -1,6 +1,8 @@
 import axios from "axios";
 import { baseUrl, authHeader } from "../../api";
 
+export const SET_FETCHED_COMPETITIONS =
+  "competitions/SET_FETCHED_COMPETITIONS_TO_STORE";
 export const ADD_COMPETITION = "competitions/ADD_COMPETITION";
 export const ADD_COMPETITION_TO_USER =
   "competitions/ADD_COMPETITION_TO_USER_DATA";
@@ -10,9 +12,17 @@ export function getAllCompetitions() {
     try {
       const competitions = await axios.get(`${baseUrl}/competitions`);
       console.log("competition test", competitions);
+      dispatch(setCompetitionsToStore(competitions.data));
     } catch (error) {
       throw error;
     }
+  };
+}
+
+function setCompetitionsToStore(competitions) {
+  return {
+    type: SET_FETCHED_COMPETITIONS,
+    payload: competitions
   };
 }
 
