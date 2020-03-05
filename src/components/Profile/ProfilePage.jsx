@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import DataCard from "./DataCard";
+import OrganisationDataCard from "./OrganisationDataCard";
 
 class ProfilePage extends Component {
   render() {
@@ -11,9 +12,24 @@ class ProfilePage extends Component {
     return (
       <div>
         I will be the profile page!
-        <DataCard value={firstName} name={"firstName"} label="First name" />
-        <DataCard value={lastName} name={"lastName"} label="Last name" />
-        <DataCard value={email} name={"email"} label="E - mail address" />
+        <DataCard
+          value={firstName}
+          name={"firstName"}
+          label="First name"
+          about="user"
+        />
+        <DataCard
+          value={lastName}
+          name={"lastName"}
+          label="Last name"
+          about="user"
+        />
+        <DataCard
+          value={email}
+          name={"email"}
+          label="E - mail address"
+          about="user"
+        />
         {organisation && (
           <div>
             <p>
@@ -24,11 +40,13 @@ class ProfilePage extends Component {
               value={organisation.organisationName}
               name={"organisationName"}
               label="Organisation name"
+              about="organisation"
             />
             <DataCard
               value={organisation.organisationEmail}
               name={"organisationEmail"}
               label="Organisation e - mail address"
+              about="organisation"
             />
           </div>
         )}

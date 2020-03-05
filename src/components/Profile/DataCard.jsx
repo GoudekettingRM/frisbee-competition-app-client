@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { updateUser } from "../../store/user/actions";
+import { updateOrganisation } from "../../store/organisation/actions";
 
 const DataCard = props => {
   const [editMode, setEditMode] = useState(false);
@@ -14,8 +15,11 @@ const DataCard = props => {
   const onSubmit = event => {
     event.preventDefault();
     console.log("update info tesT: ", { [valueName]: dataValue }, props.token);
-
-    props.updateUser({ [valueName]: dataValue }, props.token);
+    if (props.about === "user") {
+      props.updateUser({ [valueName]: dataValue }, props.token);
+    } else if (props.about === "organisation") {
+      props.updateOrganisation({ [valueName]: dataValue }, props.token);
+    }
   };
 
   const onChange = event => {
@@ -54,6 +58,6 @@ const mapStateToProps = state => ({
   token: state.session.jwt
 });
 
-const mapDispatchToProps = { updateUser };
+const mapDispatchToProps = { updateUser, updateOrganisation };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataCard);
