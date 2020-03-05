@@ -86,7 +86,6 @@ class CreateCompetition extends Component {
     };
 
     this.props.addNewCompetition(competitionData, this.props.token);
-    console.log("This.state test after submit", this.state);
   };
 
   addCompetitionDayComponent = () => {

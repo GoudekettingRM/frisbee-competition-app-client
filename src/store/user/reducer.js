@@ -1,5 +1,6 @@
 import { SET_SESSION, REMOVE_SESSION, UPDATE_USER_DATA } from "./actions";
 import { UPDATE_USER_ORGANISATION } from "../organisation/actions";
+import { ADD_COMPETITION_TO_USER } from "../competition/actions";
 
 const initialState = {
   jwt: "",
@@ -8,6 +9,21 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
+    case ADD_COMPETITION_TO_USER: {
+      const newCompetitions = state.user.organisation.competitions.concat(
+        payload
+      );
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          organisation: {
+            ...state.user.organisation,
+            competitions: newCompetitions
+          }
+        }
+      };
+    }
     case UPDATE_USER_ORGANISATION: {
       return {
         ...state,
