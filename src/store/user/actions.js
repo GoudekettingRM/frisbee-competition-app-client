@@ -3,6 +3,7 @@ import { baseUrl, authHeader } from "../../api";
 
 export const SET_SESSION = "users/SET_SESSION_DATA";
 export const REMOVE_SESSION = "users/REMOVE_SESSION_DATA";
+export const UPDATE_USER_DATA = "users/UPDATE_USER_DATA";
 
 export function updateUser(updateData, token) {
   return async (dispatch, getState) => {
@@ -15,9 +16,17 @@ export function updateUser(updateData, token) {
       );
 
       console.log("Updated user data:", updatedUserData);
+      dispatch(updateUserAction(updatedUserData.data));
     } catch (error) {
       throw error;
     }
+  };
+}
+
+function updateUserAction(updateData) {
+  return {
+    type: UPDATE_USER_DATA,
+    payload: updateData
   };
 }
 
