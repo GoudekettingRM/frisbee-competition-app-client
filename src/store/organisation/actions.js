@@ -1,20 +1,29 @@
 import axios from "axios";
 import { baseUrl, authHeader } from "../../api";
 
+export const UPDATE_USER_ORGANISATION =
+  "organisations/UPDATE_ORGANISATION_DATA_FOR_USER";
+
 export function updateOrganisation(updateData, token) {
   return async (dispatch, getState) => {
     try {
       const authorization = authHeader(token);
-      const updatedUserData = await axios.patch(
+      const updatedOrganisationData = await axios.patch(
         `${baseUrl}/organisations`,
         updateData,
         authorization
       );
-
-      console.log("Updated user data:", updatedUserData);
+      dispatch(updateOrganisationAction(updatedOrganisationData.data));
     } catch (error) {
       throw error;
     }
+  };
+}
+
+function updateOrganisationAction(updateData) {
+  return {
+    type: UPDATE_USER_ORGANISATION,
+    payload: updateData
   };
 }
 
