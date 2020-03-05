@@ -8,6 +8,7 @@ import Logout from "./components/Login-out/Logout";
 import CreateOrganisation from "./components/CreateOrganisation/CreateOrganisation";
 import ProfilePage from "./components/Profile/ProfilePage";
 import "./App.css";
+import CreateCompetition from "./components/CreateCompetition/CreateCompetition";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           component={CreateOrganisation}
         />
         <Route path="/profile" exact component={ProfilePage} />
+        <Route path="/create-competition" exact component={CreateCompetition} />
       </Switch>
     </div>
   );

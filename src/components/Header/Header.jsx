@@ -16,8 +16,10 @@ class Header extends Component {
             </nav>
           ) : (
             <nav style={{ display: "inline" }}>
-              {!this.props.user.organisation && (
+              {!this.props.user.organisation ? (
                 <Link to="/create-organisation">Create Club/Federation</Link>
+              ) : (
+                <Link to="/create-competition">Create Competition</Link>
               )}
               <Link to="/profile">Profile</Link>
               <Link to="/logout">Log out</Link>
