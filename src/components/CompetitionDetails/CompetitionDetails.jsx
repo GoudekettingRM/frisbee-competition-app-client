@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import CompetitionDayCard from "./CompetitionDayCard";
 
 class CompetitionDetails extends Component {
   render() {
-    console.log("Render of competition details: ", this.props.competition);
     const {
       name,
       startDate,
@@ -25,7 +25,10 @@ class CompetitionDetails extends Component {
           <p>Players List Deadline: {playersListDeadline}</p>
         </div>
         <div>
-          {competitionDays && competitionDays.map(day => <div>Hi!</div>)}
+          {competitionDays &&
+            competitionDays.map((day, index) => (
+              <CompetitionDayCard day={day} id={index + 1} key={index + 1} />
+            ))}
         </div>
       </div>
     );
