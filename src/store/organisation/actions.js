@@ -43,7 +43,6 @@ export function addOrganisation(organsationData, token) {
       dispatch(
         updateUserWithNewOrganisation(newOrganisation.data.newOrganisation)
       );
-      // Don't do anything with this yet..
     } catch (error) {
       throw error;
     }
