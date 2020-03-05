@@ -5,6 +5,17 @@ export const ADD_COMPETITION = "competitions/ADD_COMPETITION";
 export const ADD_COMPETITION_TO_USER =
   "competitions/ADD_COMPETITION_TO_USER_DATA";
 
+export function getAllCompetitions() {
+  return async (dispatch, getState) => {
+    try {
+      const competitions = await axios.get(`${baseUrl}/competitions`);
+      console.log("competition test", competitions);
+    } catch (error) {
+      throw error;
+    }
+  };
+}
+
 export function addNewCompetition(competitionData, token) {
   return async (dispatch, getState) => {
     try {
@@ -20,7 +31,6 @@ export function addNewCompetition(competitionData, token) {
         competitionData,
         authorization
       );
-      console.log("newCompetition test", newCompetition);
       dispatch(addCompetitionAction(newCompetition.data.newCompetition));
       dispatch(
         addCompetitionToAllCompetitionsAction(
