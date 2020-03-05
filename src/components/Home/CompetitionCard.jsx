@@ -1,27 +1,34 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { SET_SELECTED_COMPETITION } from "../../store/competition/actions";
 import "./competitionCard.css";
 
-class CompetitionCard extends Component {
-  render() {
-    const { name, startDate, endDate, id } = this.props.competition;
-    return (
-      <Link to={`/competitions/${id}`} style={{ textDecoration: "none" }}>
-        <div className="competitionCard">
-          <h1>{name}</h1>
-          <p>
-            starts: {startDate} <br />
-            ends: {endDate}
-          </p>
-        </div>
-      </Link>
-    );
-  }
-}
+const CompetitionCard = props => {
+  const { name, startDate, endDate, id } = props.competition;
 
-const mapStateToProps = state => ({});
+  const setSelectedCompetition = () => {
+    const setCompetitionAction = {
+      type: SET_SELECTED_COMPETITION,
+      payload: props.competition
+    };
+    props.dispatch(setCompetitionAction);
+  };
 
-const mapDispatchToProps = {};
+  return (
+    <Link
+      to={`/competitions/${id}`}
+      style={{ textDecoration: "none" }}
+      onClick={setSelectedCompetition}>
+      <div className="competitionCard">
+        <h1>{name}</h1>
+        <p>
+          starts: {startDate} <br />
+          ends: {endDate}
+        </p>
+      </div>
+    </Link>
+  );
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(CompetitionCard);
+export default connect()(CompetitionCard);
