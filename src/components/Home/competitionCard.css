@@ -1,0 +1,9 @@
+.competitionCard {
+  width: 300px;
+  height: fit-content;
+  margin: 30px auto;
+  padding: 10px 20px;
+  box-shadow: 0px 6px 10px 5px rgba(140, 140, 140, 1);
+  text-decoration: none;
+  color: black;
+}

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getAllCompetitions } from "../../store/competition/actions";
+import CompetitionCard from "./CompetitionCard";
 
 class Home extends Component {
   componentDidMount = () => {
@@ -9,12 +10,19 @@ class Home extends Component {
     }
   };
 
+  renderCompetitionCards = () => {
+    return this.props.competitions.map(competition => (
+      <CompetitionCard competition={competition} key={competition.id} />
+    ));
+  };
+
   render() {
-    return (
-      <div>
-        <h1>Hi from home</h1>
-      </div>
-    );
+    const { competitions } = this.props;
+
+    if (!competitions.length) {
+      return <div>Loading data...</div>;
+    }
+    return <div>{this.renderCompetitionCards()}</div>;
   }
 }
 
