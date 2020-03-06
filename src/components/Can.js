@@ -1,4 +1,4 @@
-import rules from "../rbac-rules";
+import rules from "./rbac-rules";
 
 const check = (rules, roleId, action, data) => {
   const permissions = rules[roleId];
@@ -28,10 +28,12 @@ const check = (rules, roleId, action, data) => {
   }
 };
 
-const Can = props =>
-  check(rules, props.role, props.perform, props.data)
+const Can = props => {
+  // console.log("Props of can test:", props);
+  return check(rules, props.roleId, props.perform, props.data)
     ? props.yes()
     : props.no();
+};
 
 Can.defaultProps = {
   yes: () => null,

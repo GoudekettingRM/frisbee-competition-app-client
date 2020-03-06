@@ -113,6 +113,7 @@ const rules = {
     static: [
       "players:read",
       "teams:read",
+      "teams:create",
       "competitions:read",
       "competitions:update-add-team",
       "games:read"
@@ -126,9 +127,9 @@ const rules = {
         if (!userId || !playerId) return false;
         return userId === playerId;
       },
-      "teams:update": ({ team, organisation }) => {
-        if (!team || !organisation) return false;
-        return team.organisationId === organisation.id;
+      "teams:update": ({ teamOrgansationId, organisationId }) => {
+        if (!teamOrgansationId || !organisationId) return false;
+        return teamOrgansationId === organisationId;
       },
       "teams:update-add-player": ({ team, organisation }) => {
         if (!team || !organisation) return false;
@@ -192,9 +193,9 @@ const rules = {
       "games:delete" //
     ],
     dynamic: {
-      "teams:create": ({ organisationId, competition }) => {
-        if (!organisationId || !competition) return false;
-        return organisationId === competition.organisationId;
+      "teams:create": ({ organisationId, competitionOrganisationId }) => {
+        if (!organisationId || !competitionOrganisationId) return false;
+        return organisationId === competitionOrganisationId;
       }
       // "teams:update": ()=> {},
       // "teams:update-add-player": () => {},
