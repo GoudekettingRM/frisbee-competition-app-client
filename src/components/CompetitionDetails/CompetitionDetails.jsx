@@ -68,6 +68,7 @@ class CompetitionDetails extends Component {
     const userRoleId = organisation
       ? organisation.roleId
       : this.props.user.roleId;
+
     return (
       <div>
         {this.renderCompetitionDetails()}
