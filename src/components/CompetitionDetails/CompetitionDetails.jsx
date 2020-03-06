@@ -61,7 +61,7 @@ class CompetitionDetails extends Component {
           )}
           <div>
             <h3>Teams registered:</h3>
-            {teams && teams.map(team => <p>{team.name}</p>)}
+            {teams && teams.map(team => <p key={team.id}>{team.name}</p>)}
           </div>
         </div>
       </div>
