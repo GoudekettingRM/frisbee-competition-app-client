@@ -28,12 +28,16 @@ class AddTeamForm extends Component {
       token
     );
     this.props.addTeam(name, organisationId, competitionId, token);
+    this.props.toggleForm();
+    this.setState({
+      name: ""
+    });
   };
 
   render() {
     return (
       <form onSubmit={this.onSubmit}>
-        <h2>Register a team</h2>
+        <h2>Register a team for {this.props.selectedCompetition.name}</h2>
         <input
           type="text"
           name="name"
@@ -57,7 +61,10 @@ class AddTeamForm extends Component {
   }
 }
 
-const mapStateToProps = state => ({ token: state.session.jwt });
+const mapStateToProps = state => ({
+  token: state.session.jwt,
+  selectedCompetition: state.competitions.selected
+});
 
 const mapDispatchToProps = { addTeam };
 

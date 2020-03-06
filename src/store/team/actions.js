@@ -17,7 +17,7 @@ export function addTeam(name, organisationId, competitionId, token) {
         newTeamData,
         authorization
       );
-      console.log("New team test: ", newTeam.data);
+
       dispatch(addNewTeamToCompetition(newTeam.data));
     } catch (error) {
       throw error;

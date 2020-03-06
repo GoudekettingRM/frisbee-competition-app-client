@@ -24,7 +24,8 @@ class CompetitionDetails extends Component {
       seedingDeadline,
       playersListDeadline,
       competitionDays,
-      id
+      id,
+      teams
     } = this.props.competition;
     const { showForm } = this.state;
     const { organisation } = this.props.user;
@@ -44,18 +45,25 @@ class CompetitionDetails extends Component {
               <CompetitionDayCard day={day} id={index + 1} key={index + 1} />
             ))}
         </div>
-        {organisation && name && !showForm && (
-          <button onClick={this.toggleForm}>
-            Register a team for this competition!
-          </button>
-        )}
-        {showForm && (
-          <AddTeamForm
-            toggleForm={this.toggleForm}
-            competitionId={id}
-            organisationId={organisation.id}
-          />
-        )}
+        <div>
+          {organisation && name && !showForm && (
+            <div>
+              <h2>Want to play in this competition</h2>
+              <button onClick={this.toggleForm}>Register a team!</button>
+            </div>
+          )}
+          {showForm && (
+            <AddTeamForm
+              toggleForm={this.toggleForm}
+              competitionId={id}
+              organisationId={organisation.id}
+            />
+          )}
+          <div>
+            <h3>Teams registered:</h3>
+            {teams && teams.map(team => <p>{team.name}</p>)}
+          </div>
+        </div>
       </div>
     );
   }
