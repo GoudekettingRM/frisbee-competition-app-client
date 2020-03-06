@@ -17,17 +17,9 @@ class AddTeamForm extends Component {
     event.preventDefault();
     const { name } = this.state;
     const { organisationId, competitionId, token } = this.props;
-    console.log(
-      "Form submitted. name:",
-      name,
-      "organisation id:",
-      organisationId,
-      "competition id:",
-      competitionId,
-      "token:",
-      token
-    );
+
     this.props.addTeam(name, organisationId, competitionId, token);
+
     this.props.toggleForm();
     this.setState({
       name: ""

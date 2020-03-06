@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import Can from "../Can";
 
 class Header extends Component {
   render() {
+    const { organisation } = this.props.user;
+    const userRoleId = organisation
+      ? organisation.roleId
+      : this.props.user.roleId;
     return (
       <div>
         <div>R.M.G.</div>
@@ -16,11 +21,19 @@ class Header extends Component {
             </nav>
           ) : (
             <nav style={{ display: "inline" }}>
-              {!this.props.user.organisation ? (
+              {!organisation && (
                 <Link to="/create-organisation">Create Club/Federation</Link>
-              ) : (
-                <Link to="/create-competition">Create Competition</Link>
               )}
+              <Can
+                roleId={userRoleId}
+                perform="competitions:create"
+                yes={() => {
+                  return (
+                    <Link to="/create-competition">Create Competition</Link>
+                  );
+                }}
+                no={() => null}
+              />
               <Link to="/profile">Profile</Link>
               <Link to="/logout">Log out</Link>
             </nav>

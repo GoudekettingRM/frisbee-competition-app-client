@@ -25,6 +25,7 @@ export default (state = initialState, { type, payload }) => {
       });
       return {
         ...state,
+        all: allCompetitionsUpdated,
         selected: {
           ...state.selected,
           teams: [...state.selected.teams, payload]
