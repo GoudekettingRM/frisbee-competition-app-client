@@ -4,28 +4,28 @@ const check = (rules, roleId, action, data) => {
   const permissions = rules[roleId];
   if (!permissions) {
     // role is not present in the rules
+    console.log("Role not present in rules.");
     return false;
   }
 
   const staticPermissions = permissions.static;
-
-  if (staticPermissions && staticPermissions.includes(action)) {
-    // static rule not provided for action
-    return true;
-  }
-
   const dynamicPermissions = permissions.dynamic;
 
-  if (dynamicPermissions) {
+  if (staticPermissions && staticPermissions.includes(action)) {
+    return true;
+  } else if (dynamicPermissions) {
     const permissionCondition = dynamicPermissions[action];
     if (!permissionCondition) {
       // dynamic rule not provided for action
+      console.log("Dynamic rule not provided for action");
       return false;
     }
-
     return permissionCondition(data);
+  } else {
+    // static rule not provided for action
+    console.log("Static rule not provided for action");
+    return false;
   }
-  return false;
 };
 
 const Can = props =>
