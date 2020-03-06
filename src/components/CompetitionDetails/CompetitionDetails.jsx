@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import CompetitionDayCard from "./CompetitionDayCard";
 import AddTeamForm from "./AddTeamForm";
 import Can from "../Can";
+import { Link } from "react-router-dom";
 
 class CompetitionDetails extends Component {
   state = {
@@ -46,10 +47,7 @@ class CompetitionDetails extends Component {
     return (
       <div>
         {!showForm && (
-          <div>
-            <h2>Want to play in this competition</h2>
-            <button onClick={this.toggleForm}>Register a team!</button>
-          </div>
+          <button onClick={this.toggleForm}>Register a team!</button>
         )}
         {showForm && (
           <AddTeamForm
@@ -92,6 +90,7 @@ class CompetitionDetails extends Component {
           <h3>Teams registered:</h3>
           {teams && teams.map(team => <p key={team.id}>{team.name}</p>)}
         </div>
+        <Link to="/create-game">Add game</Link>
       </div>
     );
   }

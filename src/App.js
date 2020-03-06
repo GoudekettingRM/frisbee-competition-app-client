@@ -10,6 +10,7 @@ import ProfilePage from "./components/Profile/ProfilePage";
 import "./App.css";
 import CreateCompetition from "./components/CreateCompetition/CreateCompetition";
 import CompetitionDetails from "./components/CompetitionDetails/CompetitionDetails";
+import AddGame from "./components/Games/AddGame";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/profile" exact component={ProfilePage} />
         <Route path="/create-competition" exact component={CreateCompetition} />
         <Route path="/competitions/:id" exact component={CompetitionDetails} />
+        <Route path="/create-game" exact component={AddGame} />
       </Switch>
     </div>
   );
