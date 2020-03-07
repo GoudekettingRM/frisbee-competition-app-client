@@ -34,9 +34,6 @@ export default class Location extends Component {
   };
 
   render() {
-    console.log("Render of location component state test:", this.state);
-
-    const { coordinates } = this.state;
     return (
       <PlacesAutocomplete
         value={this.state.address}

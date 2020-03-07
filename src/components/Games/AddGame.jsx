@@ -13,10 +13,16 @@ class AddGame extends Component {
     competitionDayId: 0
   };
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     if (!Object.keys(this.props.competition).length) {
-      this.props.getOneCompetition(this.props.match.params.competitionId);
+      await this.props.getOneCompetition(this.props.match.params.competitionId);
     }
+    const competitionDayIdInitialValue =
+      this.props.competition.competitionDays.length > 1
+        ? 0
+        : this.props.competition.competitionDays[0].id;
+
+    this.setState({ competitionDayId: competitionDayIdInitialValue });
   };
 
   onChange = event => {
@@ -69,7 +75,7 @@ class AddGame extends Component {
         competitionDays.map((day, index) => {
           return (
             <select
-              name="competitionDay"
+              name="competitionDayId"
               key={day.id}
               defaultValue={day.id}
               onChange={this.onChange}>
@@ -86,6 +92,8 @@ class AddGame extends Component {
   };
 
   render() {
+    console.log("render of add game state", this.state);
+
     return (
       <form>
         <label htmlFor="homeTeam">Home Team</label>
