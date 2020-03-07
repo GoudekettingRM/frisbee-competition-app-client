@@ -11,20 +11,25 @@ class AddGame extends Component {
     lat: null,
     lng: null,
     competitionDayId: 0,
+    competitionId: 0,
     startTime: "",
     changeLocation: false
   };
 
   componentDidMount = async () => {
+    const competitionId = parseInt(this.props.match.params.competitionId);
     if (!Object.keys(this.props.competition).length) {
-      await this.props.getOneCompetition(this.props.match.params.competitionId);
+      await this.props.getOneCompetition(competitionId);
     }
     const competitionDayIdInitialValue =
       this.props.competition.competitionDays.length > 1
         ? 0
         : this.props.competition.competitionDays[0].id;
 
-    this.setState({ competitionDayId: competitionDayIdInitialValue });
+    this.setState({
+      competitionDayId: competitionDayIdInitialValue,
+      competitionId
+    });
   };
 
   onChange = event => {
@@ -103,7 +108,7 @@ class AddGame extends Component {
   };
 
   renderAwaySelectOption = () => {
-    const homeTeamId = parseInt(this.state.homeTeam);
+    const homeTeamId = parseInt(this.state.homeTeamId);
     return this.props.teams
       .filter(team => team.id !== homeTeamId)
       .map(team => (
@@ -117,7 +122,7 @@ class AddGame extends Component {
     const competitionDays = this.props.competition.competitionDays;
     if (competitionDays) {
       return competitionDays.length > 1 ? (
-        <select name="competitionDay" onChange={this.onChange}>
+        <select name="competitionDayId" onChange={this.onChange}>
           <option value={0}>Select Competition Day</option>
           {competitionDays.map((day, index) => (
             <option key={day.id} value={day.id}>
