@@ -10,7 +10,9 @@ class AddGame extends Component {
     location: "",
     lat: null,
     lng: null,
-    competitionDayId: 0
+    competitionDayId: 0,
+    startTime: "",
+    changeLocation: false
   };
 
   componentDidMount = async () => {
@@ -31,13 +33,64 @@ class AddGame extends Component {
     });
   };
 
+  allFilledIn = state => {
+    for (var key in state) if (!state[key]) return false;
+    return true;
+  };
+
+  onSubmit = event => {
+    event.preventDefault();
+    const { changeLocation, ...dataFields } = this.state;
+    if (!this.allFilledIn(dataFields)) {
+      alert("You have to fill in all fields before you can create a game.");
+      return null;
+    }
+    console.log("Let's create the game!");
+  };
+
   handleLocationSelect = (address, coordinates) => {
     this.setState({
       ...this.state,
       location: address,
       lat: coordinates.lat,
-      lng: coordinates.lng
+      lng: coordinates.lng,
+      changeLocation: false
     });
+  };
+
+  toggleChangeLocation = () => {
+    this.setState({
+      ...this.state,
+      changeLocation: !this.state.changeLocation
+    });
+  };
+
+  renderLocation = () => {
+    if (this.state.location && this.state.changeLocation) {
+      return (
+        <div>
+          <span>Selected location: {this.state.location}</span>
+          <label>Select new location:</label>
+          <Location handleSelection={this.handleLocationSelect} />
+        </div>
+      );
+    } else if (this.state.location && !this.state.changeLocation) {
+      return (
+        <div>
+          <span>Selected location: {this.state.location}</span>
+          <button type="button" onClick={this.toggleChangeLocation}>
+            Change location
+          </button>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <label>Select location:</label>
+          <Location handleSelection={this.handleLocationSelect} />
+        </div>
+      );
+    }
   };
 
   renderHomeSelectOptions = () => {
@@ -67,22 +120,16 @@ class AddGame extends Component {
           <option value={0}>Select Competition Day</option>
           {competitionDays.map((day, index) => (
             <option key={day.id} value={day.id}>
-              Day {index + 1}: {day.date}
+              Competition day {index + 1}: {day.date}
             </option>
           ))}
         </select>
       ) : (
         competitionDays.map((day, index) => {
           return (
-            <select
-              name="competitionDayId"
-              key={day.id}
-              defaultValue={day.id}
-              onChange={this.onChange}>
-              <option value={day.id}>
-                Day {index + 1}: {day.date}
-              </option>
-            </select>
+            <p key={day.id}>
+              Competition day {index + 1}: {day.date}
+            </p>
           );
         })
       );
@@ -92,10 +139,8 @@ class AddGame extends Component {
   };
 
   render() {
-    console.log("render of add game state", this.state);
-
     return (
-      <form>
+      <form onSubmit={this.onSubmit}>
         <label htmlFor="homeTeam">Home Team</label>
         <select name="homeTeam" onChange={this.onChange}>
           <option value={0}>Select Home Team</option>
@@ -106,13 +151,16 @@ class AddGame extends Component {
           <option value={0}>Select Away Team</option>
           {this.props.teams && this.renderAwaySelectOption()}
         </select>
-        <label htmlFor="location">Selected Location:</label>
-        <span>
-          <em>{this.state.address}</em>
-        </span>
+        {this.renderLocation()}
         {this.renderCompetitionDaysSelectOption()}
-        {/* and add start time */}
-        <Location handleSelection={this.handleLocationSelect} />
+        <label htmlFor="startTime">Start time</label>
+        <input
+          type="time"
+          name="startTime"
+          value={this.state.startTime}
+          onChange={this.onChange}
+        />
+        <button type="submit">Create game</button>
       </form>
     );
   }

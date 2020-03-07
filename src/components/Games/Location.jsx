@@ -17,7 +17,6 @@ export default class Location extends Component {
     const results = await geocodeByAddress(address);
     const latLng = await getLatLng(results[0]);
 
-    this.props.handleSelection(address, { ...latLng });
     this.setState({
       address: "",
       coordinates: {
@@ -25,6 +24,8 @@ export default class Location extends Component {
         lng: null
       }
     });
+
+    this.props.handleSelection(address, { ...latLng });
   };
 
   onChange = address => {
