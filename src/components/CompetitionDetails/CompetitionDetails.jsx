@@ -4,7 +4,6 @@ import CompetitionDayCard from "./CompetitionDayCard";
 import AddTeamForm from "./AddTeamForm";
 import Can from "../Can";
 import { Link } from "react-router-dom";
-
 import { getOneCompetition } from "../../store/competition/actions";
 
 class CompetitionDetails extends Component {
@@ -103,7 +102,6 @@ class CompetitionDetails extends Component {
           to={`/competitions/${this.props.match.params.competitionId}/create-game`}>
           Add game
         </Link>
-
       </div>
     );
   }
