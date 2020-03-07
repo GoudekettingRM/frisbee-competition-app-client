@@ -45,8 +45,6 @@ export default class Location extends Component {
         shouldFetchSuggestions={this.state.address.length > 3}>
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
-            {/* <p>Latitude: {coordinates.lat}</p> */}
-            {/* <p>Longitude: {coordinates.lng}</p> */}
             <input
               {...getInputProps({
                 placeholder: "Enter address"

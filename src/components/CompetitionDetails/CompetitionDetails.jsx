@@ -12,11 +12,8 @@ class CompetitionDetails extends Component {
   };
 
   componentDidMount = () => {
-    console.log("In comp did mount of com details", this.props);
-
     if (!Object.keys(this.props.competition).length) {
-      const competitionId = this.props.match.params.competitionId;
-      this.props.getOneCompetition(competitionId);
+      this.props.getOneCompetition(this.props.match.params.competitionId);
     }
   };
 

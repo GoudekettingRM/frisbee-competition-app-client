@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import NewCompetitionDay from "./NewCompetitionDay";
 import { addNewCompetition } from "../../store/competition/actions";
+import Can from "../Can";
 
 class CreateCompetition extends Component {
   state = {
@@ -101,14 +102,7 @@ class CreateCompetition extends Component {
     });
   };
 
-  render() {
-    if (!this.props.organisation) {
-      return (
-        <div>
-          You have to be the contact of an organisation to create a competition
-        </div>
-      );
-    }
+  renderCompetitionForm = () => {
     return (
       <form onSubmit={this.onSubmit}>
         <h1>Create new competition</h1>
@@ -164,6 +158,25 @@ class CreateCompetition extends Component {
         {this.state.competitionDays}
         <button type="submit">create</button>
       </form>
+    );
+  };
+
+  render() {
+    const userRoleId = this.props.organisation
+      ? this.props.organisation.roleId
+      : this.props.user.roleId;
+    return (
+      <Can
+        roleId={userRoleId}
+        perform="competitions:create"
+        yes={() => this.renderCompetitionForm()}
+        no={() => (
+          <div>
+            You have to be the contact of an organisation to create a
+            competition
+          </div>
+        )}
+      />
     );
   }
 }

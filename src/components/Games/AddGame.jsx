@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Location from "./Location";
+import { getOneCompetition } from "../../store/competition/actions";
 
 class AddGame extends Component {
   state = {
@@ -12,7 +13,11 @@ class AddGame extends Component {
     competitionDayId: 0
   };
 
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    if (!Object.keys(this.props.competition).length) {
+      this.props.getOneCompetition(this.props.match.params.competitionId);
+    }
+  };
 
   onChange = event => {
     this.setState({
@@ -50,17 +55,37 @@ class AddGame extends Component {
 
   renderCompetitionDaysSelectOption = () => {
     const competitionDays = this.props.competition.competitionDays;
-    console.log("competitionDays", competitionDays);
-    return competitionDays.map((day, index) => (
-      <option key={day.id} value={day.id}>
-        Day {index + 1}: {day.date}
-      </option>
-    ));
+    if (competitionDays) {
+      return competitionDays.length > 1 ? (
+        <select name="competitionDay" onChange={this.onChange}>
+          <option value={0}>Select Competition Day</option>
+          {competitionDays.map((day, index) => (
+            <option key={day.id} value={day.id}>
+              Day {index + 1}: {day.date}
+            </option>
+          ))}
+        </select>
+      ) : (
+        competitionDays.map((day, index) => {
+          return (
+            <select
+              name="competitionDay"
+              key={day.id}
+              defaultValue={day.id}
+              onChange={this.onChange}>
+              <option value={day.id}>
+                Day {index + 1}: {day.date}
+              </option>
+            </select>
+          );
+        })
+      );
+    } else {
+      return null;
+    }
   };
 
   render() {
-    console.log("render of add game component state test:", this.state);
-
     return (
       <form>
         <label htmlFor="homeTeam">Home Team</label>
@@ -77,10 +102,8 @@ class AddGame extends Component {
         <span>
           <em>{this.state.address}</em>
         </span>
-        <select name="competitionDay" onChange={this.onChange}>
-          {this.renderCompetitionDaysSelectOption()}
-        </select>
-        {/* Select competition day to play on and add start time */}
+        {this.renderCompetitionDaysSelectOption()}
+        {/* and add start time */}
         <Location handleSelection={this.handleLocationSelect} />
       </form>
     );
@@ -92,6 +115,6 @@ const mapStateToProps = state => ({
   competition: state.competitions.selected
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { getOneCompetition };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddGame);
