@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Location from "./Location";
 
 class AddGame extends Component {
   state = {
@@ -11,6 +12,8 @@ class AddGame extends Component {
       [event.target.name]: event.target.value
     });
   };
+
+  onSelect = async value => {};
   renderHomeSelectOptions = () => {
     return this.props.teams.map(team => (
       <option key={team.id} value={team.id}>
@@ -44,6 +47,7 @@ class AddGame extends Component {
           <option value={0}>Select Away Team</option>
           {this.props.teams && this.renderAwaySelectOption()}
         </select>
+        <Location />
       </form>
     );
   }

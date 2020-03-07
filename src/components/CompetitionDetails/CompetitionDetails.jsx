@@ -66,6 +66,7 @@ class CompetitionDetails extends Component {
     const userRoleId = organisation
       ? organisation.roleId
       : this.props.user.roleId;
+    const organisationId = organisation ? organisation.id : 0;
 
     return (
       <div>
@@ -80,7 +81,7 @@ class CompetitionDetails extends Component {
           roleId={userRoleId}
           perform="teams:create"
           data={{
-            organisationId: organisation.id,
+            organisationId,
             competitionOrganisationId: this.props.competition.organisationId
           }}
           yes={() => this.renderForm()}
