@@ -180,4 +180,5 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = { getOneCompetition, addGame };
 
+
 export default connect(mapStateToProps, mapDispatchToProps)(AddGame);
