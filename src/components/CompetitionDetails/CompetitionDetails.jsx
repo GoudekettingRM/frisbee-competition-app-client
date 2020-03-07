@@ -5,9 +5,17 @@ import AddTeamForm from "./AddTeamForm";
 import Can from "../Can";
 import { Link } from "react-router-dom";
 
+import { getOneCompetition } from "../../store/competition/actions";
+
 class CompetitionDetails extends Component {
   state = {
     showForm: false
+  };
+
+  componentDidMount = () => {
+    if (!Object.keys(this.props.competition).length) {
+      this.props.getOneCompetition(this.props.match.params.competitionId);
+    }
   };
 
   toggleForm = () => {
@@ -66,6 +74,7 @@ class CompetitionDetails extends Component {
     const userRoleId = organisation
       ? organisation.roleId
       : this.props.user.roleId;
+    const organisationId = organisation ? organisation.id : 0;
 
     return (
       <div>
@@ -80,7 +89,7 @@ class CompetitionDetails extends Component {
           roleId={userRoleId}
           perform="teams:create"
           data={{
-            organisationId: organisation.id,
+            organisationId,
             competitionOrganisationId: this.props.competition.organisationId
           }}
           yes={() => this.renderForm()}
@@ -90,7 +99,11 @@ class CompetitionDetails extends Component {
           <h3>Teams registered:</h3>
           {teams && teams.map(team => <p key={team.id}>{team.name}</p>)}
         </div>
-        <Link to="/create-game">Add game</Link>
+        <Link
+          to={`/competitions/${this.props.match.params.competitionId}/create-game`}>
+          Add game
+        </Link>
+
       </div>
     );
   }
@@ -101,4 +114,8 @@ const mapStateToProps = state => ({
   user: state.session.user
 });
 
-export default connect(mapStateToProps)(CompetitionDetails);
+const mapDispatchToProps = {
+  getOneCompetition
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CompetitionDetails);

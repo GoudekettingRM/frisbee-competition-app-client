@@ -28,8 +28,16 @@ function App() {
         />
         <Route path="/profile" exact component={ProfilePage} />
         <Route path="/create-competition" exact component={CreateCompetition} />
-        <Route path="/competitions/:id" exact component={CompetitionDetails} />
-        <Route path="/create-game" exact component={AddGame} />
+        <Route
+          path="/competitions/:competitionId"
+          exact
+          component={CompetitionDetails}
+        />
+        <Route
+          path="/competitions/:competitionId/create-game"
+          exact
+          component={AddGame}
+        />
       </Switch>
     </div>
   );

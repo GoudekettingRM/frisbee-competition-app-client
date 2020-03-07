@@ -175,12 +175,12 @@ const rules = {
       "teams:read",
       "competitions:read",
       "games:read",
+      "competitions:create",
       "teams:update", //
       "teams:update-add-player", //
       "teams:update-remove-player", //
       "teams:update-(un)assign-captains", //
       "teams:delete", //
-      "competitions:create", //
       "competitions:update", //
       "competitions:update-add-team", //
       "competitions:update-remove-team", //

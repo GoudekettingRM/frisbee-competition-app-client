@@ -8,6 +8,40 @@ export const ADD_COMPETITION_TO_USER =
   "competitions/ADD_COMPETITION_TO_USER_DATA";
 export const SET_SELECTED_COMPETITION = "competitions/SET_SELECTED_COMPETITION";
 
+export function addGame(gameData, token) {
+  return async (dispatch, getState) => {
+    try {
+      const authorization = authHeader(token);
+      const newGame = await axios.post(
+        `${baseUrl}/games`,
+        gameData,
+        authorization
+      );
+      console.log("new game", newGame);
+    } catch (error) {
+      throw error;
+    }
+  };
+}
+
+export function getOneCompetition(id) {
+  return async (dispatch, getState) => {
+    try {
+      const competition = await axios.get(`${baseUrl}/competitions/${id}`);
+      dispatch(setSelectedCompetitionToStore(competition.data));
+    } catch (error) {
+      throw error;
+    }
+  };
+}
+
+export function setSelectedCompetitionToStore(competition) {
+  return {
+    type: SET_SELECTED_COMPETITION,
+    payload: competition
+  };
+}
+
 export function getAllCompetitions() {
   return async (dispatch, getState) => {
     try {
