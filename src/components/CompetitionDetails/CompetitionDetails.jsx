@@ -15,7 +15,7 @@ class CompetitionDetails extends Component {
     console.log("In comp did mount of com details", this.props);
 
     if (!Object.keys(this.props.competition).length) {
-      const competitionId = this.props.match.params.id;
+      const competitionId = this.props.match.params.competitionId;
       this.props.getOneCompetition(competitionId);
     }
   };
@@ -101,7 +101,10 @@ class CompetitionDetails extends Component {
           <h3>Teams registered:</h3>
           {teams && teams.map(team => <p key={team.id}>{team.name}</p>)}
         </div>
-        <Link to="/create-game">Add game</Link>
+        <Link
+          to={`/competitions/${this.props.match.params.competitionId}/create-game`}>
+          Add game
+        </Link>
       </div>
     );
   }
