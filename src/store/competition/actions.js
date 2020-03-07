@@ -8,6 +8,22 @@ export const ADD_COMPETITION_TO_USER =
   "competitions/ADD_COMPETITION_TO_USER_DATA";
 export const SET_SELECTED_COMPETITION = "competitions/SET_SELECTED_COMPETITION";
 
+export function addGame(gameData, token) {
+  return async (dispatch, getState) => {
+    try {
+      const authorization = authHeader(token);
+      const newGame = await axios.post(
+        `${baseUrl}/games`,
+        gameData,
+        authorization
+      );
+      console.log("new game", newGame);
+    } catch (error) {
+      throw error;
+    }
+  };
+}
+
 export function getOneCompetition(id) {
   return async (dispatch, getState) => {
     try {

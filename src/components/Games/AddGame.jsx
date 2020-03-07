@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Location from "./Location";
-import { getOneCompetition } from "../../store/competition/actions";
+import { getOneCompetition, addGame } from "../../store/competition/actions";
 
 class AddGame extends Component {
   state = {
-    homeTeam: 0,
-    awayTeam: 0,
+    homeTeamId: 0,
+    awayTeamId: 0,
     location: "",
     lat: null,
     lng: null,
@@ -46,6 +46,7 @@ class AddGame extends Component {
       return null;
     }
     console.log("Let's create the game!");
+    this.props.addGame(dataFields, this.props.token);
   };
 
   handleLocationSelect = (address, coordinates) => {
@@ -141,13 +142,13 @@ class AddGame extends Component {
   render() {
     return (
       <form onSubmit={this.onSubmit}>
-        <label htmlFor="homeTeam">Home Team</label>
-        <select name="homeTeam" onChange={this.onChange}>
+        <label htmlFor="homeTeamId">Home Team</label>
+        <select name="homeTeamId" onChange={this.onChange}>
           <option value={0}>Select Home Team</option>
           {this.props.teams && this.renderHomeSelectOptions()}
         </select>
-        <label htmlFor="awayTeam">Away Team</label>
-        <select name="awayTeam" onChange={this.onChange}>
+        <label htmlFor="awayTeamId">Away Team</label>
+        <select name="awayTeamId" onChange={this.onChange}>
           <option value={0}>Select Away Team</option>
           {this.props.teams && this.renderAwaySelectOption()}
         </select>
@@ -167,10 +168,11 @@ class AddGame extends Component {
 }
 
 const mapStateToProps = state => ({
+  token: state.session.jwt,
   teams: state.competitions.selected.teams,
   competition: state.competitions.selected
 });
 
-const mapDispatchToProps = { getOneCompetition };
+const mapDispatchToProps = { getOneCompetition, addGame };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddGame);
