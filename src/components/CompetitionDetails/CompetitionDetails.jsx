@@ -4,10 +4,20 @@ import CompetitionDayCard from "./CompetitionDayCard";
 import AddTeamForm from "./AddTeamForm";
 import Can from "../Can";
 import { Link } from "react-router-dom";
+import { getOneCompetition } from "../../store/competition/actions";
 
 class CompetitionDetails extends Component {
   state = {
     showForm: false
+  };
+
+  componentDidMount = () => {
+    console.log("In comp did mount of com details", this.props);
+
+    if (!Object.keys(this.props.competition).length) {
+      const competitionId = this.props.match.params.id;
+      this.props.getOneCompetition(competitionId);
+    }
   };
 
   toggleForm = () => {
@@ -102,4 +112,8 @@ const mapStateToProps = state => ({
   user: state.session.user
 });
 
-export default connect(mapStateToProps)(CompetitionDetails);
+const mapDispatchToProps = {
+  getOneCompetition
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CompetitionDetails);

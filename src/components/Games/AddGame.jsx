@@ -6,12 +6,13 @@ class AddGame extends Component {
   state = {
     homeTeam: 0,
     awayTeam: 0,
-    address: "",
-    coordinates: {
-      lat: null,
-      lng: null
-    }
+    location: "",
+    lat: null,
+    lng: null,
+    competitionDayId: 0
   };
+
+  componentDidMount = () => {};
 
   onChange = event => {
     this.setState({
@@ -22,8 +23,9 @@ class AddGame extends Component {
   handleLocationSelect = (address, coordinates) => {
     this.setState({
       ...this.state,
-      address,
-      coordinates
+      location: address,
+      lat: coordinates.lat,
+      lng: coordinates.lng
     });
   };
 
@@ -46,6 +48,16 @@ class AddGame extends Component {
       ));
   };
 
+  renderCompetitionDaysSelectOption = () => {
+    const competitionDays = this.props.competition.competitionDays;
+    console.log("competitionDays", competitionDays);
+    return competitionDays.map((day, index) => (
+      <option key={day.id} value={day.id}>
+        Day {index + 1}: {day.date}
+      </option>
+    ));
+  };
+
   render() {
     console.log("render of add game component state test:", this.state);
 
@@ -65,13 +77,20 @@ class AddGame extends Component {
         <span>
           <em>{this.state.address}</em>
         </span>
+        <select name="competitionDay" onChange={this.onChange}>
+          {this.renderCompetitionDaysSelectOption()}
+        </select>
+        {/* Select competition day to play on and add start time */}
         <Location handleSelection={this.handleLocationSelect} />
       </form>
     );
   }
 }
 
-const mapStateToProps = state => ({ teams: state.competitions.selected.teams });
+const mapStateToProps = state => ({
+  teams: state.competitions.selected.teams,
+  competition: state.competitions.selected
+});
 
 const mapDispatchToProps = {};
 
