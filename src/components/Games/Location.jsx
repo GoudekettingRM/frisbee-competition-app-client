@@ -16,11 +16,14 @@ export default class Location extends Component {
   onSelect = async address => {
     const results = await geocodeByAddress(address);
     const latLng = await getLatLng(results[0]);
-    console.log("Address test: ", address);
 
+    this.props.handleSelection(address, { ...latLng });
     this.setState({
       address: "",
-      coordinates: latLng
+      coordinates: {
+        lat: null,
+        lng: null
+      }
     });
   };
 
@@ -31,6 +34,8 @@ export default class Location extends Component {
   };
 
   render() {
+    console.log("Render of location component state test:", this.state);
+
     const { coordinates } = this.state;
     return (
       <PlacesAutocomplete
@@ -40,8 +45,8 @@ export default class Location extends Component {
         shouldFetchSuggestions={this.state.address.length > 3}>
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
-            <p>Latitude: {coordinates.lat}</p>
-            <p>Longitude: {coordinates.lng}</p>
+            {/* <p>Latitude: {coordinates.lat}</p> */}
+            {/* <p>Longitude: {coordinates.lng}</p> */}
             <input
               {...getInputProps({
                 placeholder: "Enter address"
