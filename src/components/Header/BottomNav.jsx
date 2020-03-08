@@ -2,13 +2,10 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
 import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuButton from "./MenuButton";
 import { connect } from "react-redux";
-import { superAdmin, federation } from "../endpointRoles";
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -18,14 +15,6 @@ const useStyles = makeStyles(theme => ({
   grow: {
     flexGrow: 1
   },
-  fabButton: {
-    position: "absolute",
-    zIndex: 1,
-    bottom: -20,
-    left: -200,
-    right: 0,
-    margin: "0 auto"
-  },
   tabLink: {
     display: "block"
   }
@@ -33,7 +22,6 @@ const useStyles = makeStyles(theme => ({
 
 const BottomAppBar = props => {
   const classes = useStyles();
-  console.log("Bottom app bar props", props.user.roleId);
 
   return (
     <React.Fragment>
@@ -49,18 +37,6 @@ const BottomAppBar = props => {
               { label: "Organisation", path: "/organisations" }
             ]}
           />
-          {props.user &&
-          (props.user.roleId === superAdmin ||
-            (props.user.organisation &&
-              props.user.organisation.roleId === federation)) ? (
-            <Fab
-              size="small"
-              color="secondary"
-              aria-label="add"
-              className={classes.fabButton}>
-              <AddIcon />
-            </Fab>
-          ) : null}
           <div className={classes.grow} />
           {!props.token ? (
             <MenuButton
@@ -90,8 +66,7 @@ const BottomAppBar = props => {
 };
 
 const mapStateToProps = state => ({
-  token: state.session.jwt,
-  user: state.session.user
+  token: state.session.jwt
 });
 
 export default connect(mapStateToProps)(BottomAppBar);
