@@ -2,13 +2,17 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { getAllCompetitions } from "../../store/competition/actions";
 import CompetitionCard from "./CompetitionCard";
-import { fabPositioning, fabLinkIcon } from "../../styles";
+import { fabPositioning, headerSpacing } from "../../styles";
 import Can from "../Can";
 
 class Home extends Component {
+  state = {
+    redirect: null
+  };
+
   componentDidMount = () => {
     if (!this.props.competitions.length) {
       this.props.getAllCompetitions();
@@ -27,11 +31,15 @@ class Home extends Component {
       ? user.organisation.roleId
       : user.roleId;
 
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />;
+    }
+
     if (!competitions.length) {
-      return <div>Loading data...</div>;
+      return <div style={headerSpacing}>Loading data...</div>;
     }
     return (
-      <div>
+      <div style={headerSpacing}>
         {this.renderCompetitionCards()}
         {user && (
           <Can
@@ -44,11 +52,12 @@ class Home extends Component {
                   color="secondary"
                   aria-label="add"
                   style={fabPositioning}>
-                  <Link to="/create-competition" style={fabLinkIcon}>
-                    <AddIcon />
-                  </Link>
+                  <AddIcon
+                    onClick={() =>
+                      this.setState({ redirect: "/create-competition" })
+                    }
+                  />
                 </Fab>
-                //  <Link to="/create-competition">Create Competition</Link>
               );
             }}
             no={() => null}

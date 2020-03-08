@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -20,7 +21,29 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const BottomAppBar = props => {
+const pageTitle = currentProps => {
+  const path = currentProps.location.pathname;
+  const competition = path.substring(17, 30);
+  console.log("competition", competition);
+
+  if (path === "/") return "Home";
+  if (path === "/login") return "Log in";
+  if (path === "/logout") return "Log out";
+  if (path === "/signup") return "Sign up";
+  if (path === "/create-competition") return "New competition";
+  if (
+    path.substring(0, 14) === "/competitions/" &&
+    path.substring(17, 20) === ""
+  )
+    return currentProps.selectedCompetition.name;
+  if (
+    path.substring(0, 14) === "/competitions/" &&
+    path.substring(17, 30) === "create-game"
+  )
+    return currentProps.selectedCompetition.name + " - Add Game";
+};
+
+const NavBar = props => {
   const classes = useStyles();
 
   return (
@@ -33,10 +56,11 @@ const BottomAppBar = props => {
             class={classes.tabLink}
             items={[
               { label: "Home", path: "/" },
-              { label: "Competitions", path: "/competitions" },
               { label: "Organisation", path: "/organisations" }
             ]}
           />
+          <div className={classes.grow} />
+          <h3>{pageTitle(props)}</h3>
           <div className={classes.grow} />
           {!props.token ? (
             <MenuButton
@@ -66,7 +90,8 @@ const BottomAppBar = props => {
 };
 
 const mapStateToProps = state => ({
-  token: state.session.jwt
+  token: state.session.jwt,
+  selectedCompetition: state.competitions.selected
 });
 
-export default connect(mapStateToProps)(BottomAppBar);
+export default withRouter(connect(mapStateToProps)(NavBar));

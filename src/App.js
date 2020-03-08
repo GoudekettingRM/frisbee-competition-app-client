@@ -11,17 +11,18 @@ import "./App.css";
 import CreateCompetition from "./components/CreateCompetition/CreateCompetition";
 import CompetitionDetails from "./components/CompetitionDetails/CompetitionDetails";
 import AddGame from "./components/Games/AddGame";
-import BottomAppBar from "./components/Header/BottomNav";
+import NavBar from "./components/Header/NavBar";
 
 function App() {
   return (
     <div className="App">
-      <Header />
+      <NavBar />
+
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/login" exact component={Login} />
         <Route path="/logout" exact component={Logout} />
-        <Route path="/player-signup" exact component={SignUpPlayer} />
+        <Route path="/signup" exact component={SignUpPlayer} />
         <Route
           path="/create-organisation"
           exact
@@ -40,7 +41,6 @@ function App() {
           component={AddGame}
         />
       </Switch>
-      <BottomAppBar />
     </div>
   );
 }

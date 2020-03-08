@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Location from "./Location";
 import { getOneCompetition, addGame } from "../../store/competition/actions";
+import { headerSpacing } from "../../styles";
 
 class AddGame extends Component {
   state = {
@@ -146,7 +147,7 @@ class AddGame extends Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit} style={headerSpacing}>
         <label htmlFor="homeTeamId">Home Team</label>
         <select name="homeTeamId" onChange={this.onChange}>
           <option value={0}>Select Home Team</option>
@@ -179,6 +180,5 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = { getOneCompetition, addGame };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddGame);

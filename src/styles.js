@@ -6,8 +6,6 @@ export const fabPositioning = {
   margin: "0 auto"
 };
 
-export const fabLinkIcon = {
-  textDecoration: "none",
-  color: "inherit",
-  marginBottom: "-7px"
+export const headerSpacing = {
+  marginTop: "80px"
 };
