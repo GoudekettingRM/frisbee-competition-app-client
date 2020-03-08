@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -12,8 +12,8 @@ import { superAdmin, federation } from "../endpointRoles";
 
 const useStyles = makeStyles(theme => ({
   appBar: {
-    top: "auto",
-    bottom: 0
+    top: 0,
+    bottom: "auto"
   },
   grow: {
     flexGrow: 1
@@ -21,8 +21,8 @@ const useStyles = makeStyles(theme => ({
   fabButton: {
     position: "absolute",
     zIndex: 1,
-    top: -30,
-    left: 0,
+    bottom: -20,
+    left: -200,
     right: 0,
     margin: "0 auto"
   },
@@ -54,6 +54,7 @@ const BottomAppBar = props => {
             (props.user.organisation &&
               props.user.organisation.roleId === federation)) ? (
             <Fab
+              size="small"
               color="secondary"
               aria-label="add"
               className={classes.fabButton}>
