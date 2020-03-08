@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import uuidv4 from "uuid/v4";
 import NewCompetitionDay from "./NewCompetitionDay";
 import { addNewCompetition } from "../../store/competition/actions";
 import Can from "../Can";
@@ -27,16 +28,6 @@ class CreateCompetition extends Component {
     });
   };
 
-  changeCompetitionDayDates = (index, value) => {
-    const NewCompetitionDayDates = [...this.state.competitionDayDates];
-    NewCompetitionDayDates[index] = value;
-
-    this.setState({
-      ...this.state,
-      competitionDayDates: NewCompetitionDayDates
-    });
-  };
-
   onSubmit = event => {
     event.preventDefault();
     const {
@@ -48,8 +39,6 @@ class CreateCompetition extends Component {
       competitionDays,
       competitionDayDates
     } = this.state;
-
-    console.log("State in submit", this.state);
 
     const today = new Date();
     const month =
@@ -67,9 +56,7 @@ class CreateCompetition extends Component {
       seedingDeadline < now ||
       playersListDeadline < now
     ) {
-      alert(
-        "All dates should be filled in and in the future. You cannot create a competition in the past."
-      );
+      alert("All dates should be filled in and in the future.");
       return null;
     }
 
@@ -87,11 +74,10 @@ class CreateCompetition extends Component {
     if (competitionDays.length) {
       if (
         !competitionDayDates.length ||
-        competitionDayDates.find(date => date < now) || emptyDatePresent
+        competitionDayDates.find(date => date < now) ||
+        emptyDatePresent
       ) {
-        alert(
-          "All dates should be filled in and in the future. You cannot create a competition in the past."
-        );
+        alert("All dates should be filled in and in the future. ");
         return null;
       }
     }
@@ -103,19 +89,44 @@ class CreateCompetition extends Component {
     this.props.addNewCompetition(competitionData, this.props.token);
   };
 
-  addCompetitionDayComponent = () => {
-    const competitionDays = [...this.state.competitionDays];
-    const competitionDayDates = [...this.state.competitionDayDates];
+  changeCompetitionDayDates = (index, value) => {
+    const NewCompetitionDayDates = [...this.state.competitionDayDates];
+    NewCompetitionDayDates[index] = value;
+
     this.setState({
       ...this.state,
-      competitionDayDates: competitionDayDates.concat(""),
-      competitionDays: competitionDays.concat(
-        <NewCompetitionDay
-          key={competitionDays.length}
-          id={competitionDays.length}
-          handleChange={this.changeCompetitionDayDates}
-        />
-      )
+      competitionDayDates: NewCompetitionDayDates
+    });
+  };
+
+  removeCompetitionDayComponent = indexOfElementToRemove => {
+    const newCompetitionDays = [...this.state.competitionDays];
+    const newCompetitionDayDates = [...this.state.competitionDayDates];
+    newCompetitionDays.splice(indexOfElementToRemove, 1, "removed");
+    newCompetitionDayDates.splice(indexOfElementToRemove, 1, "removed");
+
+    this.setState({
+      ...this.state,
+      competitionDays: newCompetitionDays,
+      competitionDayDates: newCompetitionDayDates
+    });
+  };
+
+  addCompetitionDayComponent = () => {
+    const newCompetitionDays = [
+      ...this.state.competitionDays,
+      <NewCompetitionDay
+        key={this.state.competitionDays.length}
+        id={this.state.competitionDays.length}
+        handleChange={this.changeCompetitionDayDates}
+        removeDay={this.removeCompetitionDayComponent}
+      />
+    ];
+
+    this.setState({
+      ...this.state,
+      competitionDayDates: [...this.state.competitionDayDates, ""],
+      competitionDays: newCompetitionDays
     });
   };
 
@@ -172,13 +183,15 @@ class CreateCompetition extends Component {
         <button type="button" onClick={this.addCompetitionDayComponent}>
           +
         </button>
-        {this.state.competitionDays}
+        {this.state.competitionDays.filter(day => day !== "removed")}
         <button type="submit">create</button>
       </form>
     );
   };
 
   render() {
+    console.log("render of create comp", this.state);
+
     const userRoleId = this.props.organisation
       ? this.props.organisation.roleId
       : this.props.user.roleId;
