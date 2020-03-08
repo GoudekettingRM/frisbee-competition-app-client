@@ -11,6 +11,7 @@ import "./App.css";
 import CreateCompetition from "./components/CreateCompetition/CreateCompetition";
 import CompetitionDetails from "./components/CompetitionDetails/CompetitionDetails";
 import AddGame from "./components/Games/AddGame";
+import BottomAppBar from "./components/Header/BottomNav";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           component={AddGame}
         />
       </Switch>
+      <BottomAppBar />
     </div>
   );
 }
