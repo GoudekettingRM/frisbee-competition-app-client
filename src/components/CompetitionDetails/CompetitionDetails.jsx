@@ -109,19 +109,26 @@ class CompetitionDetails extends Component {
           <h3>Teams registered:</h3>
           {teams && teams.map(team => <p key={team.id}>{team.name}</p>)}
         </div>
-        <Fab
-          size="small"
-          color="secondary"
-          aria-label="add"
-          style={fabPositioning}>
-          <PlaylistAdd
-            onClick={() =>
-              this.setState({
-                redirect: `/competitions/${this.props.match.params.competitionId}/create-game`
-              })
-            }
-          />
-        </Fab>
+        <Can
+          roleId={userRoleId}
+          perform="games:create"
+          yes={() => (
+            <Fab
+              size="small"
+              color="secondary"
+              aria-label="add"
+              style={fabPositioning}>
+              <PlaylistAdd
+                onClick={() =>
+                  this.setState({
+                    redirect: `/competitions/${this.props.match.params.competitionId}/create-game`
+                  })
+                }
+              />
+            </Fab>
+          )}
+          no={() => null}
+        />
       </div>
     );
   }

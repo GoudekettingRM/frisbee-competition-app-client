@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addTeam } from "../../store/team/actions";
-import { headerSpacing } from "../../styles";
 
 class AddTeamForm extends Component {
   state = {
