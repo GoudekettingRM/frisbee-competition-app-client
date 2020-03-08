@@ -13,12 +13,21 @@ export default class NewCompetitionDay extends Component {
 
   render() {
     return (
-      <input
-        type="date"
-        name="value"
-        onChange={this.onChange}
-        value={this.state.value}
-      />
+      <div>
+        <input
+          type="date"
+          name="value"
+          onChange={this.onChange}
+          value={this.state.value}
+        />
+        {this.props.id === 0 ? null : (
+          <button
+            type="button"
+            onClick={() => this.props.removeDay(this.props.id)}>
+            -
+          </button>
+        )}
+      </div>
     );
   }
 }
