@@ -23,14 +23,14 @@ const useStyles = makeStyles(theme => ({
 
 const pageTitle = currentProps => {
   const path = currentProps.location.pathname;
-  const competition = path.substring(17, 30);
-  console.log("competition", competition);
 
   if (path === "/") return "Home";
   if (path === "/login") return "Log in";
   if (path === "/logout") return "Log out";
   if (path === "/signup") return "Sign up";
   if (path === "/create-competition") return "New competition";
+  if (path === "/organisations") return "Organisations";
+  if (path === "/profile") return `Hi ${currentProps.user.firstName}!`;
   if (
     path.substring(0, 14) === "/competitions/" &&
     path.substring(17, 20) === ""
@@ -40,7 +40,7 @@ const pageTitle = currentProps => {
     path.substring(0, 14) === "/competitions/" &&
     path.substring(17, 30) === "create-game"
   )
-    return currentProps.selectedCompetition.name + " - Add Game";
+    return `${currentProps.selectedCompetition.name} - Add Game`;
 };
 
 const NavBar = props => {
@@ -56,7 +56,7 @@ const NavBar = props => {
             class={classes.tabLink}
             items={[
               { label: "Home", path: "/" },
-              { label: "Organisation", path: "/organisations" }
+              { label: "Organisations", path: "/organisations" }
             ]}
           />
           <div className={classes.grow} />
@@ -91,6 +91,7 @@ const NavBar = props => {
 
 const mapStateToProps = state => ({
   token: state.session.jwt,
+  user: state.session.user,
   selectedCompetition: state.competitions.selected
 });
 
