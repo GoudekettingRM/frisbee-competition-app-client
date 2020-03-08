@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import NewCompetitionDay from "./NewCompetitionDay";
 import { addNewCompetition } from "../../store/competition/actions";
 import Can from "../Can";
+import { headerSpacing } from "../../styles";
 
 class CreateCompetition extends Component {
   state = {
@@ -48,6 +49,8 @@ class CreateCompetition extends Component {
       competitionDayDates
     } = this.state;
 
+    console.log("State in submit", this.state);
+
     const today = new Date();
     const month =
       today.getMonth() + 1 < 10
@@ -70,10 +73,21 @@ class CreateCompetition extends Component {
       return null;
     }
 
+    const emptyDatePresent = competitionDayDates.reduce(
+      (oneEmptyFound, currentDate) => {
+        if (!oneEmptyFound && currentDate !== "") {
+          return false;
+        } else {
+          return true;
+        }
+      },
+      false
+    );
+
     if (competitionDays.length) {
       if (
         !competitionDayDates.length ||
-        competitionDayDates.find(date => date < now)
+        competitionDayDates.find(date => date < now) || emptyDatePresent
       ) {
         alert(
           "All dates should be filled in and in the future. You cannot create a competition in the past."
@@ -91,7 +105,10 @@ class CreateCompetition extends Component {
 
   addCompetitionDayComponent = () => {
     const competitionDays = [...this.state.competitionDays];
+    const competitionDayDates = [...this.state.competitionDayDates];
     this.setState({
+      ...this.state,
+      competitionDayDates: competitionDayDates.concat(""),
       competitionDays: competitionDays.concat(
         <NewCompetitionDay
           key={competitionDays.length}
@@ -104,7 +121,7 @@ class CreateCompetition extends Component {
 
   renderCompetitionForm = () => {
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit} style={headerSpacing}>
         <h1>Create new competition</h1>
         <div>
           <input
@@ -171,7 +188,7 @@ class CreateCompetition extends Component {
         perform="competitions:create"
         yes={() => this.renderCompetitionForm()}
         no={() => (
-          <div>
+          <div style={headerSpacing}>
             You have to be the contact of an organisation to create a
             competition
           </div>

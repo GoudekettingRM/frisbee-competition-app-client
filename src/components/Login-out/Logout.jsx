@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { logoutAction } from "../../store/user/actions";
+import { headerSpacing } from "../../styles";
 
 class Logout extends Component {
   onSubmit = event => {
@@ -16,7 +17,7 @@ class Logout extends Component {
       return <div> Redirecting...</div>;
     }
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit} style={headerSpacing}>
         <button type="submit">Log out</button>
       </form>
     );

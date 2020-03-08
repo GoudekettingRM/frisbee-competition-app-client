@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { signUp } from "../../store/user/actions";
+import { headerSpacing } from "../../styles";
 
 class SignUpPlayer extends Component {
   state = {
@@ -35,7 +36,7 @@ class SignUpPlayer extends Component {
       return <div> Redirecting ...</div>;
     }
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit} style={headerSpacing}>
         <input
           type="text"
           name="firstName"

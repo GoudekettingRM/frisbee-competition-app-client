@@ -1,14 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import PlaylistAdd from "@material-ui/icons/PlaylistAdd";
+import Fab from "@material-ui/core/Fab";
 import CompetitionDayCard from "./CompetitionDayCard";
 import AddTeamForm from "./AddTeamForm";
 import Can from "../Can";
-import { Link } from "react-router-dom";
 import { getOneCompetition } from "../../store/competition/actions";
+import { headerSpacing, fabPositioning } from "../../styles";
 
 class CompetitionDetails extends Component {
   state = {
-    showForm: false
+    showForm: false,
+    redirect: null
   };
 
   componentDidMount = () => {
@@ -51,6 +55,9 @@ class CompetitionDetails extends Component {
     const { showForm } = this.state;
     const { organisation } = this.props.user;
     const { id } = this.props.competition;
+    const organisationId = organisation
+      ? organisation.id
+      : this.props.user.roleId;
     return (
       <div>
         {!showForm && (
@@ -60,7 +67,7 @@ class CompetitionDetails extends Component {
           <AddTeamForm
             toggleForm={this.toggleForm}
             competitionId={id}
-            organisationId={organisation.id}
+            organisationId={organisationId}
           />
         )}
       </div>
@@ -75,8 +82,12 @@ class CompetitionDetails extends Component {
       : this.props.user.roleId;
     const organisationId = organisation ? organisation.id : 0;
 
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />;
+    }
+
     return (
-      <div>
+      <div style={headerSpacing}>
         {this.renderCompetitionDetails()}
         <div>
           {competitionDays &&
@@ -98,10 +109,26 @@ class CompetitionDetails extends Component {
           <h3>Teams registered:</h3>
           {teams && teams.map(team => <p key={team.id}>{team.name}</p>)}
         </div>
-        <Link
-          to={`/competitions/${this.props.match.params.competitionId}/create-game`}>
-          Add game
-        </Link>
+        <Can
+          roleId={userRoleId}
+          perform="games:create"
+          yes={() => (
+            <Fab
+              size="small"
+              color="secondary"
+              aria-label="add"
+              style={fabPositioning}>
+              <PlaylistAdd
+                onClick={() =>
+                  this.setState({
+                    redirect: `/competitions/${this.props.match.params.competitionId}/create-game`
+                  })
+                }
+              />
+            </Fab>
+          )}
+          no={() => null}
+        />
       </div>
     );
   }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addOrganisation } from "../../store/organisation/actions";
+import { headerSpacing } from "../../styles";
 
 class CreateOrganisation extends Component {
   state = {
@@ -29,7 +30,7 @@ class CreateOrganisation extends Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit} style={headerSpacing}>
         <input
           type="text"
           name="organisationName"
