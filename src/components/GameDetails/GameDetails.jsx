@@ -19,17 +19,12 @@ class GameDetails extends Component {
     }
   };
 
-  loadTeamGameDetails = (homeOrAway, teamData) => {
-    const teamScore =
-      homeOrAway === "home"
-        ? this.props.game.homeTeamScore
-        : this.props.game.awayTeamScore;
+  loadTeamGameDetails = (homeOrAway, name) => {
     const teamReceivedSpiritScore =
       homeOrAway === "home"
         ? this.props.game.homeTeamReceivedSpiritScore
         : this.props.game.awayTeamReceivedSpiritScore;
 
-    const { name } = teamData;
     return (
       <div>
         <ExpansionPanel>
@@ -58,17 +53,59 @@ class GameDetails extends Component {
     );
   };
 
-  render() {
-    console.log("render of game details", this.props);
+  loadScoreOrGameDetails = () => {
+    const {
+      homeTeamScore,
+      awayTeamScore,
+      location,
+      startTime,
+      lat,
+      lng
+    } = this.props.game;
+    const { date } = this.props.game.competitionDay;
 
+    return homeTeamScore ? (
+      <div>
+        <h2>{homeTeamScore}</h2>
+        <p>-</p>
+        <h2>{awayTeamScore}</h2>
+      </div>
+    ) : (
+      <div>
+        <Typography component="h2" variant="h6" style={{ margin: "20px auto" }}>
+          This game has not been played yet.
+        </Typography>
+        <Typography
+          component="h2"
+          variant="body1"
+          color="textSecondary"
+          style={{ marginBottom: "20px" }}>
+          <em>
+            <strong>When:</strong> {date}, {startTime.substring(0, 5)}
+          </em>
+          <br />
+          <em>
+            <strong>Where:</strong> {location}
+          </em>
+          <br />
+          <a
+            href={`http://maps.google.com/maps?q=${lat},${lng}`}
+            target="_blank"
+            rel="noopener noreferrer">
+            Look up location
+          </a>
+        </Typography>
+      </div>
+    );
+  };
+
+  render() {
     if (!Object.keys(this.props.game).length) return <div>No data</div>;
     return (
       <div style={headerSpacing}>
-        {this.loadTeamGameDetails("home", this.props.homeTeam)}
-        <h2>{this.props.game.homeTeamScore}</h2>
-        <p>-</p>
-        <h2>{this.props.game.awayTeamScore}</h2>
-        {this.loadTeamGameDetails("away", this.props.awayTeam)}
+        {this.loadTeamGameDetails("home", this.props.homeTeam.name)}
+        {this.loadScoreOrGameDetails()}
+        {this.loadTeamGameDetails("away", this.props.awayTeam.name)}
       </div>
     );
   }
