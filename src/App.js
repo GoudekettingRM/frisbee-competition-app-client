@@ -10,6 +10,7 @@ import CreateCompetition from "./components/CreateCompetition/CreateCompetition"
 import CompetitionDetails from "./components/CompetitionDetails/CompetitionDetails";
 import AddGame from "./components/Games/AddGame";
 import NavBar from "./components/Header/NavBar";
+import GameDetails from "./components/GameDetails/GameDetails";
 import "./App.css";
 
 function App() {
@@ -38,6 +39,11 @@ function App() {
           path="/competitions/:competitionId/create-game"
           exact
           component={AddGame}
+        />
+        <Route
+          path="/competitions/:competitionId/games/:gameId"
+          exact
+          component={GameDetails}
         />
       </Switch>
     </div>

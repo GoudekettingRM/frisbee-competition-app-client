@@ -8,7 +8,7 @@ import AddTeamForm from "./AddTeamForm";
 import Can from "../Can";
 import { getOneCompetition } from "../../store/competition/actions";
 import { headerSpacing, fabPositioning } from "../../styles";
-import GameCard from "./GameCard";
+import GameCard from "../GameDetails/GameCard";
 
 class CompetitionDetails extends Component {
   state = {

@@ -1,7 +1,7 @@
 import { SET_GAME_DETAILS } from "./actions";
 
 const initialState = {
-  game: {},
+  data: {},
   homeTeam: {},
   awayTeam: {}
 };
@@ -9,11 +9,9 @@ const initialState = {
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case SET_GAME_DETAILS:
-      console.log("payload test:", payload);
-
       return {
         ...state,
-        game: payload.game,
+        data: payload.game,
         homeTeam: payload.homeTeam,
         awayTeam: payload.awayTeam
       };
