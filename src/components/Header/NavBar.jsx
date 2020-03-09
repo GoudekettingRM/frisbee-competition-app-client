@@ -6,7 +6,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuButton from "./MenuButton";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -44,7 +44,12 @@ const pageTitle = currentProps => {
 };
 
 const NavBar = props => {
+  const token = useSelector(state => state.session.jwt);
+  const user = useSelector(state => state.session.user);
+  const selectedCompetition = useSelector(state => state.competitions.selected);
   const classes = useStyles();
+
+  console.log("selected competition", selectedCompetition);
 
   return (
     <React.Fragment>
@@ -60,9 +65,9 @@ const NavBar = props => {
             ]}
           />
           <div className={classes.grow} />
-          <h3>{pageTitle(props)}</h3>
+          <h3>{pageTitle({ ...props, user, selectedCompetition })}</h3>
           <div className={classes.grow} />
-          {!props.token ? (
+          {!token ? (
             <MenuButton
               iconType={AccountCircle}
               edgePosition="end"
@@ -89,10 +94,4 @@ const NavBar = props => {
   );
 };
 
-const mapStateToProps = state => ({
-  token: state.session.jwt,
-  user: state.session.user,
-  selectedCompetition: state.competitions.selected
-});
-
-export default withRouter(connect(mapStateToProps)(NavBar));
+export default withRouter(NavBar);

@@ -11,6 +11,7 @@ import isFuture from "date-fns/isFuture";
 import { getOneGame } from "../../store/game/actions";
 import { headerSpacing } from "../../styles";
 import Can from "../Can";
+import ScoreForm from "./ScoreForm";
 
 class GameDetails extends Component {
   state = {
@@ -36,6 +37,31 @@ class GameDetails extends Component {
     this.setState({
       editMode: !this.state.editMode
     });
+  };
+
+  onSubmit = event => {
+    event.preventDefault();
+    console.log("Submitting!");
+  };
+
+  renderEditForm = userRoleId => {
+    if (this.state.editMode) {
+      return (
+        <Can
+          roleId={userRoleId}
+          perform="games:update"
+          yes={() => {
+            return (
+              <div>
+                <ScoreForm cancel={this.toggleEdit} submit={this.onSubmit} />
+              </div>
+            );
+          }}
+          no={() => null}
+        />
+      );
+    }
+    return null;
   };
 
   loadTeamGameDetails = (homeOrAway, name) => {
@@ -126,19 +152,17 @@ class GameDetails extends Component {
     );
   };
 
-  scoreOrUpdateGame = () => {
+  scoreOrUpdateGameButton = userRoleId => {
     const { date } = this.props.game.competitionDay;
     const { homeTeamScore, awayTeamScore } = this.props.game;
-    const userRoleId = this.props.user.organisation
-      ? this.props.user.organisation.roleId
-      : this.props.user.roleId;
     return (
       <Can
         roleId={userRoleId}
         perform="games:update"
         yes={() => {
           return (
-            !isFuture(parseISO(date)) && (
+            !isFuture(parseISO(date)) &&
+            !this.state.editMode && (
               <Button
                 color="primary"
                 type="button"
@@ -157,12 +181,16 @@ class GameDetails extends Component {
   render() {
     // console.log("Render of game detail:", this.props);
     if (!Object.keys(this.props.game).length) return <div>No data</div>;
+    const userRoleId = this.props.user.organisation
+      ? this.props.user.organisation.roleId
+      : this.props.user.roleId;
     return (
       <div style={headerSpacing}>
         {this.loadTeamGameDetails("home", this.props.homeTeam.name)}
         {this.loadScoreOrGameDetails()}
         {this.loadTeamGameDetails("away", this.props.awayTeam.name)}
-        {this.scoreOrUpdateGame()}
+        {this.scoreOrUpdateGameButton(userRoleId)}
+        {this.renderEditForm(userRoleId)}
       </div>
     );
   }

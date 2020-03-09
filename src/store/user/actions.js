@@ -5,9 +5,10 @@ export const SET_SESSION = "users/SET_SESSION_DATA";
 export const REMOVE_SESSION = "users/REMOVE_SESSION_DATA";
 export const UPDATE_USER_DATA = "users/UPDATE_USER_DATA";
 
-export function updateUser(updateData, token) {
+export function updateUser(updateData) {
   return async (dispatch, getState) => {
     try {
+      const token = getState().session.jwt;
       const authorization = authHeader(token);
       const updatedUserData = await axios.patch(
         `${baseUrl}/users`,

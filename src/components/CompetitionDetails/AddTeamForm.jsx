@@ -16,9 +16,9 @@ class AddTeamForm extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { name } = this.state;
-    const { organisationId, competitionId, token } = this.props;
+    const { organisationId, competitionId } = this.props;
 
-    this.props.addTeam(name, organisationId, competitionId, token);
+    this.props.addTeam({ name, organisationId, competitionId });
 
     this.props.toggleForm();
     this.setState({
@@ -54,7 +54,6 @@ class AddTeamForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  token: state.session.jwt,
   selectedCompetition: state.competitions.selected
 });
 

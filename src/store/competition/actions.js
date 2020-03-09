@@ -8,9 +8,10 @@ export const ADD_COMPETITION_TO_USER =
   "competitions/ADD_COMPETITION_TO_USER_DATA";
 export const SET_SELECTED_COMPETITION = "competitions/SET_SELECTED_COMPETITION";
 
-export function addGame(gameData, token) {
+export function addGame(gameData) {
   return async (dispatch, getState) => {
     try {
+      const token = getState().session.jwt;
       const authorization = authHeader(token);
       const newGame = await axios.post(
         `${baseUrl}/games`,
@@ -28,14 +29,14 @@ export function getOneCompetition(id) {
   return async (dispatch, getState) => {
     try {
       const competition = await axios.get(`${baseUrl}/competitions/${id}`);
-      dispatch(setSelectedCompetitionToStore(competition.data));
+      dispatch(createSetCompetitionAction(competition.data));
     } catch (error) {
       throw error;
     }
   };
 }
 
-export function setSelectedCompetitionToStore(competition) {
+export function createSetCompetitionAction(competition) {
   return {
     type: SET_SELECTED_COMPETITION,
     payload: competition
@@ -60,9 +61,10 @@ function setCompetitionsToStore(competitions) {
   };
 }
 
-export function addNewCompetition(competitionData, token) {
+export function addNewCompetition(competitionData) {
   return async (dispatch, getState) => {
     try {
+      const token = getState().session.jwt;
       const authorization = authHeader(token);
       if (!competitionData.organisationId) {
         console.error(

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateUser } from "../../store/user/actions";
 import { updateOrganisation } from "../../store/organisation/actions";
 
 const DataCard = props => {
+  const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
   const [valueName] = useState(props.name);
   const [dataValue, setDataValue] = useState(props.value);
@@ -15,9 +16,9 @@ const DataCard = props => {
   const onSubmit = event => {
     event.preventDefault();
     if (props.about === "user") {
-      props.updateUser({ [valueName]: dataValue }, props.token);
+      dispatch(updateUser({ [valueName]: dataValue }));
     } else if (props.about === "organisation") {
-      props.updateOrganisation({ [valueName]: dataValue }, props.token);
+      dispatch(updateOrganisation({ [valueName]: dataValue }));
     }
     toggleEdit();
   };
@@ -54,10 +55,4 @@ const DataCard = props => {
   );
 };
 
-const mapStateToProps = state => ({
-  token: state.session.jwt
-});
-
-const mapDispatchToProps = { updateUser, updateOrganisation };
-
-export default connect(mapStateToProps, mapDispatchToProps)(DataCard);
+export default DataCard;

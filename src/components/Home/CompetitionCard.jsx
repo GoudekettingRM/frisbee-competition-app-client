@@ -1,17 +1,15 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { setSelectedCompetitionToStore } from "../../store/competition/actions";
+import { createSetCompetitionAction } from "../../store/competition/actions";
 import "./competitionCard.css";
 
 const CompetitionCard = props => {
+  const dispatch = useDispatch();
   const { name, startDate, endDate, id } = props.competition;
 
   const setSelectedCompetition = () => {
-    const setCompetitionAction = setSelectedCompetitionToStore(
-      props.competition
-    );
-    props.dispatch(setCompetitionAction);
+    dispatch(createSetCompetitionAction(props.competition));
   };
 
   return (
@@ -30,4 +28,4 @@ const CompetitionCard = props => {
   );
 };
 
-export default connect()(CompetitionCard);
+export default CompetitionCard;

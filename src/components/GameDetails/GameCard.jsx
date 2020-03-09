@@ -4,7 +4,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import { Redirect } from "react-router";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setGameDetails } from "../../store/game/actions";
 import "./gameCard.css";
 
@@ -34,6 +34,7 @@ const loadCardContent = (homeOrAway, teamName, teamScore) => {
 
 const GameCard = props => {
   const [redirect, setRedirect] = useState(null);
+  const dispatch = useDispatch();
   const {
     homeTeamScore,
     awayTeamScore,
@@ -46,7 +47,7 @@ const GameCard = props => {
   } = props.data;
 
   const goToGameDetails = () => {
-    props.setGameDetails(props.data);
+    dispatch(setGameDetails(props.data));
     setRedirect(`/competitions/${competitionId}/games/${id}`);
   };
 
@@ -65,8 +66,4 @@ const GameCard = props => {
   );
 };
 
-const mapDispatchToProps = {
-  setGameDetails
-};
-
-export default connect(null, mapDispatchToProps)(GameCard);
+export default GameCard;
