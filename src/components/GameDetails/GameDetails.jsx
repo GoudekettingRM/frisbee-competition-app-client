@@ -5,10 +5,18 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Button from "@material-ui/core/Button";
+import parseISO from "date-fns/parseISO";
+import isFuture from "date-fns/isFuture";
 import { getOneGame } from "../../store/game/actions";
 import { headerSpacing } from "../../styles";
+import Can from "../Can";
 
 class GameDetails extends Component {
+  state = {
+    editMode: false
+  };
+
   componentDidMount = () => {
     if (!Object.keys(this.props.game).length) {
       console.log(
@@ -17,6 +25,17 @@ class GameDetails extends Component {
       const gameId = this.props.match.params.gameId;
       this.props.getOneGame(gameId);
     }
+  };
+
+  toggleEdit = () => {
+    console.log(
+      `Edit mode is: ${this.state.editMode} and will be: ${!this.state
+        .editMode}`
+    );
+
+    this.setState({
+      editMode: !this.state.editMode
+    });
   };
 
   loadTeamGameDetails = (homeOrAway, name) => {
@@ -91,21 +110,59 @@ class GameDetails extends Component {
           <a
             href={`http://maps.google.com/maps?q=${lat},${lng}`}
             target="_blank"
-            rel="noopener noreferrer">
-            Look up location
+            rel="noopener noreferrer"
+            style={{ textDecoration: "none" }}>
+            <Button
+              color="primary"
+              type="button"
+              style={{
+                margin: "10px"
+              }}>
+              Look up location
+            </Button>
           </a>
         </Typography>
       </div>
     );
   };
 
+  scoreOrUpdateGame = () => {
+    const { date } = this.props.game.competitionDay;
+    const { homeTeamScore, awayTeamScore } = this.props.game;
+    const userRoleId = this.props.user.organisation
+      ? this.props.user.organisation.roleId
+      : this.props.user.roleId;
+    return (
+      <Can
+        roleId={userRoleId}
+        perform="games:update"
+        yes={() => {
+          return (
+            !isFuture(parseISO(date)) && (
+              <Button
+                color="primary"
+                type="button"
+                style={{ margin: "10px" }}
+                onClick={this.toggleEdit}>
+                {!homeTeamScore || !awayTeamScore ? "Score game" : "Edit score"}
+              </Button>
+            )
+          );
+        }}
+        no={() => null}
+      />
+    );
+  };
+
   render() {
+    // console.log("Render of game detail:", this.props);
     if (!Object.keys(this.props.game).length) return <div>No data</div>;
     return (
       <div style={headerSpacing}>
         {this.loadTeamGameDetails("home", this.props.homeTeam.name)}
         {this.loadScoreOrGameDetails()}
         {this.loadTeamGameDetails("away", this.props.awayTeam.name)}
+        {this.scoreOrUpdateGame()}
       </div>
     );
   }
@@ -114,7 +171,8 @@ class GameDetails extends Component {
 const mapStateToProps = state => ({
   game: state.game.data,
   homeTeam: state.game.data.homeTeam,
-  awayTeam: state.game.data.awayTeam
+  awayTeam: state.game.data.awayTeam,
+  user: state.session.user
 });
 
 const mapDispatchToProps = { getOneGame };
