@@ -19,14 +19,6 @@ class MenuButton extends React.Component {
     this.setState({ anchorEl: null });
   };
 
-  /* props: 
-  iconType: AccountCircle,
-  edgePosition: "start/end/"""
-  class: classes.tabLink
-  item: 
-  {label: "Profile",
-  path: "/profile"}
-  */
   render() {
     const { anchorEl } = this.state;
     const { edgePosition } = this.props;
