@@ -35,30 +35,24 @@ const loadCardContent = (homeOrAway, teamName, teamScore) => {
 const GameCard = props => {
   const [redirect, setRedirect] = useState(null);
   const {
-    homeTeamId,
     homeTeamScore,
-    awayTeamId,
     awayTeamScore,
     location,
     startTime,
     competitionId,
-    id
+    id,
+    homeTeam,
+    awayTeam
   } = props.data;
-  const homeTeam = props.teams.find(team => team.id === homeTeamId);
-  const awayTeam = props.teams.find(team => team.id === awayTeamId);
 
   const goToGameDetails = () => {
-    props.setGameDetails({ game: props.data, homeTeam, awayTeam });
+    props.setGameDetails(props.data);
     setRedirect(`/competitions/${competitionId}/games/${id}`);
   };
 
   if (redirect) return <Redirect to={redirect} />;
   return (
-    <Card
-      className="game"
-      onClick={() =>
-        goToGameDetails(setRedirect, { game: props.data, homeTeam, awayTeam })
-      }>
+    <Card className="game" onClick={goToGameDetails}>
       {loadCardContent("home", homeTeam.name, homeTeamScore)}
       <CardContent className="versus">
         <span>vs.</span>

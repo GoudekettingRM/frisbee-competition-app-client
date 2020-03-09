@@ -8,21 +8,22 @@ export function getOneGame(id) {
     try {
       const game = await axios.get(`${baseUrl}/games/${id}`);
       console.log("Game test in game actions", game);
+      dispatch(setGameDetailsAction(game.data));
     } catch (error) {
       throw error;
     }
   };
 }
 
-export function setGameDetails(data) {
+export function setGameDetails(gameData) {
   return (dispatch, getState) => {
-    dispatch(setGameDetailsAction(data));
+    dispatch(setGameDetailsAction(gameData));
   };
 }
 
-function setGameDetailsAction(data) {
+function setGameDetailsAction(gameData) {
   return {
     type: SET_GAME_DETAILS,
-    payload: data
+    payload: gameData
   };
 }
