@@ -1,5 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 import NewCompetitionDay from "./NewCompetitionDay";
 import { addNewCompetition } from "../../store/competition/actions";
 import Can from "../Can";
@@ -8,11 +13,11 @@ import { headerSpacing } from "../../styles";
 class CreateCompetition extends Component {
   state = {
     name: "",
-    startDate: "",
-    endDate: "",
-    teamRegistrationDeadline: "",
-    seedingDeadline: "",
-    playersListDeadline: "",
+    startDate: null,
+    endDate: null,
+    teamRegistrationDeadline: null,
+    seedingDeadline: null,
+    playersListDeadline: null,
     competitionDays: [],
     competitionDayDates: []
   };
@@ -24,6 +29,18 @@ class CreateCompetition extends Component {
   onChange = event => {
     this.setState({
       [event.target.name]: event.target.value
+    });
+  };
+  onChangeDate = (newValue, name) => {
+    const month =
+      newValue.getMonth() + 1 < 10
+        ? "0" + (newValue.getMonth() + 1)
+        : newValue.getMonth() + 1;
+    const newDate = `${newValue.getFullYear()}-${month}-${newValue.getDate()}`;
+    console.log("in onChangeDate", newDate);
+
+    this.setState({
+      [name]: newDate
     });
   };
 
@@ -129,7 +146,20 @@ class CreateCompetition extends Component {
     });
   };
 
+  dateInput = (label, name) => {
+    return (
+      <KeyboardDatePicker
+        margin="normal"
+        label={label}
+        format="dd/MM/yyyy"
+        value={this.state[name]}
+        onChange={newDate => this.onChangeDate(newDate, name)}
+      />
+    );
+  };
+
   renderCompetitionForm = () => {
+    // const today = new Date();
     return (
       <form onSubmit={this.onSubmit} style={headerSpacing}>
         <h1>Create new competition</h1>
@@ -141,43 +171,16 @@ class CreateCompetition extends Component {
             value={this.state.name}
             onChange={this.onChange}
           />
-          <label htmlFor="startDate">Start date</label>
-          <input
-            type="date"
-            name="startDate"
-            value={this.state.startDate}
-            onChange={this.onChange}
-          />
-          <label htmlFor="endDate">End date</label>
-          <input
-            type="date"
-            name="endDate"
-            value={this.state.endDate}
-            onChange={this.onChange}
-          />
-          <label htmlFor="teamRegistrationDeadline">
-            Team registration deadline
-          </label>
-          <input
-            type="date"
-            name="teamRegistrationDeadline"
-            value={this.state.teamRegistrationDeadline}
-            onChange={this.onChange}
-          />
-          <label htmlFor="seedingDeadline">Seeding deadline</label>
-          <input
-            type="date"
-            name="seedingDeadline"
-            value={this.state.seedingDeadline}
-            onChange={this.onChange}
-          />
-          <label htmlFor="playersListDeadline">Player's list deadline</label>
-          <input
-            type="date"
-            name="playersListDeadline"
-            value={this.state.playersListDeadline}
-            onChange={this.onChange}
-          />
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            {this.dateInput("Pick start date", "startDate")}
+            {this.dateInput("Pick end date", "endDate")}
+            {this.dateInput(
+              "Pick registration deadline",
+              "teamRegistrationDeadline"
+            )}
+            {this.dateInput("Pick seeding deadline", "seedingDeadline")}
+            {this.dateInput("Pick player list deadline", "playersListDeadline")}
+          </MuiPickersUtilsProvider>
         </div>
         <button type="button" onClick={this.addCompetitionDayComponent}>
           +
