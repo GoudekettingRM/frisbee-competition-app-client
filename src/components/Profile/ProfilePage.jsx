@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Typography from "@material-ui/core/Typography";
 import DataCard from "./DataCard";
 import { headerSpacing } from "../../styles";
 
@@ -35,10 +36,12 @@ class ProfilePage extends Component {
         />
         {organisation && (
           <div>
-            <p>
-              You are the contact for an organisation. The organisation's
-              details are listed below.
-            </p>
+            <Typography
+              variant="h6"
+              component="h2"
+              style={{ margin: "20px 0 10px 0" }}>
+              Organisation details:
+            </Typography>
             <DataCard
               value={organisation.organisationName}
               name={"organisationName"}
