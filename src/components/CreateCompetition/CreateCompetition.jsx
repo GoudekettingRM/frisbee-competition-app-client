@@ -6,6 +6,8 @@ import {
 } from "@material-ui/pickers";
 import Button from "@material-ui/core/Button";
 import DateFnsUtils from "@date-io/date-fns";
+import { withStyles, Typography } from "@material-ui/core";
+import Paper from "@material-ui/core/Paper";
 import NewCompetitionDay from "./NewCompetitionDay";
 import { addNewCompetition } from "../../store/competition/actions";
 import Can from "../Can";
@@ -14,6 +16,13 @@ import { validCompetitionDates } from "../../validations/competitionValidations"
 import { Fab } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import TextField from "@material-ui/core/TextField";
+
+const styles = theme => ({
+  padding: {
+    marginTop: "70px",
+    padding: theme.spacing(0.75)
+  }
+});
 
 class CreateCompetition extends Component {
   state = {
@@ -115,43 +124,52 @@ class CreateCompetition extends Component {
   };
 
   renderCompetitionForm = () => {
+    const { classes } = this.props;
     return (
-      <form onSubmit={this.onSubmit} style={headerSpacing}>
-        <div>
-          <TextField
-            style={{ width: "223px" }}
-            name="name"
-            label="Competition name"
-            value={this.state.name}
-            onChange={this.onChange}
-          />
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            {this.dateInput("Pick start date", "startDate")}
-            {this.dateInput("Pick end date", "endDate")}
-            {this.dateInput(
-              "Pick registration deadline",
-              "teamRegistrationDeadline"
-            )}
-            {this.dateInput("Pick seeding deadline", "seedingDeadline")}
-            {this.dateInput("Pick player list deadline", "playersListDeadline")}
-          </MuiPickersUtilsProvider>
-        </div>
-        <h4 style={{ margin: "30px 0 -10px 0", color: "grey" }}>
-          Competition days
-        </h4>
-        <Fab
-          color="secondary"
-          style={{ position: "absolute", right: 20 }}
-          size="small"
-          type="button"
-          onClick={this.addCompetitionDayComponent}>
-          <AddIcon />
-        </Fab>
-        {this.state.competitionDays.filter(day => day !== "removed")}
-        <Button color="primary" type="submit" style={{ margin: "10px" }}>
-          Create
-        </Button>
-      </form>
+      <Paper className={classes.padding}>
+        <form onSubmit={this.onSubmit}>
+          <div>
+            <TextField
+              style={{ width: "223px" }}
+              name="name"
+              label="Competition name"
+              value={this.state.name}
+              onChange={this.onChange}
+            />
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              {this.dateInput("Pick start date", "startDate")}
+              {this.dateInput("Pick end date", "endDate")}
+              {this.dateInput(
+                "Pick registration deadline",
+                "teamRegistrationDeadline"
+              )}
+              {this.dateInput("Pick seeding deadline", "seedingDeadline")}
+              {this.dateInput(
+                "Pick player list deadline",
+                "playersListDeadline"
+              )}
+            </MuiPickersUtilsProvider>
+          </div>
+          <Typography
+            variant="h6"
+            component="h2"
+            style={{ margin: "20px 0 0 0" }}>
+            Competition days
+          </Typography>
+          <Fab
+            color="secondary"
+            style={{ position: "absolute", right: 20 }}
+            size="small"
+            type="button"
+            onClick={this.addCompetitionDayComponent}>
+            <AddIcon />
+          </Fab>
+          {this.state.competitionDays.filter(day => day !== "removed")}
+          <Button color="primary" type="submit" style={{ margin: "10px" }}>
+            Create
+          </Button>
+        </form>
+      </Paper>
     );
   };
 
@@ -185,4 +203,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = { addNewCompetition };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateCompetition);
+export default withStyles(styles)(
+  connect(mapStateToProps, mapDispatchToProps)(CreateCompetition)
+);
