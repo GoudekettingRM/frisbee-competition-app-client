@@ -49,8 +49,6 @@ const NavBar = props => {
   const selectedCompetition = useSelector(state => state.competitions.selected);
   const classes = useStyles();
 
-  console.log("selected competition", selectedCompetition);
-
   return (
     <React.Fragment>
       <AppBar position="fixed" color="primary" className={classes.appBar}>

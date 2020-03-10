@@ -1,7 +1,24 @@
 import axios from "axios";
-import { baseUrl } from "../../api";
+import { baseUrl, authHeader } from "../../api";
 
 export const SET_GAME_DETAILS = "games/SET_SELECTED_GAME_DETAILS";
+
+export function addGame(gameData) {
+  return async (dispatch, getState) => {
+    try {
+      const token = getState().session.jwt;
+      const authorization = authHeader(token);
+      const newGame = await axios.post(
+        `${baseUrl}/games`,
+        gameData,
+        authorization
+      );
+      console.log("new game", newGame);
+    } catch (error) {
+      throw error;
+    }
+  };
+}
 
 export function getOneGame(id) {
   return async (dispatch, getState) => {

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Location from "./Location";
-import { getOneCompetition, addGame } from "../../store/competition/actions";
+import { getOneCompetition } from "../../store/competition/actions";
+import { addGame } from "../../store/game/actions";
 import { headerSpacing } from "../../styles";
 
 class AddGame extends Component {
