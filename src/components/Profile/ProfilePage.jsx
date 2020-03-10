@@ -6,13 +6,6 @@ import { headerSpacing } from "../../styles";
 
 class ProfilePage extends Component {
   render() {
-    // if (!Object.keys(this.props.user).length) {
-    //   return (
-    //     <div style={headerSpacing}>
-    //       You have to log in to look at your profile page.
-    //     </div>
-    //   );
-    // }
     const { firstName, lastName, email, organisation } = this.props.user;
     return (
       <div style={headerSpacing}>

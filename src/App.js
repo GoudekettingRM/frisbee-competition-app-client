@@ -16,7 +16,6 @@ import { useSelector } from "react-redux";
 
 function App() {
   const token = useSelector(state => state.session.jwt);
-  console.log("Token in app test:", token);
 
   const protectedRoutes = (Component, routerProps) => {
     return token ? <Component {...routerProps} /> : <Redirect to="/login" />;

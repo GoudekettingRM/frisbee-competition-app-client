@@ -20,9 +20,6 @@ class GameDetails extends Component {
 
   componentDidMount = () => {
     if (!Object.keys(this.props.game).length) {
-      console.log(
-        "I should get the game data! (component did mount of game details comp)"
-      );
       const gameId = this.props.match.params.gameId;
       this.props.getOneGame(gameId);
     }
@@ -39,12 +36,7 @@ class GameDetails extends Component {
     });
   };
 
-  onSubmit = event => {
-    event.preventDefault();
-    console.log("Submitting!");
-  };
-
-  renderEditForm = userRoleId => {
+  renderEditForm = (userRoleId, game) => {
     if (this.state.editMode) {
       return (
         <Can
@@ -53,7 +45,7 @@ class GameDetails extends Component {
           yes={() => {
             return (
               <div>
-                <ScoreForm cancel={this.toggleEdit} submit={this.onSubmit} />
+                <ScoreForm game={game} cancel={this.toggleEdit} />
               </div>
             );
           }}
@@ -184,13 +176,15 @@ class GameDetails extends Component {
     const userRoleId = this.props.user.organisation
       ? this.props.user.organisation.roleId
       : this.props.user.roleId;
+    const { game, homeTeam, awayTeam } = this.props;
+
     return (
       <div style={headerSpacing}>
-        {this.loadTeamGameDetails("home", this.props.homeTeam.name)}
+        {this.loadTeamGameDetails("home", homeTeam.name)}
         {this.loadScoreOrGameDetails()}
-        {this.loadTeamGameDetails("away", this.props.awayTeam.name)}
+        {this.loadTeamGameDetails("away", awayTeam.name)}
         {this.scoreOrUpdateGameButton(userRoleId)}
-        {this.renderEditForm(userRoleId)}
+        {this.renderEditForm(userRoleId, game)}
       </div>
     );
   }
