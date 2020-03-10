@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./components/Login-out/Login";
 import Home from "./components/Home/Home";
 import SignUpPlayer from "./components/SignUp/SignUpPlayer";
@@ -12,8 +12,15 @@ import AddGame from "./components/Games/AddGame";
 import NavBar from "./components/Header/NavBar";
 import GameDetails from "./components/GameDetails/GameDetails";
 import "./App.css";
+import { useSelector } from "react-redux";
 
 function App() {
+  const token = useSelector(state => state.session.jwt);
+  console.log("Token in app test:", token);
+
+  const protectedRoutes = (Component, routerProps) => {
+    return token ? <Component {...routerProps} /> : <Redirect to="/login" />;
+  };
   return (
     <div className="App">
       <NavBar />
@@ -21,29 +28,47 @@ function App() {
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/login" exact component={Login} />
-        <Route path="/logout" exact component={Logout} />
+        <Route
+          path="/logout"
+          exact
+          render={routerProps => protectedRoutes(Logout, routerProps)}
+        />
         <Route path="/signup" exact component={SignUpPlayer} />
         <Route
           path="/create-organisation"
           exact
-          component={CreateOrganisation}
+          render={routerProps =>
+            protectedRoutes(CreateOrganisation, routerProps)
+          }
         />
-        <Route path="/profile" exact component={ProfilePage} />
-        <Route path="/create-competition" exact component={CreateCompetition} />
+        <Route
+          path="/profile"
+          exact
+          render={routerProps => protectedRoutes(ProfilePage, routerProps)}
+        />
+        <Route
+          path="/create-competition"
+          exact
+          render={routerProps =>
+            protectedRoutes(CreateCompetition, routerProps)
+          }
+        />
         <Route
           path="/competitions/:competitionId"
           exact
-          component={CompetitionDetails}
+          render={routerProps =>
+            protectedRoutes(CompetitionDetails, routerProps)
+          }
         />
         <Route
           path="/competitions/:competitionId/create-game"
           exact
-          component={AddGame}
+          render={routerProps => protectedRoutes(AddGame, routerProps)}
         />
         <Route
           path="/competitions/:competitionId/games/:gameId"
           exact
-          component={GameDetails}
+          render={routerProps => protectedRoutes(GameDetails, routerProps)}
         />
       </Switch>
     </div>

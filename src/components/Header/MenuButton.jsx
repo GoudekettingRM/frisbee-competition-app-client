@@ -1,8 +1,6 @@
 import React from "react";
-// import AccountCircle from "material-ui-icons/AccountCircle";
 import Menu from "@material-ui/core/Menu";
 import IconButton from "@material-ui/core/IconButton";
-// import { withStyles } from "material-ui/styles";
 import Tab from "@material-ui/core/Tab";
 import { Link } from "react-router-dom";
 
