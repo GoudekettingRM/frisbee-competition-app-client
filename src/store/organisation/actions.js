@@ -6,9 +6,10 @@ export const UPDATE_USER_ORGANISATION =
 export const ADD_ORGANISATION_TO_USER_DATA =
   "organisations/ADD_NEW_ORGANISATION_TO_USER";
 
-export function updateOrganisation(updateData, token) {
+export function updateOrganisation(updateData) {
   return async (dispatch, getState) => {
     try {
+      const token = getState().session.jwt;
       const authorization = authHeader(token);
       const updatedOrganisationData = await axios.patch(
         `${baseUrl}/organisations`,
@@ -29,17 +30,16 @@ function updateOrganisationAction(updateData) {
   };
 }
 
-export function addOrganisation(organsationData, token) {
+export function addOrganisation(organsationData) {
   return async (dispatch, getState) => {
     try {
+      const token = getState().session.jwt;
       const authorization = authHeader(token);
       const newOrganisation = await axios.post(
         `${baseUrl}/organisations`,
         organsationData,
         authorization
       );
-      console.log("New organisation created test", newOrganisation);
-
       dispatch(
         updateUserWithNewOrganisation(newOrganisation.data.newOrganisation)
       );

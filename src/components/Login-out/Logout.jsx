@@ -1,31 +1,38 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import { Redirect } from "react-router";
 import { logoutAction } from "../../store/user/actions";
 import { headerSpacing } from "../../styles";
 
-class Logout extends Component {
-  onSubmit = event => {
+const Logout = () => {
+  const [redirect, setRedirect] = useState(null);
+  const token = useSelector(state => state.session.jwt);
+  const dispatch = useDispatch();
+
+  const onSubmit = event => {
     event.preventDefault();
-    this.props.dispatch(logoutAction());
+    setRedirect("/login");
+    dispatch(logoutAction());
   };
 
-  render() {
-    if (!this.props.token) {
-      setTimeout(() => {
-        this.props.history.push("/login");
-      }, 500);
-      return <div> Redirecting...</div>;
-    }
-    return (
-      <form onSubmit={this.onSubmit} style={headerSpacing}>
-        <button type="submit">Log out</button>
-      </form>
-    );
+  if (!token) {
+    return <Redirect to={redirect} />;
   }
-}
+  return (
+    <form onSubmit={onSubmit} style={headerSpacing}>
+      <Grid container justify="center" style={{ marginTop: "10px" }}>
+        <Button
+          type="submit"
+          variant="outlined"
+          color="primary"
+          style={{ textTransform: "none" }}>
+          Logout
+        </Button>
+      </Grid>
+    </form>
+  );
+};
 
-const mapStateToProps = state => ({
-  token: state.session.jwt
-});
-
-export default connect(mapStateToProps)(Logout);
+export default Logout;

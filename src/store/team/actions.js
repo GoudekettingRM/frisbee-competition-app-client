@@ -3,14 +3,10 @@ import { baseUrl, authHeader } from "../../api";
 
 export const ADD_TEAM_TO_COMPETITION = "teams/ADD_NEW_TEAM_TO_COMPETITION";
 
-export function addTeam(name, organisationId, competitionId, token) {
+export function addTeam(newTeamData) {
   return async (dispatch, getState) => {
     try {
-      const newTeamData = {
-        name,
-        organisationId,
-        competitionId
-      };
+      const token = getState().session.jwt;
       const authorization = authHeader(token);
       const newTeam = await axios.post(
         `${baseUrl}/teams`,

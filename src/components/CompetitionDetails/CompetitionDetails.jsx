@@ -8,6 +8,7 @@ import AddTeamForm from "./AddTeamForm";
 import Can from "../Can";
 import { getOneCompetition } from "../../store/competition/actions";
 import { headerSpacing, fabPositioning } from "../../styles";
+import GameCard from "../GameDetails/GameCard";
 
 class CompetitionDetails extends Component {
   state = {
@@ -75,7 +76,7 @@ class CompetitionDetails extends Component {
   };
 
   render() {
-    const { competitionDays, teams } = this.props.competition;
+    const { competitionDays, teams, games } = this.props.competition;
     const { organisation } = this.props.user;
     const userRoleId = organisation
       ? organisation.roleId
@@ -129,6 +130,14 @@ class CompetitionDetails extends Component {
           )}
           no={() => null}
         />
+        <div>
+          <h3>Games:</h3>
+          {games &&
+            teams &&
+            games.map(game => (
+              <GameCard data={game} teams={teams} key={game.id} />
+            ))}
+        </div>
       </div>
     );
   }

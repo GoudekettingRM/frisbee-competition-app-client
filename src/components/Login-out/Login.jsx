@@ -1,12 +1,29 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withStyles } from "@material-ui/core";
+import Paper from "@material-ui/core/Paper";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import { Redirect } from "react-router";
 import { login } from "../../store/user/actions";
 import { headerSpacing } from "../../styles";
+
+const styles = theme => ({
+  margin: {
+    margin: theme.spacing(2)
+  },
+  padding: {
+    marginTop: "80px",
+    padding: theme.spacing(1)
+  }
+});
 
 class Login extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    redirect: null
   };
 
   onChange = event => {
@@ -20,35 +37,81 @@ class Login extends Component {
     this.props.login(this.state);
     this.setState({
       email: "",
-      password: ""
+      password: "",
+      redirect: "/"
     });
   };
 
   render() {
-    if (this.props.token) {
-      setTimeout(() => {
-        this.props.history.push("/");
-      }, 500);
-      return <div>Redirecting... </div>;
-    }
+    const { classes, token } = this.props;
+    const { redirect } = this.state;
+
+    if (redirect) return <Redirect to={redirect} />;
+
+    if (token && !redirect)
+      return <div style={headerSpacing}>Login successful </div>;
+
     return (
-      <form onSubmit={this.onSubmit} style={headerSpacing}>
-        <input
-          type="text"
-          name="email"
-          placeholder="Enter e-mail address"
-          value={this.state.email}
-          onChange={this.onChange}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter password"
-          value={this.state.password}
-          onChange={this.onChange}
-        />
-        <button type="submit">Log in</button>
-      </form>
+      <Paper className={classes.padding}>
+        <form className={classes.margin} onSubmit={this.onSubmit}>
+          <Grid container spacing={8} alignItems="flex-end">
+            <Grid item md={true} sm={true} xs={true}>
+              <TextField
+                id="email"
+                label="E - mail"
+                type="email"
+                name="email"
+                fullWidth
+                autoFocus
+                required
+                onChange={this.onChange}
+              />
+            </Grid>
+          </Grid>
+          <Grid container spacing={8} alignItems="flex-end">
+            <Grid item md={true} sm={true} xs={true}>
+              <TextField
+                id="password"
+                label="Password"
+                type="password"
+                name="password"
+                fullWidth
+                required
+                onChange={this.onChange}
+              />
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            alignItems="center"
+            justify="center"
+            style={{ paddingTop: "20px" }}>
+            <Grid item>
+              <span style={{ fontSize: "0.875rem" }}>Not a member ?</span>
+              <Button
+                type="button"
+                disableFocusRipple
+                style={{ textTransform: "none" }}
+                variant="text"
+                color="primary"
+                onClick={() =>
+                  this.setState({ ...this.state, redirect: "/signup" })
+                }>
+                Sign up
+              </Button>
+            </Grid>
+          </Grid>
+          <Grid container justify="center" style={{ marginTop: "10px" }}>
+            <Button
+              type="submit"
+              variant="outlined"
+              color="primary"
+              style={{ textTransform: "none" }}>
+              Login
+            </Button>
+          </Grid>
+        </form>
+      </Paper>
     );
   }
 }
@@ -59,4 +122,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = { login };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withStyles(styles)(
+  connect(mapStateToProps, mapDispatchToProps)(Login)
+);

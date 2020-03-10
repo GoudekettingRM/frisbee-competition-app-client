@@ -19,7 +19,7 @@ class CreateOrganisation extends Component {
   onSubmit = event => {
     event.preventDefault();
 
-    this.props.addOrganisation(this.state, this.props.token);
+    this.props.addOrganisation(this.state);
 
     this.setState({
       organisationName: "",
