@@ -3,12 +3,17 @@ import { withStyles } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
+import TextField from "@material-ui/core/TextField";
 import { GameScoreCard } from "./GameScoreCard";
 import { SpiritItem } from "./SpiritItem";
+import { scoreGame } from "../../store/game/actions";
 
 const styles = theme => ({
   padding: {
     padding: theme.spacing(1)
+  },
+  margin: {
+    margin: "30px 0"
   }
 });
 
@@ -26,7 +31,7 @@ class ScoreForm extends Component {
     PASCComment: "",
     COMMScore: 2,
     COMMComment: "",
-    GeneralComment: ""
+    generalComment: ""
   };
 
   onChange = event => {
@@ -38,33 +43,39 @@ class ScoreForm extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { homeTeamScore, awayTeamScore } = this.state;
-    console.log("Hello from submit of scoreform", this.state);
     if (homeTeamScore === undefined || awayTeamScore === undefined) {
       alert("You have to enter a score for both teams.");
       return null;
     }
-    console.log("Lets send the data to the backend.");
+    this.props.scoreGame(this.state, this.props.game.id);
   };
+
+  renderButtons = () => {
+    return (
+      <div>
+        <Button color="primary" style={{ margin: "10px" }} type="submit">
+          Submit
+        </Button>
+        <Button
+          type="button"
+          color="default"
+          style={{ margin: "10px" }}
+          onClick={this.props.cancel}>
+          Cancel
+        </Button>
+      </div>
+    );
+  };
+
   render() {
-    const { classes, cancel } = this.props;
+    const { classes } = this.props;
     const homeTeam = this.props.game.homeTeam.name;
     const awayTeam = this.props.game.awayTeam.name;
 
     return (
       <Paper className={classes.padding}>
         <form onSubmit={this.onSubmit}>
-          <div>
-            <Button color="primary" style={{ margin: "10px" }} type="submit">
-              Submit
-            </Button>
-            <Button
-              type="button"
-              color="default"
-              style={{ margin: "10px" }}
-              onClick={cancel}>
-              Cancel
-            </Button>
-          </div>
+          {this.renderButtons()}
           <div>
             <GameScoreCard
               homeTeam={homeTeam}
@@ -72,7 +83,7 @@ class ScoreForm extends Component {
               awayTeam={awayTeam}
             />
           </div>
-          <div style={{ margin: "30px 0" }}>
+          <div className={classes.margin}>
             <SpiritItem
               label={"Rules, Knowledge & Use"}
               scoreName={"RKUScore"}
@@ -109,10 +120,24 @@ class ScoreForm extends Component {
               change={this.onChange}
             />
           </div>
+          <TextField
+            multiline
+            name="generalComment"
+            label="Enter comment"
+            rows="4"
+            rowsMax="4"
+            value={this.state.generalComment}
+            onChange={this.onChange}
+          />
+          {this.renderButtons()}
         </form>
       </Paper>
     );
   }
 }
 
-export default withStyles(styles)(connect()(ScoreForm));
+const mapDispatchToProps = {
+  scoreGame
+};
+
+export default withStyles(styles)(connect(null, mapDispatchToProps)(ScoreForm));

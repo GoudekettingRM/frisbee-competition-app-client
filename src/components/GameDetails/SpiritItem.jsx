@@ -5,7 +5,8 @@ import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import AddCommentIcon from "@material-ui/icons/AddComment";
 import CloseIcon from "@material-ui/icons/Close";
-import { TextField, makeStyles } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   margin: {
@@ -67,6 +68,8 @@ export const SpiritItem = props => {
       {addComment && (
         <div>
           <TextField
+            multiline
+            rowsMax="5"
             name={commentName}
             label="Enter comment"
             value={comment}
