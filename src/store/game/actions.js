@@ -29,7 +29,7 @@ export function addGame(gameData) {
         gameData,
         authorization
       );
-      console.log("new game", newGame);
+      // console.log("new game", newGame);
     } catch (error) {
       throw error;
     }
@@ -40,7 +40,7 @@ export function getOneGame(id) {
   return async (dispatch, getState) => {
     try {
       const game = await axios.get(`${baseUrl}/games/${id}`);
-      console.log("Game test in game actions", game);
+      // console.log("Game test in game actions", game);
       dispatch(setGameDetailsAction(game.data));
     } catch (error) {
       throw error;

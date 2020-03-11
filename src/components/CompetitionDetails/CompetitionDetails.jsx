@@ -82,6 +82,9 @@ class CompetitionDetails extends Component {
       : this.props.user.roleId;
     const organisationId = organisation ? organisation.id : 0;
 
+    console.log("games test in comp details render", games);
+    console.log("teams test in comp details render", teams);
+
     return (
       <div style={headerSpacing}>
         {this.renderCompetitionDetails()}
