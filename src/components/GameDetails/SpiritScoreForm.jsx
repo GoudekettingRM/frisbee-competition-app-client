@@ -35,8 +35,7 @@ export class SpiritScoreForm extends Component {
     PASCComment: "",
     COMMScore: 2,
     COMMComment: "",
-    generalComment: "",
-    teamSwitch: false
+    generalComment: ""
   };
 
   onChange = event => {
@@ -47,22 +46,13 @@ export class SpiritScoreForm extends Component {
 
   onSubmit = async event => {
     event.preventDefault();
-    const { game, user } = this.props;
-    const { homeTeamId, id } = game;
-    const { teamSwitch } = this.state;
-
-    const spiritScoreForHomeOrAway =
-      user.roleId === superAdmin
-        ? teamSwitch
-          ? "away"
-          : "home"
-        : homeTeamId === user.teamId
-        ? "away"
-        : "home";
+    const { game, spiritScoreFor } = this.props;
+    const { id } = game;
 
     const spiritScoreData = {
       ...this.state,
-      spiritScoreFor: spiritScoreForHomeOrAway
+      spiritScoreFor,
+      gameId: id
     };
 
     this.props.addSpiritScore(spiritScoreData, id);
@@ -78,48 +68,17 @@ export class SpiritScoreForm extends Component {
       PASCComment: "",
       COMMScore: 2,
       COMMComment: "",
-      generalComment: "",
-      teamSwitch: false
+      generalComment: ""
     });
   };
 
   render() {
     const { classes } = this.props;
-    const { organisation, roleId } = this.props.user;
-    const userCanChooseForSpirit = organisation
-      ? organisation.roleId !== clubBoard
-        ? true
-        : false
-      : roleId === superAdmin
-      ? true
-      : false;
 
     return (
       <Paper className={classes.padding}>
         <form onSubmit={this.onSubmit} className={classes.minWidth}>
           <div>
-            {userCanChooseForSpirit && (
-              <Typography component="div">
-                Spirit score for:
-                <Grid
-                  component="label"
-                  container
-                  alignItems="center"
-                  spacing={2}>
-                  <Grid item>Home</Grid>
-                  <Grid item>
-                    <Switch
-                      value="teamSwitch"
-                      color="primary"
-                      onChange={() =>
-                        this.setState({ teamSwitch: !this.state.teamSwitch })
-                      }
-                    />
-                  </Grid>
-                  <Grid item>Away</Grid>
-                </Grid>
-              </Typography>
-            )}
             <SpiritItem
               label={"Rules, Knowledge & Use"}
               scoreName={"RKUScore"}
@@ -159,7 +118,7 @@ export class SpiritScoreForm extends Component {
           <TextField
             multiline
             name="generalComment"
-            label="Enter comment"
+            label="Comment on the game"
             rows="4"
             rowsMax="4"
             value={this.state.generalComment}
@@ -182,7 +141,8 @@ export class SpiritScoreForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.session.user
+  user: state.session.user,
+  game: state.game.data
 });
 
 const mapDispatchToProps = { addSpiritScore };

@@ -4,9 +4,11 @@ import { baseUrl, authHeader } from "../../api";
 export const SET_GAME_DETAILS = "games/SET_SELECTED_GAME_DETAILS";
 export const ADD_GAME_TO_COMPETITION = "games/ADD_GAME_TO_COMPETITION";
 
-export function addSpiritScore(spiritScoreData, gameId) {
+export function addSpiritScore(spiritScoreData) {
   return async (dispatch, getState) => {
     try {
+      console.log("Trying to send to /spirit-scores", spiritScoreData);
+
       const token = getState().session.jwt;
       const authorization = authHeader(token);
       const gameWithSpirit = await axios.post(
@@ -25,7 +27,9 @@ export function scoreGame(scores, gameId) {
   return async (dispatch, getState) => {
     try {
       const token = getState().session.jwt;
-      const authorization = authHeader(token);
+      const authorization = authHeader(token, { Scoring: true });
+      console.log("Authorization test:", authorization);
+
       const scoredGame = await axios.patch(
         `${baseUrl}/games/${gameId}`,
         scores,

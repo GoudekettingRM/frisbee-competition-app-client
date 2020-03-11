@@ -29,7 +29,7 @@ export const TeamGameDetails = props => {
       variant="body2"
       color="textSecondary"
       style={{ fontSize: "0.8rem", marginTop: "3px" }}>
-      <em>Not Given Yet</em>
+      <em>Not Received Yet</em>
     </Typography>
   );
 
@@ -60,7 +60,10 @@ export const TeamGameDetails = props => {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           {editSpirit ? (
-            <SpiritScoreForm toggleSpiritForm={toggleSpiritForm} />
+            <SpiritScoreForm
+              spiritScoreFor={homeOrAway}
+              toggleSpiritForm={toggleSpiritForm}
+            />
           ) : (
             <Typography align="left">
               <span>

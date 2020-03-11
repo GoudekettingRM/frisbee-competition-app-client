@@ -71,7 +71,7 @@ export const SpiritItem = props => {
             multiline
             rowsMax="5"
             name={commentName}
-            label="Enter comment"
+            label={`Add a comment`}
             value={comment}
             onChange={change}
           />

@@ -32,27 +32,8 @@ class GameDetails extends Component {
   renderScoreForm = userRoleId => {
     const { game, user } = this.props;
     const { homeTeamId, awayTeamId, homeTeamScore } = game;
-    if (this.state.scoring && !homeTeamScore) {
-      return (
-        <Can
-          roleId={userRoleId}
-          perform="games:update-score"
-          data={{
-            homeTeamId,
-            awayTeamId,
-            userTeamId: user.teamId
-          }}
-          yes={() => {
-            return (
-              <div>
-                <ScoreForm game={game} toggleScoreForm={this.toggleScoreForm} />
-              </div>
-            );
-          }}
-          no={() => null}
-        />
-      );
-    } else if (this.state.scoring) {
+    if (this.state.scoring) {
+      const scoresPresent = homeTeamScore ? true : false;
       return (
         <Can
           roleId={userRoleId}
@@ -68,7 +49,7 @@ class GameDetails extends Component {
                 <ScoreForm
                   game={game}
                   toggleScoreForm={this.toggleScoreForm}
-                  scoresPresent={true}
+                  scoresPresent={scoresPresent}
                 />
               </div>
             );
@@ -76,8 +57,9 @@ class GameDetails extends Component {
           no={() => null}
         />
       );
+    } else {
+      return null;
     }
-    return null;
   };
 
   scoreOrUpdateGameButton = userRoleId => {
