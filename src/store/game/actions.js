@@ -3,22 +3,41 @@ import { baseUrl, authHeader } from "../../api";
 
 export const SET_GAME_DETAILS = "games/SET_SELECTED_GAME_DETAILS";
 
-export function scoreGame(scoreData, gameId) {
+export function addSpiritScore(spiritScoreData, gameId) {
   return async (dispatch, getState) => {
     try {
       const token = getState().session.jwt;
       const authorization = authHeader(token);
-      const scoredGame = await axios.post(
-        `${baseUrl}/games/${gameId}`,
-        scoreData,
+      const gameWithSpirit = await axios.post(
+        `${baseUrl}/spirit-scores`,
+        spiritScoreData,
         authorization
       );
-      console.log("Scored game:", scoredGame);
+      console.log("gameWithSpirit :", gameWithSpirit);
     } catch (error) {
       throw error;
     }
   };
 }
+
+export function scoreGame(scores, gameId) {
+  return async (dispatch, getState) => {
+    try {
+      const token = getState().session.jwt;
+      const authorization = authHeader(token);
+      const scoredGame = await axios.patch(
+        `${baseUrl}/games/${gameId}`,
+        scores,
+        authorization
+      );
+
+      dispatch(setGameDetails(scoredGame.data));
+    } catch (error) {
+      throw error;
+    }
+  };
+}
+
 export function addGame(gameData) {
   return async (dispatch, getState) => {
     try {

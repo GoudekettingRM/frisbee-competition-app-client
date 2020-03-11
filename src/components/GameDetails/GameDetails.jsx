@@ -46,7 +46,31 @@ class GameDetails extends Component {
           yes={() => {
             return (
               <div>
-                <ScoreForm game={game} cancel={this.toggleScoreForm} />
+                <ScoreForm game={game} toggleScoreForm={this.toggleScoreForm} />
+              </div>
+            );
+          }}
+          no={() => null}
+        />
+      );
+    } else if (this.state.scoring) {
+      return (
+        <Can
+          roleId={userRoleId}
+          perform="games:update-score"
+          data={{
+            homeTeamId,
+            awayTeamId,
+            userTeamId: user.teamId
+          }}
+          yes={() => {
+            return (
+              <div>
+                <ScoreForm
+                  game={game}
+                  toggleScoreForm={this.toggleScoreForm}
+                  scoresPresent={true}
+                />
               </div>
             );
           }}
@@ -77,12 +101,12 @@ class GameDetails extends Component {
         yes={() => {
           return (
             !isFuture(parseISO(date)) &&
-            !this.state.editMode && (
+            !this.state.scoring && (
               <Button
                 color="primary"
                 type="button"
                 style={{ margin: "10px" }}
-                onClick={this.toggleEdit}>
+                onClick={this.toggleScoreForm}>
                 {!homeTeamScore || !awayTeamScore ? "Score game" : "Edit score"}
               </Button>
             )
@@ -94,7 +118,7 @@ class GameDetails extends Component {
   };
 
   render() {
-    // console.log("Render of game detail:", this.props);
+    console.log("Render of game detail:", this.props);
     if (!Object.keys(this.props.game).length) return <div>No data</div>;
     const userRoleId = this.props.user.organisation
       ? this.props.user.organisation.roleId

@@ -72,11 +72,11 @@ export const ScoreOrGameStartDetails = props => {
 
   return homeTeamScore ? (
     <div>
-      <Typography component="h2" variant="h5">
+      <Typography component="h2" variant="h5" style={{ margin: "20px 0 0 0" }}>
         {homeTeamScore}
       </Typography>
       <p>-</p>
-      <Typography component="h2" variant="h5">
+      <Typography component="h2" variant="h5" style={{ margin: "0 0 20px 0" }}>
         {awayTeamScore}
       </Typography>
     </div>

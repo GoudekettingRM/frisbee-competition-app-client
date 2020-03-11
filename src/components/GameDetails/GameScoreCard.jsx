@@ -4,9 +4,9 @@ import Grid from "@material-ui/core/Grid";
 import Input from "@material-ui/core/Input";
 
 export const GameScoreCard = props => {
-  const [homeTeamScore, setHomeTeamScore] = useState("");
-  const [awayTeamScore, setAwayTeamScore] = useState("");
-  const { homeTeam, awayTeam, change } = props;
+  const { homeTeam, homeScore, awayTeam, awayScore, change } = props;
+  const [homeTeamScore, setHomeTeamScore] = useState(homeScore);
+  const [awayTeamScore, setAwayTeamScore] = useState(awayScore);
 
   const handleFocus = event => {
     event.target.select();
