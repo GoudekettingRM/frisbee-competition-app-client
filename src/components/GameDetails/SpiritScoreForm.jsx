@@ -1,15 +1,11 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
-import Switch from "@material-ui/core/Switch";
-import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { addSpiritScore, updateSpiritScore } from "../../store/game/actions";
 import { SpiritItem } from "./SpiritItem";
-import { addSpiritScore } from "../../store/game/actions";
-import { clubBoard, superAdmin } from "../endpointRoles";
 
 const styles = theme => ({
   padding: {
@@ -49,13 +45,32 @@ export class SpiritScoreForm extends Component {
     const { game, spiritScoreFor } = this.props;
     const { id } = game;
 
+    const addNewSpiritScore =
+      spiritScoreFor === "home"
+        ? game.homeTeamReceivedSpiritScoreId
+          ? false
+          : true
+        : game.awayTeamReceivedSpiritScoreId
+        ? false
+        : true;
+
     const spiritScoreData = {
       ...this.state,
       spiritScoreFor,
       gameId: id
     };
 
-    this.props.addSpiritScore(spiritScoreData, id);
+    if (addNewSpiritScore) {
+      this.props.addSpiritScore(spiritScoreData);
+    } else {
+      console.log("spiritScoreFor test", spiritScoreFor);
+
+      const spiritScoreId =
+        spiritScoreFor === "home"
+          ? game.homeTeamReceivedSpiritScoreId
+          : game.awayTeamReceivedSpiritScoreId;
+      this.props.updateSpiritScore(spiritScoreData, spiritScoreId);
+    }
 
     this.setState({
       RKUScore: 2,
@@ -145,7 +160,7 @@ const mapStateToProps = state => ({
   game: state.game.data
 });
 
-const mapDispatchToProps = { addSpiritScore };
+const mapDispatchToProps = { addSpiritScore, updateSpiritScore };
 
 export default withStyles(styles)(
   connect(mapStateToProps, mapDispatchToProps)(SpiritScoreForm)

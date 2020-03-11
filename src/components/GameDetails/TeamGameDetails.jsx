@@ -1,12 +1,12 @@
-import React, { useState } from "react";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import Typography from "@material-ui/core/Typography";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import EditIcon from "@material-ui/icons/Edit";
-import CloseIcon from "@material-ui/icons/Close";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import CloseIcon from "@material-ui/icons/Close";
+import EditIcon from "@material-ui/icons/Edit";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import React, { useState } from "react";
 import SpiritScoreForm from "./SpiritScoreForm";
 
 export const TeamGameDetails = props => {

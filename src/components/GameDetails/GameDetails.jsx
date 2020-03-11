@@ -1,15 +1,15 @@
+import Button from "@material-ui/core/Button";
+import isFuture from "date-fns/isFuture";
+import parseISO from "date-fns/parseISO";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Button from "@material-ui/core/Button";
-import parseISO from "date-fns/parseISO";
-import isFuture from "date-fns/isFuture";
 import { getOneGame } from "../../store/game/actions";
 import { headerSpacing } from "../../styles";
 import Can from "../Can";
-import ScoreForm from "./ScoreForm";
-import { TeamGameDetails } from "./TeamGameDetails";
-import { ScoreOrGameStartDetails } from "./ScoreOrGameStartDetails";
 import "./gameDetails.css";
+import ScoreForm from "./ScoreForm";
+import { ScoreOrGameStartDetails } from "./ScoreOrGameStartDetails";
+import { TeamGameDetails } from "./TeamGameDetails";
 
 class GameDetails extends Component {
   state = {
