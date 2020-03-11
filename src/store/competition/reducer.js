@@ -4,6 +4,7 @@ import {
   SET_SELECTED_COMPETITION
 } from "./actions";
 import { ADD_TEAM_TO_COMPETITION } from "../team/actions";
+import { ADD_GAME_TO_COMPETITION } from "../game/actions";
 
 const initialState = {
   all: [],
@@ -12,6 +13,24 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
+    case ADD_GAME_TO_COMPETITION: {
+      const allCompetitionsUpdated = state.all.map(competition => {
+        if (competition.id === state.selected.id) {
+          return {
+            ...competition,
+            games: [...competition.games, payload]
+          };
+        } else return competition;
+      });
+      return {
+        ...state,
+        all: allCompetitionsUpdated,
+        selected: {
+          ...state.selected,
+          games: [...state.selected.games, payload]
+        }
+      };
+    }
     case ADD_TEAM_TO_COMPETITION: {
       const allCompetitionsUpdated = state.all.map(competition => {
         if (competition.id === state.selected.id) {
@@ -19,9 +38,7 @@ export default (state = initialState, { type, payload }) => {
             ...competition,
             teams: [...competition.teams, payload]
           };
-        } else {
-          return competition;
-        }
+        } else return competition;
       });
       return {
         ...state,

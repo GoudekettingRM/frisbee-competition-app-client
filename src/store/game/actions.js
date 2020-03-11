@@ -2,6 +2,7 @@ import axios from "axios";
 import { baseUrl, authHeader } from "../../api";
 
 export const SET_GAME_DETAILS = "games/SET_SELECTED_GAME_DETAILS";
+export const ADD_GAME_TO_COMPETITION = "games/ADD_GAME_TO_COMPETITION";
 
 export function addSpiritScore(spiritScoreData, gameId) {
   return async (dispatch, getState) => {
@@ -49,6 +50,7 @@ export function addGame(gameData) {
         authorization
       );
       // console.log("new game", newGame);
+      dispatch(addNewGameToCompetition(newGame.data));
     } catch (error) {
       throw error;
     }
@@ -73,6 +75,12 @@ export function setGameDetails(gameData) {
   };
 }
 
+function addNewGameToCompetition(gameData) {
+  return {
+    type: ADD_GAME_TO_COMPETITION,
+    payload: gameData
+  };
+}
 function setGameDetailsAction(gameData) {
   return {
     type: SET_GAME_DETAILS,
