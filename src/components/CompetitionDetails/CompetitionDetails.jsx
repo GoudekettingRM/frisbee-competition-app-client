@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import PlaylistAdd from "@material-ui/icons/PlaylistAdd";
 import Fab from "@material-ui/core/Fab";
 import CompetitionDayCard from "./CompetitionDayCard";
@@ -83,9 +82,8 @@ class CompetitionDetails extends Component {
       : this.props.user.roleId;
     const organisationId = organisation ? organisation.id : 0;
 
-    if (this.state.redirect) {
-      return <Redirect to={this.state.redirect} />;
-    }
+    console.log("games test in comp details render", games);
+    console.log("teams test in comp details render", teams);
 
     return (
       <div style={headerSpacing}>
@@ -121,9 +119,9 @@ class CompetitionDetails extends Component {
               style={fabPositioning}>
               <PlaylistAdd
                 onClick={() =>
-                  this.setState({
-                    redirect: `/competitions/${this.props.match.params.competitionId}/create-game`
-                  })
+                  this.props.history.push(
+                    `/competitions/${this.props.match.params.competitionId}/create-game`
+                  )
                 }
               />
             </Fab>
@@ -135,7 +133,12 @@ class CompetitionDetails extends Component {
           {games &&
             teams &&
             games.map(game => (
-              <GameCard data={game} teams={teams} key={game.id} />
+              <GameCard
+                history={this.props.history}
+                data={game}
+                teams={teams}
+                key={game.id}
+              />
             ))}
         </div>
       </div>

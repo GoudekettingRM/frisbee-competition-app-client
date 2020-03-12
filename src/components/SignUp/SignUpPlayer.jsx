@@ -5,7 +5,6 @@ import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import { Redirect } from "react-router";
 import { signUp } from "../../store/user/actions";
 import { headerSpacing } from "../../styles";
 
@@ -24,8 +23,7 @@ class SignUpPlayer extends Component {
     firstName: "",
     lastName: "",
     email: "",
-    password: "",
-    redirect: null
+    password: ""
   };
 
   onChange = event => {
@@ -34,24 +32,21 @@ class SignUpPlayer extends Component {
     });
   };
 
-  onSubmit = event => {
+  onSubmit = async event => {
     event.preventDefault();
-    this.props.signUp(this.state);
+    await this.props.signUp(this.state);
+
     this.setState({
       firstName: "",
       lastName: "",
       email: "",
-      password: "",
-      redirect: "/profile"
+      password: ""
     });
+    this.props.history.push("/profile");
   };
 
   render() {
-    const { redirect } = this.state;
-    const { token, classes } = this.props;
-    if (redirect) return <Redirect to={redirect} />;
-
-    if (token && !redirect) return <div> Sign Up successful ...</div>;
+    const { classes } = this.props;
 
     return (
       <Paper className={classes.padding} style={headerSpacing}>

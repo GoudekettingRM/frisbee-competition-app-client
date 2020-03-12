@@ -1,173 +1,61 @@
+import Button from "@material-ui/core/Button";
+import isFuture from "date-fns/isFuture";
+import parseISO from "date-fns/parseISO";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import Typography from "@material-ui/core/Typography";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Button from "@material-ui/core/Button";
-import parseISO from "date-fns/parseISO";
-import isFuture from "date-fns/isFuture";
 import { getOneGame } from "../../store/game/actions";
 import { headerSpacing } from "../../styles";
 import Can from "../Can";
-import ScoreForm from "./ScoreForm";
+import ScoreForm from "../Scores/ScoreForm";
+import { ScoreOrGameStartDetails } from "../Scores/ScoreOrGameStartDetails";
+import { TeamGameDetails } from "./TeamGameDetails";
+import "./gameDetails.css";
 
 class GameDetails extends Component {
   state = {
-    editMode: false
+    scoring: false
   };
 
   componentDidMount = () => {
     if (!Object.keys(this.props.game).length) {
-      console.log(
-        "I should get the game data! (component did mount of game details comp)"
-      );
       const gameId = this.props.match.params.gameId;
       this.props.getOneGame(gameId);
     }
   };
 
-  toggleEdit = () => {
-    console.log(
-      `Edit mode is: ${this.state.editMode} and will be: ${!this.state
-        .editMode}`
-    );
-
+  toggleScoreForm = () => {
     this.setState({
-      editMode: !this.state.editMode
+      scoring: !this.state.scoring
     });
-  };
-
-  onSubmit = event => {
-    event.preventDefault();
-    console.log("Submitting!");
-  };
-
-  renderEditForm = userRoleId => {
-    if (this.state.editMode) {
-      return (
-        <Can
-          roleId={userRoleId}
-          perform="games:update"
-          yes={() => {
-            return (
-              <div>
-                <ScoreForm cancel={this.toggleEdit} submit={this.onSubmit} />
-              </div>
-            );
-          }}
-          no={() => null}
-        />
-      );
-    }
-    return null;
-  };
-
-  loadTeamGameDetails = (homeOrAway, name) => {
-    const teamReceivedSpiritScore =
-      homeOrAway === "home"
-        ? this.props.game.homeTeamReceivedSpiritScore
-        : this.props.game.awayTeamReceivedSpiritScore;
-
-    return (
-      <div>
-        <ExpansionPanel>
-          <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header">
-            <Typography component="h2" style={{ marginRight: "15px" }}>
-              {name}
-            </Typography>
-            <Typography
-              component="h2"
-              variant="body1"
-              color="textSecondary"
-              style={{ fontSize: "0.8rem", marginTop: "3px" }}>
-              <em>Received spirit: {teamReceivedSpiritScore}</em>
-            </Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <Typography>
-              Spirit score received: {teamReceivedSpiritScore}
-            </Typography>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      </div>
-    );
-  };
-
-  loadScoreOrGameDetails = () => {
-    const {
-      homeTeamScore,
-      awayTeamScore,
-      location,
-      startTime,
-      lat,
-      lng
-    } = this.props.game;
-    const { date } = this.props.game.competitionDay;
-
-    return homeTeamScore ? (
-      <div>
-        <h2>{homeTeamScore}</h2>
-        <p>-</p>
-        <h2>{awayTeamScore}</h2>
-      </div>
-    ) : (
-      <div>
-        <Typography component="h2" variant="h6" style={{ margin: "20px auto" }}>
-          This game has not been played yet.
-        </Typography>
-        <Typography
-          component="h2"
-          variant="body1"
-          color="textSecondary"
-          style={{ marginBottom: "20px" }}>
-          <em>
-            <strong>When:</strong> {date}, {startTime.substring(0, 5)}
-          </em>
-          <br />
-          <em>
-            <strong>Where:</strong> {location}
-          </em>
-          <br />
-          <a
-            href={`http://maps.google.com/maps?q=${lat},${lng}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ textDecoration: "none" }}>
-            <Button
-              color="primary"
-              type="button"
-              style={{
-                margin: "10px"
-              }}>
-              Look up location
-            </Button>
-          </a>
-        </Typography>
-      </div>
-    );
   };
 
   scoreOrUpdateGameButton = userRoleId => {
     const { date } = this.props.game.competitionDay;
-    const { homeTeamScore, awayTeamScore } = this.props.game;
+    const { user } = this.props;
+    const {
+      homeTeamScore,
+      awayTeamScore,
+      homeTeam,
+      awayTeam
+    } = this.props.game;
     return (
       <Can
         roleId={userRoleId}
-        perform="games:update"
+        perform="games:update-score"
+        data={{
+          homeTeam,
+          awayTeam,
+          user
+        }}
         yes={() => {
           return (
             !isFuture(parseISO(date)) &&
-            !this.state.editMode && (
+            !this.state.scoring && (
               <Button
                 color="primary"
                 type="button"
                 style={{ margin: "10px" }}
-                onClick={this.toggleEdit}>
+                onClick={this.toggleScoreForm}>
                 {!homeTeamScore || !awayTeamScore ? "Score game" : "Edit score"}
               </Button>
             )
@@ -179,18 +67,27 @@ class GameDetails extends Component {
   };
 
   render() {
-    // console.log("Render of game detail:", this.props);
+    console.log("Render of game detail:", this.props);
     if (!Object.keys(this.props.game).length) return <div>No data</div>;
     const userRoleId = this.props.user.organisation
       ? this.props.user.organisation.roleId
       : this.props.user.roleId;
+    const { homeTeam, awayTeam, game } = this.props;
+    const scoresPresent = game.homeTeamScore ? true : false;
+
     return (
       <div style={headerSpacing}>
-        {this.loadTeamGameDetails("home", this.props.homeTeam.name)}
-        {this.loadScoreOrGameDetails()}
-        {this.loadTeamGameDetails("away", this.props.awayTeam.name)}
+        <TeamGameDetails homeOrAway="home" name={homeTeam.name} game={game} />
+        <ScoreOrGameStartDetails game={game} />
+        <TeamGameDetails homeOrAway="away" name={awayTeam.name} game={game} />
         {this.scoreOrUpdateGameButton(userRoleId)}
-        {this.renderEditForm(userRoleId)}
+        {this.state.scoring && (
+          <ScoreForm
+            game={game}
+            toggleScoreForm={this.toggleScoreForm}
+            scoresPresent={scoresPresent}
+          />
+        )}
       </div>
     );
   }

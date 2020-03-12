@@ -44,25 +44,20 @@ const rules = {
         if (!userId || !playerId) return false;
         return userId === playerId;
       },
-      "games:update-score": ({ homeTeamId, awayTeamId, userTeamId }) => {
-        if (!homeTeamId || !awayTeamId || !userTeamId) return false;
-        return homeTeamId === userTeamId || awayTeamId === userTeamId;
+      "games:update-score": ({ homeTeam, awayTeam, user }) => {
+        if (!homeTeam || !awayTeam || !user) return false;
+        return homeTeam.id === user.teamId || awayTeam.id === user.teamId;
       },
-      "games:update-home-team-spirit": ({
-        homeTeamId,
-        awayTeamId,
-        userTeamId
+      "games:update-spirit-score": ({
+        homeOrAway,
+        homeTeam,
+        awayTeam,
+        user
       }) => {
-        if (!homeTeamId || !awayTeamId || !userTeamId) return false;
-        return awayTeamId === userTeamId;
-      },
-      "games:update-away-team-spirit": ({
-        homeTeamId,
-        awayTeamId,
-        userTeamId
-      }) => {
-        if (!homeTeamId || !awayTeamId || !userTeamId) return false;
-        return homeTeamId === userTeamId;
+        if (!homeTeam || !awayTeam || !user) return false;
+        if (homeOrAway === "home") return awayTeam.id === user.teamId;
+        if (homeOrAway === "away") return homeTeam.id === user.teamId;
+        return false;
       }
     }
   },
@@ -87,25 +82,20 @@ const rules = {
         if (!teamId || !userTeamId) return false;
         return teamId === userTeamId;
       },
-      "games:update-score": ({ homeTeamId, awayTeamId, userTeamId }) => {
-        if (!homeTeamId || !awayTeamId || !userTeamId) return false;
-        return homeTeamId === userTeamId || awayTeamId === userTeamId;
+      "games:update-score": ({ homeTeam, awayTeam, user }) => {
+        if (!homeTeam || !awayTeam || !user) return false;
+        return homeTeam.id === user.teamId || awayTeam.id === user.teamId;
       },
-      "games:update-home-team-spirit": ({
-        homeTeamId,
-        awayTeamId,
-        userTeamId
+      "games:update-spirit-score": ({
+        homeOrAway,
+        homeTeam,
+        awayTeam,
+        user
       }) => {
-        if (!homeTeamId || !awayTeamId || !userTeamId) return false;
-        return awayTeamId === userTeamId;
-      },
-      "games:update-away-team-spirit": ({
-        homeTeamId,
-        awayTeamId,
-        userTeamId
-      }) => {
-        if (!homeTeamId || !awayTeamId || !userTeamId) return false;
-        return homeTeamId === userTeamId;
+        if (!homeTeam || !awayTeam || !user) return false;
+        if (homeOrAway === "home") return awayTeam.id === user.teamId;
+        if (homeOrAway === "away") return homeTeam.id === user.teamId;
+        return false;
       }
     }
   },
@@ -158,13 +148,18 @@ const rules = {
           awayTeam.organisationId === user.organisationId
         );
       },
-      "games:update-home-team-spirit": ({ homeTeam, awayTeam, user }) => {
+      "games:update-spirit-score": ({
+        homeOrAway,
+        homeTeam,
+        awayTeam,
+        user
+      }) => {
         if (!homeTeam || !awayTeam || !user) return false;
-        return awayTeam.organisationId === user.organisationId;
-      },
-      "games:update-away-team-spirit": ({ homeTeam, awayTeam, user }) => {
-        if (!homeTeam || !awayTeam || !user) return false;
-        return homeTeam.organisationId === user.organisationId;
+        if (homeOrAway === "home")
+          return awayTeam.organisationId === user.organisationId;
+        if (homeOrAway === "away")
+          return homeTeam.organisationId === user.organisationId;
+        return false;
       }
     }
   },
@@ -188,8 +183,7 @@ const rules = {
       "games:create", //
       "games:update", //
       "games:update-score", //
-      "games:update-home-team-spirit", //
-      "games:update-away-team-spirit", //
+      "games:update-spirit-score", //
       "games:delete" //
     ],
     dynamic: {
@@ -210,8 +204,7 @@ const rules = {
       // "games:create": () => {},
       // "games:update": () => {},
       // "games:update-score": () => {},
-      // "games:update-home-team-spirit": () => {},
-      // "games:update-away-team-spirit": () => {},
+      // "games:update-spirit-score": () => {}
       // "games:delete": () => {}
     }
   },
@@ -239,8 +232,7 @@ const rules = {
       "games:read",
       "games:update",
       "games:update-score",
-      "games:update-home-team-spirit",
-      "games:update-away-team-spirit",
+      "games:update-spirit-score",
       "games:delete"
     ]
   }

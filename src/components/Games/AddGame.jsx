@@ -54,6 +54,7 @@ class AddGame extends Component {
     }
     console.log("Let's create the game!");
     this.props.addGame(dataFields, this.props.token);
+    this.props.history.goBack();
   };
 
   handleLocationSelect = (address, coordinates) => {

@@ -1,0 +1,10 @@
+.spiritFlex {
+  display: flex;
+  justify-content: space-between;
+}
+.spiritNameSpacing {
+  margin-right: 50px;
+}
+.total {
+  border-bottom: 1px solid lightgray;
+}
