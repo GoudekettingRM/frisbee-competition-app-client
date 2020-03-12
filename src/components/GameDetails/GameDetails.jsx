@@ -6,10 +6,10 @@ import { connect } from "react-redux";
 import { getOneGame } from "../../store/game/actions";
 import { headerSpacing } from "../../styles";
 import Can from "../Can";
-import "./gameDetails.css";
-import ScoreForm from "./ScoreForm";
-import { ScoreOrGameStartDetails } from "./ScoreOrGameStartDetails";
+import ScoreForm from "../Scores/ScoreForm";
+import { ScoreOrGameStartDetails } from "../Scores/ScoreOrGameStartDetails";
 import { TeamGameDetails } from "./TeamGameDetails";
+import "./gameDetails.css";
 
 class GameDetails extends Component {
   state = {
@@ -29,55 +29,23 @@ class GameDetails extends Component {
     });
   };
 
-  renderScoreForm = userRoleId => {
-    const { game, user } = this.props;
-    const { homeTeamId, awayTeamId, homeTeamScore } = game;
-    if (this.state.scoring) {
-      const scoresPresent = homeTeamScore ? true : false;
-      return (
-        <Can
-          roleId={userRoleId}
-          perform="games:update-score"
-          data={{
-            homeTeamId,
-            awayTeamId,
-            userTeamId: user.teamId
-          }}
-          yes={() => {
-            return (
-              <div>
-                <ScoreForm
-                  game={game}
-                  toggleScoreForm={this.toggleScoreForm}
-                  scoresPresent={scoresPresent}
-                />
-              </div>
-            );
-          }}
-          no={() => null}
-        />
-      );
-    } else {
-      return null;
-    }
-  };
-
   scoreOrUpdateGameButton = userRoleId => {
     const { date } = this.props.game.competitionDay;
+    const { user } = this.props;
     const {
       homeTeamScore,
       awayTeamScore,
-      homeTeamId,
-      awayTeamId
+      homeTeam,
+      awayTeam
     } = this.props.game;
     return (
       <Can
         roleId={userRoleId}
         perform="games:update-score"
         data={{
-          homeTeamId,
-          awayTeamId,
-          userTeamId: this.props.user.teamId
+          homeTeam,
+          awayTeam,
+          user
         }}
         yes={() => {
           return (
@@ -105,6 +73,7 @@ class GameDetails extends Component {
       ? this.props.user.organisation.roleId
       : this.props.user.roleId;
     const { homeTeam, awayTeam, game } = this.props;
+    const scoresPresent = game.homeTeamScore ? true : false;
 
     return (
       <div style={headerSpacing}>
@@ -112,7 +81,13 @@ class GameDetails extends Component {
         <ScoreOrGameStartDetails game={game} />
         <TeamGameDetails homeOrAway="away" name={awayTeam.name} game={game} />
         {this.scoreOrUpdateGameButton(userRoleId)}
-        {this.renderScoreForm(userRoleId)}
+        {this.state.scoring && (
+          <ScoreForm
+            game={game}
+            toggleScoreForm={this.toggleScoreForm}
+            scoresPresent={scoresPresent}
+          />
+        )}
       </div>
     );
   }

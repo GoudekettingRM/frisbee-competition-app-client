@@ -7,11 +7,17 @@ import CloseIcon from "@material-ui/icons/Close";
 import EditIcon from "@material-ui/icons/Edit";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React, { useState } from "react";
-import SpiritScoreForm from "./SpiritScoreForm";
+import { useSelector } from "react-redux";
+import Can from "../Can";
+import { SpiritScoreDetails } from "../Scores/SpiritScoreDetails";
+import SpiritScoreForm from "../Scores/SpiritScoreForm";
 
 export const TeamGameDetails = props => {
   const [editSpirit, setEditSpirit] = useState(false);
+  const user = useSelector(state => state.session.user);
   const { homeOrAway, name, game } = props;
+  const userRoleId = user.organisation ? user.organisation.roleId : user.roleId;
+
   const receivedSpiritScore =
     homeOrAway === "home"
       ? game.homeTeamReceivedSpiritScore
@@ -21,7 +27,7 @@ export const TeamGameDetails = props => {
     setEditSpirit(!editSpirit);
   };
 
-  const teamReceivedSpiritScore = receivedSpiritScore ? (
+  const totalSpiritScoreReceived = receivedSpiritScore ? (
     receivedSpiritScore.spiritTotal
   ) : (
     <Typography
@@ -55,7 +61,7 @@ export const TeamGameDetails = props => {
             variant="body1"
             color="textSecondary"
             style={{ fontSize: "0.8rem", marginTop: "3px" }}>
-            <em>Received spirit: {teamReceivedSpiritScore}</em>
+            <em>Received spirit: {totalSpiritScoreReceived}</em>
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
@@ -63,56 +69,35 @@ export const TeamGameDetails = props => {
             <SpiritScoreForm
               spiritScoreFor={homeOrAway}
               toggleSpiritForm={toggleSpiritForm}
+              receivedSpiritScore={receivedSpiritScore}
             />
           ) : (
-            <Typography align="left">
-              <span>
-                <span className="spiritFlex total">
-                  <span className="spiritNameSpacing">
-                    <strong>Spirit total:</strong>
-                  </span>
-                  <span>{teamReceivedSpiritScore}</span>
-                </span>
-                <br />
-                {receivedSpiritScore && (
-                  <span>
-                    <span className="spiritFlex">
-                      <span>Rules, Knowledge & Use:</span>
-                      <span>{receivedSpiritScore.RKUScore}</span>
-                    </span>
-                    <br />
-                    <span className="spiritFlex">
-                      <span>Fouls & Body Contact:</span>
-                      <span>{receivedSpiritScore.FNBScore}</span>
-                    </span>
-                    <br />
-                    <span className="spiritFlex">
-                      <span>Fairmindedness:</span>
-                      <span>{receivedSpiritScore.FMScore}</span>
-                    </span>
-                    <br />
-                    <span className="spiritFlex">
-                      <span className="spiritNameSpacing">
-                        Positive Attitude & Self-Control:
-                      </span>
-                      <span>{receivedSpiritScore.PASCScore}</span>
-                    </span>
-                    <br />
-                    <span className="spiritFlex">
-                      <span>Communication:</span>
-                      <span>{receivedSpiritScore.COMMScore}</span>
-                    </span>
-                  </span>
-                )}
-              </span>
-            </Typography>
+            <SpiritScoreDetails
+              totalSpiritScoreReceived={totalSpiritScoreReceived}
+              receivedSpiritScore={receivedSpiritScore}
+            />
           )}
           <div>
-            <IconButton
-              onClick={toggleSpiritForm}
-              style={{ marginTop: "-10px", marginRight: "-13px" }}>
-              {editSpirit ? <CloseIcon /> : <EditIcon />}
-            </IconButton>
+            <Can
+              roleId={userRoleId}
+              perform="games:update-spirit-score"
+              data={{
+                homeOrAway,
+                homeTeam: game.homeTeam,
+                awayTeam: game.awayTeam,
+                user
+              }}
+              yes={() => {
+                return (
+                  <IconButton
+                    onClick={toggleSpiritForm}
+                    style={{ marginTop: "-10px", marginRight: "-13px" }}>
+                    {editSpirit ? <CloseIcon /> : <EditIcon />}
+                  </IconButton>
+                );
+              }}
+              no={() => null}
+            />
           </div>
         </ExpansionPanelDetails>
       </ExpansionPanel>

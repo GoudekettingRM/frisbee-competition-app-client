@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import ToggleButton from "@material-ui/lab/ToggleButton";
@@ -15,10 +15,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const SpiritItem = props => {
+  const { label, scoreName, commentName, value, comment, change } = props;
   const classes = useStyles();
+
   const [spiritValue, setSpiritValue] = useState(2);
+
+  useEffect(() => {
+    setSpiritValue(value);
+  }, [value]);
+
   const [addComment, setAddComment] = useState(false);
-  const { label, scoreName, commentName, comment, change } = props;
 
   const handleSpirit = (event, newSpirit) => {
     if (newSpirit !== null) {

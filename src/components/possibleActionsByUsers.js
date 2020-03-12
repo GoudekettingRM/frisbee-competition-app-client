@@ -21,5 +21,6 @@
 "games:read",
 "games:update",
 "games:update-score",
+"games:update-spirit-score",
 "games:delete",
 */

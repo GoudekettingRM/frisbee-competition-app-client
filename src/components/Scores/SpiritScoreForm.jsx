@@ -34,6 +34,42 @@ export class SpiritScoreForm extends Component {
     generalComment: ""
   };
 
+  componentDidMount = () => {
+    console.log(
+      "This.props.receivedSpiritScore",
+      this.props.receivedSpiritScore
+    );
+
+    if (this.props.receivedSpiritScore) {
+      const {
+        RKUScore,
+        RKUComment,
+        FNBScore,
+        FNBComment,
+        FMScore,
+        FMComment,
+        PASCScore,
+        PASCComment,
+        COMMScore,
+        COMMComment,
+        generalComment
+      } = this.props.receivedSpiritScore;
+      this.setState({
+        RKUScore,
+        RKUComment,
+        FNBScore,
+        FNBComment,
+        FMScore,
+        FMComment,
+        PASCScore,
+        PASCComment,
+        COMMScore,
+        COMMComment,
+        generalComment
+      });
+    }
+  };
+
   onChange = event => {
     this.setState({
       [event.target.name]: event.target.value
@@ -61,9 +97,11 @@ export class SpiritScoreForm extends Component {
     };
 
     if (addNewSpiritScore) {
+      console.log("Trying to add new");
+
       this.props.addSpiritScore(spiritScoreData);
     } else {
-      console.log("spiritScoreFor test", spiritScoreFor);
+      console.log("Trying to update");
 
       const spiritScoreId =
         spiritScoreFor === "home"
@@ -71,20 +109,6 @@ export class SpiritScoreForm extends Component {
           : game.awayTeamReceivedSpiritScoreId;
       this.props.updateSpiritScore(spiritScoreData, spiritScoreId);
     }
-
-    this.setState({
-      RKUScore: 2,
-      RKUComment: "",
-      FNBScore: 2,
-      FNBComment: "",
-      FMScore: 2,
-      FMComment: "",
-      PASCScore: 2,
-      PASCComment: "",
-      COMMScore: 2,
-      COMMComment: "",
-      generalComment: ""
-    });
   };
 
   render() {
@@ -98,6 +122,7 @@ export class SpiritScoreForm extends Component {
               label={"Rules, Knowledge & Use"}
               scoreName={"RKUScore"}
               commentName={"RKUComment"}
+              value={this.state.RKUScore}
               comment={this.state.RKUComment}
               change={this.onChange}
             />
@@ -105,6 +130,7 @@ export class SpiritScoreForm extends Component {
               label={"Fouls & Body Contact"}
               scoreName={"FNBScore"}
               commentName={"FNBComment"}
+              value={this.state.FNBScore}
               comment={this.state.FNBComment}
               change={this.onChange}
             />
@@ -112,6 +138,7 @@ export class SpiritScoreForm extends Component {
               label={"Fairmindedness"}
               scoreName={"FMScore"}
               commentName={"FMComment"}
+              value={this.state.FMScore}
               comment={this.state.FMComment}
               change={this.onChange}
             />
@@ -119,6 +146,7 @@ export class SpiritScoreForm extends Component {
               label={"Positive Attitude & Self-Control"}
               scoreName={"PASCScore"}
               commentName={"PASCComment"}
+              value={this.state.PASCScore}
               comment={this.state.PASCComment}
               change={this.onChange}
             />
@@ -126,6 +154,7 @@ export class SpiritScoreForm extends Component {
               label={"Communication"}
               scoreName={"COMMScore"}
               commentName={"COMMComment"}
+              value={this.state.COMMScore}
               comment={this.state.COMMComment}
               change={this.onChange}
             />

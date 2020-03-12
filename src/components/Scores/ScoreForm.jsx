@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
-import { GameScoreCard } from "./GameScoreCard";
+import { GameScoreCard } from "../GameDetails/GameScoreCard";
 import { scoreGame } from "../../store/game/actions";
 
 const styles = theme => ({

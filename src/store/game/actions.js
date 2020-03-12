@@ -37,7 +37,7 @@ export function addSpiritScore(spiritScoreData) {
         spiritScoreData,
         authorization
       );
-      console.log("gameWithSpirit :", gameWithSpirit);
+      // console.log("gameWithSpirit :", gameWithSpirit);
       dispatch(updateGameDetailsAction(gameWithSpirit.data));
       dispatch(setGameDetailsAction(gameWithSpirit.data));
     } catch (error) {
