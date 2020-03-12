@@ -5,6 +5,17 @@ export const ADD_TEAM_TO_COMPETITION = "teams/ADD_NEW_TEAM_TO_COMPETITION";
 export const SET_SELECTED_TEAM_DETAILS =
   "teams/SET_SELECTED_TEAM_DETAILS_TO_STORE";
 
+export function getTeam(teamId) {
+  return async (dispatch, getState) => {
+    try {
+      const team = await axios.get(`${baseUrl}/teams/${teamId}`);
+      dispatch(setSelectedTeamDetailsAction(team.data));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
 export function addTeam(newTeamData) {
   return async (dispatch, getState) => {
     try {
@@ -15,7 +26,6 @@ export function addTeam(newTeamData) {
         newTeamData,
         authorization
       );
-
       dispatch(addNewTeamToCompetition(newTeam.data));
     } catch (error) {
       throw error;

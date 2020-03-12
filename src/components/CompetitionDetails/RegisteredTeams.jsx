@@ -8,8 +8,9 @@ import { RegisteredTeamCard } from "./RegisteredTeamCard";
 import "./teams.css";
 
 export const RegisteredTeams = props => {
-  const { teams, history } = props;
-  console.log("history test in registered teams", history);
+  const { teams, history, competitionId } = props;
+
+  console.log("props", props);
 
   return (
     <div>
@@ -31,7 +32,12 @@ export const RegisteredTeams = props => {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className="teamCardContainer">
           {teams.map(team => (
-            <RegisteredTeamCard key={team.id} team={team} history={history} />
+            <RegisteredTeamCard
+              key={team.id}
+              team={team}
+              history={history}
+              competitionId={competitionId}
+            />
           ))}
         </ExpansionPanelDetails>
       </ExpansionPanel>

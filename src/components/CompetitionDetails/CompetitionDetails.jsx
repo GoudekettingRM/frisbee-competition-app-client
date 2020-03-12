@@ -82,9 +82,7 @@ class CompetitionDetails extends Component {
       ? organisation.roleId
       : this.props.user.roleId;
     const organisationId = organisation ? organisation.id : 0;
-
-    // console.log("games test in comp details render", games);
-    // console.log("teams test in comp details render", teams);
+    const competitionId = this.props.match.params.competitionId;
 
     return (
       <div style={headerSpacing}>
@@ -107,7 +105,11 @@ class CompetitionDetails extends Component {
         />
         <div>
           {teams && (
-            <RegisteredTeams teams={teams} history={this.props.history} />
+            <RegisteredTeams
+              teams={teams}
+              history={this.props.history}
+              competitionId={competitionId}
+            />
           )}
         </div>
         <div>

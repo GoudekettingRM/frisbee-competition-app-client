@@ -35,11 +35,6 @@ export class SpiritScoreForm extends Component {
   };
 
   componentDidMount = () => {
-    console.log(
-      "This.props.receivedSpiritScore",
-      this.props.receivedSpiritScore
-    );
-
     if (this.props.receivedSpiritScore) {
       const {
         RKUScore,
@@ -186,7 +181,7 @@ export class SpiritScoreForm extends Component {
 
 const mapStateToProps = state => ({
   user: state.session.user,
-  game: state.game.data
+  game: state.game
 });
 
 const mapDispatchToProps = { addSpiritScore, updateSpiritScore };

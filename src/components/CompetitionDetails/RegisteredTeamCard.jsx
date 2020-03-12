@@ -8,13 +8,12 @@ import { setSelectedTeamDetailsAction } from "../../store/team/actions";
 
 export const RegisteredTeamCard = props => {
   const dispatch = useDispatch();
-  const { history, team } = props;
+  const { history, team, competitionId } = props;
   const { name, id } = props.team;
-  console.log("history test in registered team card", history);
 
   const goToTeamPage = () => {
     dispatch(setSelectedTeamDetailsAction(team));
-    history.push(`/teams/${id}`);
+    history.push(`/competitions/${competitionId}/teams/${id}`);
   };
   return (
     <Card className="teamCardItem" onClick={goToTeamPage}>

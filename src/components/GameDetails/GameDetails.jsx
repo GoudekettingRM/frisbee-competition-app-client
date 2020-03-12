@@ -94,9 +94,9 @@ class GameDetails extends Component {
 }
 
 const mapStateToProps = state => ({
-  game: state.game.data,
-  homeTeam: state.game.data.homeTeam,
-  awayTeam: state.game.data.awayTeam,
+  game: state.game,
+  homeTeam: state.game.homeTeam,
+  awayTeam: state.game.awayTeam,
   user: state.session.user
 });
 

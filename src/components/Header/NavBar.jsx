@@ -41,12 +41,18 @@ const pageTitle = currentProps => {
     path.substring(17, 30) === "create-game"
   )
     return `${currentProps.selectedCompetition.name} - Add Game`;
+  if (
+    path.substring(0, 14) === "/competitions/" ||
+    path.substring(17, 24) === "/teams/"
+  )
+    return `${currentProps.team.name}`;
 };
 
 const NavBar = props => {
   const token = useSelector(state => state.session.jwt);
   const user = useSelector(state => state.session.user);
   const selectedCompetition = useSelector(state => state.competitions.selected);
+  const team = useSelector(state => state.team);
   const classes = useStyles();
 
   return (
@@ -63,7 +69,7 @@ const NavBar = props => {
             ]}
           />
           <div className={classes.grow} />
-          <h3>{pageTitle({ ...props, user, selectedCompetition })}</h3>
+          <h3>{pageTitle({ ...props, user, selectedCompetition, team })}</h3>
           <div className={classes.grow} />
           {!token ? (
             <MenuButton
