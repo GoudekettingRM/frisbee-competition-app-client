@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { RegisteredPlayers } from "./RegisteredPlayers";
 import { getTeam } from "../../store/team/actions";
+import { headerSpacing } from "../../styles";
 
 class TeamDetails extends Component {
   componentDidMount = () => {
@@ -11,10 +13,14 @@ class TeamDetails extends Component {
   };
 
   render() {
+    if (!Object.keys(this.props.team).length) {
+      return <div style={headerSpacing}>Loading ...</div>;
+    }
+    const { users } = this.props.team;
     return (
-      <div>
-        <div> Team Information</div>
-        <div>Player's list</div>
+      <div style={headerSpacing}>
+        <div>Team Information</div>
+        {users && <RegisteredPlayers players={users} />}
       </div>
     );
   }

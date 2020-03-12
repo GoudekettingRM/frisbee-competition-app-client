@@ -4,10 +4,12 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React from "react";
-import { RegisteredTeamCard } from "./RegisteredTeamCard";
+import { RegisteredPlayerCard } from "./RegisteredPlayerCard";
 
-export const RegisteredTeams = props => {
-  const { teams, history, competitionId } = props;
+export const RegisteredPlayers = props => {
+  const { players } = props;
+
+  console.log("Registered players props", players);
 
   return (
     <div>
@@ -24,17 +26,12 @@ export const RegisteredTeams = props => {
               fontWeight: "600",
               marginRight: "25px"
             }}>
-            Teams registered
+            Players
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className="cardContainer">
-          {teams.map(team => (
-            <RegisteredTeamCard
-              key={team.id}
-              team={team}
-              history={history}
-              competitionId={competitionId}
-            />
+          {players.map((player, index) => (
+            <RegisteredPlayerCard key={index} player={player} />
           ))}
         </ExpansionPanelDetails>
       </ExpansionPanel>

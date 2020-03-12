@@ -9,6 +9,7 @@ import Can from "../Can";
 import ScoreForm from "../Scores/ScoreForm";
 import { ScoreOrGameStartDetails } from "../Scores/ScoreOrGameStartDetails";
 import { TeamGameDetails } from "./TeamGameDetails";
+import { getUserRole } from "../../helper-files/rbac-helpers";
 import "./gameDetails.css";
 
 class GameDetails extends Component {
@@ -29,18 +30,21 @@ class GameDetails extends Component {
     });
   };
 
-  scoreOrUpdateGameButton = userRoleId => {
-    const { date } = this.props.game.competitionDay;
-    const { user } = this.props;
+  scoreOrUpdateGameButton = () => {
     const {
-      homeTeamScore,
-      awayTeamScore,
-      homeTeam,
-      awayTeam
-    } = this.props.game;
+      user,
+      game: {
+        homeTeamScore,
+        awayTeamScore,
+        homeTeam,
+        awayTeam,
+        competitionDay: { date }
+      }
+    } = this.props;
+
     return (
       <Can
-        roleId={userRoleId}
+        roleId={getUserRole(user)}
         perform="games:update-score"
         data={{
           homeTeam,
@@ -69,10 +73,7 @@ class GameDetails extends Component {
   render() {
     console.log("Render of game detail:", this.props);
     if (!Object.keys(this.props.game).length) return <div>No data</div>;
-    const userRoleId = this.props.user.organisation
-      ? this.props.user.organisation.roleId
-      : this.props.user.roleId;
-    const { homeTeam, awayTeam, game } = this.props;
+    const { homeTeam, awayTeam, game, user } = this.props;
     const scoresPresent = game.homeTeamScore ? true : false;
 
     return (
@@ -80,7 +81,7 @@ class GameDetails extends Component {
         <TeamGameDetails homeOrAway="home" name={homeTeam.name} game={game} />
         <ScoreOrGameStartDetails game={game} />
         <TeamGameDetails homeOrAway="away" name={awayTeam.name} game={game} />
-        {this.scoreOrUpdateGameButton(userRoleId)}
+        {this.scoreOrUpdateGameButton()}
         {this.state.scoring && (
           <ScoreForm
             game={game}

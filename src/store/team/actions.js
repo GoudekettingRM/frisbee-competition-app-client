@@ -11,7 +11,7 @@ export function getTeam(teamId) {
       const team = await axios.get(`${baseUrl}/teams/${teamId}`);
       dispatch(setSelectedTeamDetailsAction(team.data));
     } catch (error) {
-      console.error(error);
+      throw error;
     }
   };
 }
