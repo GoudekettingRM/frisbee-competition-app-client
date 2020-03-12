@@ -2,6 +2,7 @@ import axios from "axios";
 import { baseUrl, authHeader } from "../../api";
 
 export const SET_GAME_DETAILS = "games/SET_SELECTED_GAME_DETAILS";
+export const UPDATE_GAME_DETAILS = "games/SET_UPDATED_GAME_DETAILS";
 export const ADD_GAME_TO_COMPETITION = "games/ADD_GAME_TO_COMPETITION";
 
 export function updateSpiritScore(spiritScoreData, id) {
@@ -16,6 +17,8 @@ export function updateSpiritScore(spiritScoreData, id) {
         authorization
       );
       console.log("Game with updated spirit", gameWithUpdatedSpirit);
+      dispatch(updateGameDetailsAction(gameWithUpdatedSpirit.data));
+      dispatch(setGameDetailsAction(gameWithUpdatedSpirit.data));
     } catch (error) {
       console.error(error);
     }
@@ -35,6 +38,8 @@ export function addSpiritScore(spiritScoreData) {
         authorization
       );
       console.log("gameWithSpirit :", gameWithSpirit);
+      dispatch(updateGameDetailsAction(gameWithSpirit.data));
+      dispatch(setGameDetailsAction(gameWithSpirit.data));
     } catch (error) {
       throw error;
     }
@@ -46,15 +51,13 @@ export function scoreGame(scores, gameId) {
     try {
       const token = getState().session.jwt;
       const authorization = authHeader(token, { Scoring: true });
-      console.log("Authorization test:", authorization);
-
       const scoredGame = await axios.patch(
         `${baseUrl}/games/${gameId}`,
         scores,
         authorization
       );
 
-      dispatch(setGameDetails(scoredGame.data));
+      dispatch(setGameDetailsAction(scoredGame.data));
     } catch (error) {
       throw error;
     }
@@ -106,6 +109,12 @@ function addNewGameToCompetition(gameData) {
 function setGameDetailsAction(gameData) {
   return {
     type: SET_GAME_DETAILS,
+    payload: gameData
+  };
+}
+function updateGameDetailsAction(gameData) {
+  return {
+    type: UPDATE_GAME_DETAILS,
     payload: gameData
   };
 }
