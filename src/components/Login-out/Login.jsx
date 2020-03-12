@@ -20,7 +20,8 @@ const styles = theme => ({
 class Login extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    loginError: false
   };
 
   onChange = event => {
@@ -31,12 +32,14 @@ class Login extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    this.props.login(this.state);
-    this.props.history.push("/");
-    this.setState({
-      email: "",
-      password: ""
-    });
+    const { login, token, history } = this.props;
+    login(this.state);
+    if (token) {
+      history.push("/");
+      this.setState({ email: "", password: "", loginError: false });
+    } else {
+      this.setState({ email: "", password: "" });
+    }
   };
 
   render() {

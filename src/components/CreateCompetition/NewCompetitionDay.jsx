@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import moment from "moment";
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider
@@ -13,11 +12,6 @@ export default class NewCompetitionDay extends Component {
     value: null
   };
   onChangeDate = (newValue, name) => {
-    // const month =
-    // newValue.getMonth() + 1 < 10
-    // ? "0" + (newValue.getMonth() + 1)
-    // : newValue.getMonth() + 1;
-    // const newDate = `${newValue.getFullYear()}-${month}-${newValue.getDate()}`;
     this.setState({
       [name]: newValue
     });
