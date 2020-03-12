@@ -1,5 +1,4 @@
-import isBefore from "date-fns/isBefore";
-import parseISO from "date-fns/parseISO";
+import moment from "moment";
 
 export function validCompetitionDates(competitionData) {
   const {
@@ -13,31 +12,26 @@ export function validCompetitionDates(competitionData) {
   } = competitionData;
 
   if (
-    isBefore(parseISO(startDate), new Date()) ||
-    isBefore(parseISO(endDate), new Date()) ||
-    isBefore(parseISO(teamRegistrationDeadline), new Date()) ||
-    isBefore(parseISO(seedingDeadline), new Date()) ||
-    isBefore(parseISO(playersListDeadline), new Date())
+    moment(startDate).isBefore(moment()) ||
+    moment(endDate).isBefore(moment()) ||
+    moment(teamRegistrationDeadline).isBefore(moment()) ||
+    moment(seedingDeadline).isBefore(moment()) ||
+    moment(playersListDeadline).isBefore(moment())
   ) {
     alert("All dates should be filled in and in the future.");
     return false;
   }
 
   const emptyDatePresent = competitionDayDates.reduce(
-    (oneEmptyFound, currentDate) => {
-      if (!oneEmptyFound && currentDate !== "") {
-        return false;
-      } else {
-        return true;
-      }
-    },
+    (oneEmptyFound, currentDate) =>
+      !oneEmptyFound && currentDate !== "" ? false : true,
     false
   );
 
   if (
     competitionDays.length &&
     (!competitionDayDates.length ||
-      competitionDayDates.find(date => isBefore(parseISO(date), new Date())) ||
+      competitionDayDates.find(date => moment(date).isBefore(moment())) ||
       emptyDatePresent)
   ) {
     alert("All dates should be filled in and in the future. ");

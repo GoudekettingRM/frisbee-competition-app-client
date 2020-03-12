@@ -5,7 +5,7 @@ import {
   MuiPickersUtilsProvider
 } from "@material-ui/pickers";
 import Button from "@material-ui/core/Button";
-import DateFnsUtils from "@date-io/date-fns";
+import MomentUtils from "@date-io/moment";
 import NewCompetitionDay from "./NewCompetitionDay";
 import { addNewCompetition } from "../../store/competition/actions";
 import Can from "../Can";
@@ -14,6 +14,7 @@ import { validCompetitionDates } from "../../validations/competitionValidations"
 import { Fab } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import TextField from "@material-ui/core/TextField";
+import { getUserRole } from "../../helper-files/rbac-helpers";
 
 class CreateCompetition extends Component {
   state = {
@@ -37,14 +38,8 @@ class CreateCompetition extends Component {
     });
   };
   onChangeDate = (newValue, name) => {
-    const month =
-      newValue.getMonth() + 1 < 10
-        ? "0" + (newValue.getMonth() + 1)
-        : newValue.getMonth() + 1;
-    const newDate = `${newValue.getFullYear()}-${month}-${newValue.getDate()}`;
-
     this.setState({
-      [name]: newDate
+      [name]: newValue
     });
   };
 
@@ -107,7 +102,7 @@ class CreateCompetition extends Component {
       <KeyboardDatePicker
         margin="normal"
         label={label}
-        format="dd/MM/yyyy"
+        format="DD/MM/YYYY"
         value={this.state[name]}
         onChange={newDate => this.onChangeDate(newDate, name)}
       />
@@ -125,7 +120,7 @@ class CreateCompetition extends Component {
             value={this.state.name}
             onChange={this.onChange}
           />
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <MuiPickersUtilsProvider utils={MomentUtils}>
             {this.dateInput("Pick start date", "startDate")}
             {this.dateInput("Pick end date", "endDate")}
             {this.dateInput(
@@ -156,14 +151,11 @@ class CreateCompetition extends Component {
   };
 
   render() {
-    console.log("render of create comp", this.state);
+    // console.log("render of create comp", this.state);
 
-    const userRoleId = this.props.organisation
-      ? this.props.organisation.roleId
-      : this.props.user.roleId;
     return (
       <Can
-        roleId={userRoleId}
+        roleId={getUserRole(this.props.user)}
         perform="competitions:create"
         yes={() => this.renderCompetitionForm()}
         no={() => (

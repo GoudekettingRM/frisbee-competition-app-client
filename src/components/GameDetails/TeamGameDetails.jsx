@@ -11,12 +11,12 @@ import { useSelector } from "react-redux";
 import Can from "../Can";
 import { SpiritScoreDetails } from "../Scores/SpiritScoreDetails";
 import SpiritScoreForm from "../Scores/SpiritScoreForm";
+import { getUserRole } from "../../helper-files/rbac-helpers";
 
 export const TeamGameDetails = props => {
   const [editSpirit, setEditSpirit] = useState(false);
   const user = useSelector(state => state.session.user);
   const { homeOrAway, name, game } = props;
-  const userRoleId = user.organisation ? user.organisation.roleId : user.roleId;
 
   const receivedSpiritScore =
     homeOrAway === "home"
@@ -79,7 +79,7 @@ export const TeamGameDetails = props => {
           )}
           <div>
             <Can
-              roleId={userRoleId}
+              roleId={getUserRole(user)}
               perform="games:update-spirit-score"
               data={{
                 homeOrAway,

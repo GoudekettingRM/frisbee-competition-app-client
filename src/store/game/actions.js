@@ -20,7 +20,7 @@ export function updateSpiritScore(spiritScoreData, id) {
       dispatch(updateGameDetailsAction(gameWithUpdatedSpirit.data));
       dispatch(setGameDetailsAction(gameWithUpdatedSpirit.data));
     } catch (error) {
-      console.error(error);
+      throw error;
     }
   };
 }

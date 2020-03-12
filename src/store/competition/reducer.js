@@ -23,7 +23,7 @@ export default (state = initialState, { type, payload }) => {
             ...competition,
             games: gamesUpdated
           };
-        }
+        } else return competition;
       });
       const selectedCompetitionGamesUpdated = state.selected.games
         ? state.selected.games.map(game =>

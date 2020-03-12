@@ -16,11 +16,11 @@ class AddTeamForm extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { name } = this.state;
-    const { organisationId, competitionId } = this.props;
+    const { organisationId, competitionId, addTeam, toggleForm } = this.props;
 
-    this.props.addTeam({ name, organisationId, competitionId });
+    addTeam({ name, organisationId, competitionId });
 
-    this.props.toggleForm();
+    toggleForm();
     this.setState({
       name: ""
     });

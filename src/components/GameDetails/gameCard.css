@@ -1,6 +1,6 @@
 .game {
   display: flex;
-  width: 80%;
+  width: 100%;
   flex-flow: nowrap;
   margin: 0 auto;
 }

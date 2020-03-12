@@ -22,31 +22,48 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const pageTitle = currentProps => {
-  const path = currentProps.location.pathname;
+  const {
+    user: { firstName },
+    selectedCompetition,
+    team,
+    game: { homeTeam, awayTeam },
+    location: { pathname }
+  } = currentProps;
 
-  if (path === "/") return "Home";
-  if (path === "/login") return "Log in";
-  if (path === "/logout") return "Log out";
-  if (path === "/signup") return "Sign up";
-  if (path === "/create-competition") return "New competition";
-  if (path === "/organisations") return "Organisations";
-  if (path === "/profile") return `Hi ${currentProps.user.firstName}!`;
-  if (
-    path.substring(0, 14) === "/competitions/" &&
-    path.substring(17, 20) === ""
-  )
-    return currentProps.selectedCompetition.name;
-  if (
-    path.substring(0, 14) === "/competitions/" &&
-    path.substring(17, 30) === "create-game"
-  )
-    return `${currentProps.selectedCompetition.name} - Add Game`;
+  const homeTeamName = homeTeam ? homeTeam.name : null;
+  const awayTeamName = awayTeam ? awayTeam.name : null;
+
+  const splitPath = pathname.split("/");
+
+  const pageTitles = {
+    "": "Home",
+    login: "Log in",
+    logout: "Log out",
+    signup: "Sign up",
+    "create-competition": "New competition",
+    organisations: "Organisations",
+    profile: `Hi ${firstName}`,
+    competitions: {
+      "": `${selectedCompetition.name}`,
+      "create-game": `${selectedCompetition.name} - Add Game`,
+      teams: `${team.name}`,
+      games: `${homeTeamName} - ${awayTeamName}`
+    }
+  };
+
+  splitPath[3] = splitPath[3] === undefined ? "" : splitPath[3];
+
+  return splitPath[1] === "competitions"
+    ? pageTitles[splitPath[1]][splitPath[3]]
+    : pageTitles[splitPath[1]];
 };
 
 const NavBar = props => {
   const token = useSelector(state => state.session.jwt);
   const user = useSelector(state => state.session.user);
   const selectedCompetition = useSelector(state => state.competitions.selected);
+  const team = useSelector(state => state.team);
+  const game = useSelector(state => state.game);
   const classes = useStyles();
 
   return (
@@ -63,7 +80,9 @@ const NavBar = props => {
             ]}
           />
           <div className={classes.grow} />
-          <h3>{pageTitle({ ...props, user, selectedCompetition })}</h3>
+          <h3>
+            {pageTitle({ ...props, user, selectedCompetition, team, game })}
+          </h3>
           <div className={classes.grow} />
           {!token ? (
             <MenuButton
