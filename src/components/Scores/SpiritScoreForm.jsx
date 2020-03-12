@@ -73,15 +73,20 @@ export class SpiritScoreForm extends Component {
 
   onSubmit = async event => {
     event.preventDefault();
-    const { game, spiritScoreFor } = this.props;
-    const { id } = game;
+    const {
+      game: {
+        id,
+        homeTeamReceivedSpiritScoreId,
+        awayTeamReceivedSpiritScoreId
+      },
+      spiritScoreFor,
+      toggleSpiritForm,
+      updateSpiritScore,
+      addSpiritScore
+    } = this.props;
 
     const addNewSpiritScore =
-      spiritScoreFor === "home"
-        ? game.homeTeamReceivedSpiritScoreId
-          ? false
-          : true
-        : game.awayTeamReceivedSpiritScoreId
+      homeTeamReceivedSpiritScoreId || awayTeamReceivedSpiritScoreId
         ? false
         : true;
 
@@ -93,17 +98,17 @@ export class SpiritScoreForm extends Component {
 
     if (addNewSpiritScore) {
       console.log("Trying to add new");
-
-      this.props.addSpiritScore(spiritScoreData);
+      addSpiritScore(spiritScoreData);
     } else {
       console.log("Trying to update");
 
       const spiritScoreId =
         spiritScoreFor === "home"
-          ? game.homeTeamReceivedSpiritScoreId
-          : game.awayTeamReceivedSpiritScoreId;
-      this.props.updateSpiritScore(spiritScoreData, spiritScoreId);
+          ? homeTeamReceivedSpiritScoreId
+          : awayTeamReceivedSpiritScoreId;
+      updateSpiritScore(spiritScoreData, spiritScoreId);
     }
+    toggleSpiritForm();
   };
 
   render() {

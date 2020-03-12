@@ -6,6 +6,7 @@ import { getAllCompetitions } from "../../store/competition/actions";
 import CompetitionCard from "./CompetitionCard";
 import { fabPositioning, headerSpacing } from "../../styles";
 import Can from "../Can";
+import { getUserRole } from "../../helper-files/rbac-helpers";
 
 class Home extends Component {
   componentDidMount = () => {
@@ -22,9 +23,6 @@ class Home extends Component {
 
   render() {
     const { competitions, user } = this.props;
-    const userRoleId = user.organisation
-      ? user.organisation.roleId
-      : user.roleId;
 
     if (!competitions.length) {
       return <div style={headerSpacing}>Loading data...</div>;
@@ -34,7 +32,7 @@ class Home extends Component {
         {this.renderCompetitionCards()}
         {user && (
           <Can
-            roleId={userRoleId}
+            roleId={getUserRole(user)}
             perform="competitions:create"
             yes={() => {
               return (
@@ -58,21 +56,6 @@ class Home extends Component {
     );
   }
 }
-/*
- {!organisation && (
-                <Link to="/create-organisation">Create Club/Federation</Link>
-              )}
-              <Can
-                roleId={userRoleId}
-                perform="competitions:create"
-                yes={() => {
-                  return (
-                    <Link to="/create-competition">Create Competition</Link>
-                  );
-                }}
-                no={() => null}
-              />
-*/
 
 const mapStateToProps = state => ({
   competitions: state.competitions.all,

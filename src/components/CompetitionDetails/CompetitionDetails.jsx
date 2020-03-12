@@ -9,6 +9,7 @@ import { getOneCompetition } from "../../store/competition/actions";
 import { headerSpacing, fabPositioning } from "../../styles";
 import { RegisteredTeams } from "./RegisteredTeams";
 import { PlannedGames } from "./PlannedGames";
+import { getUserRole } from "../../helper-files/rbac-helpers";
 
 class CompetitionDetails extends Component {
   state = {
@@ -78,9 +79,7 @@ class CompetitionDetails extends Component {
   render() {
     const { competitionDays, teams, games } = this.props.competition;
     const { organisation } = this.props.user;
-    const userRoleId = organisation
-      ? organisation.roleId
-      : this.props.user.roleId;
+    const { user, history } = this.props;
     const organisationId = organisation ? organisation.id : 0;
     const competitionId = this.props.match.params.competitionId;
 
@@ -94,7 +93,7 @@ class CompetitionDetails extends Component {
             ))}
         </div>
         <Can
-          roleId={userRoleId}
+          roleId={getUserRole(user)}
           perform="teams:create"
           data={{
             organisationId,
@@ -107,22 +106,18 @@ class CompetitionDetails extends Component {
           {teams && (
             <RegisteredTeams
               teams={teams}
-              history={this.props.history}
+              history={history}
               competitionId={competitionId}
             />
           )}
         </div>
         <div>
           {games && teams && (
-            <PlannedGames
-              games={games}
-              history={this.props.history}
-              teams={teams}
-            />
+            <PlannedGames games={games} history={history} teams={teams} />
           )}
         </div>
         <Can
-          roleId={userRoleId}
+          roleId={getUserRole(user)}
           perform="games:create"
           yes={() => (
             <Fab

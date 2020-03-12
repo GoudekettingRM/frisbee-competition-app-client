@@ -1,6 +1,5 @@
 import Button from "@material-ui/core/Button";
-import isFuture from "date-fns/isFuture";
-import parseISO from "date-fns/parseISO";
+import moment from "moment";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getOneGame } from "../../store/game/actions";
@@ -53,7 +52,7 @@ class GameDetails extends Component {
         }}
         yes={() => {
           return (
-            !isFuture(parseISO(date)) &&
+            !moment(date).isAfter(moment()) &&
             !this.state.scoring && (
               <Button
                 color="primary"

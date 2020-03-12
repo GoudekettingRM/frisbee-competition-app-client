@@ -1,8 +1,7 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import isBefore from "date-fns/isBefore";
-import parseISO from "date-fns/parseISO";
+import moment from "moment";
 
 export const ScoreOrGameStartDetails = props => {
   const {
@@ -11,10 +10,9 @@ export const ScoreOrGameStartDetails = props => {
     location,
     startTime,
     lat,
-    lng
+    lng,
+    competitionDay: { date }
   } = props.game;
-
-  const { date } = props.game.competitionDay;
 
   const gameInFuture = () => {
     return (
@@ -80,7 +78,7 @@ export const ScoreOrGameStartDetails = props => {
         {awayTeamScore}
       </Typography>
     </div>
-  ) : isBefore(parseISO(date), new Date()) ? (
+  ) : moment(date).isBefore(moment()) ? (
     gamePlayedButNotScored()
   ) : (
     gameInFuture()

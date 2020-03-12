@@ -44,14 +44,14 @@ const pageTitle = currentProps => {
     organisations: "Organisations",
     profile: `Hi ${firstName}`,
     competitions: {
-      "/": `${selectedCompetition.name}`,
+      "": `${selectedCompetition.name}`,
       "create-game": `${selectedCompetition.name} - Add Game`,
       teams: `${team.name}`,
       games: `${homeTeamName} - ${awayTeamName}`
     }
   };
 
-  splitPath[3] = splitPath[3] === undefined ? "/" : splitPath[3];
+  splitPath[3] = splitPath[3] === undefined ? "" : splitPath[3];
 
   return splitPath[1] === "competitions"
     ? pageTitles[splitPath[1]][splitPath[3]]
