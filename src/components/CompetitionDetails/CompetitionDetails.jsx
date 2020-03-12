@@ -7,7 +7,8 @@ import AddTeamForm from "./AddTeamForm";
 import Can from "../Can";
 import { getOneCompetition } from "../../store/competition/actions";
 import { headerSpacing, fabPositioning } from "../../styles";
-import GameCard from "../GameDetails/GameCard";
+import { RegisteredTeams } from "./RegisteredTeams";
+import { PlannedGames } from "./PlannedGames";
 
 class CompetitionDetails extends Component {
   state = {
@@ -82,8 +83,8 @@ class CompetitionDetails extends Component {
       : this.props.user.roleId;
     const organisationId = organisation ? organisation.id : 0;
 
-    console.log("games test in comp details render", games);
-    console.log("teams test in comp details render", teams);
+    // console.log("games test in comp details render", games);
+    // console.log("teams test in comp details render", teams);
 
     return (
       <div style={headerSpacing}>
@@ -105,8 +106,18 @@ class CompetitionDetails extends Component {
           no={() => null}
         />
         <div>
-          <h3>Teams registered:</h3>
-          {teams && teams.map(team => <p key={team.id}>{team.name}</p>)}
+          {teams && (
+            <RegisteredTeams teams={teams} history={this.props.history} />
+          )}
+        </div>
+        <div>
+          {games && teams && (
+            <PlannedGames
+              games={games}
+              history={this.props.history}
+              teams={teams}
+            />
+          )}
         </div>
         <Can
           roleId={userRoleId}
@@ -128,19 +139,6 @@ class CompetitionDetails extends Component {
           )}
           no={() => null}
         />
-        <div>
-          <h3>Games:</h3>
-          {games &&
-            teams &&
-            games.map(game => (
-              <GameCard
-                history={this.props.history}
-                data={game}
-                teams={teams}
-                key={game.id}
-              />
-            ))}
-        </div>
       </div>
     );
   }
