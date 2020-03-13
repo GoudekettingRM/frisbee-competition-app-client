@@ -13,8 +13,10 @@ const styles = theme => ({
     margin: theme.spacing(2)
   },
   padding: {
-    marginTop: "80px",
-    padding: theme.spacing(1)
+    margin: "0 auto",
+    padding: theme.spacing(1),
+    minWidth: "250px",
+    maxWidth: "500px"
   }
 });
 

@@ -14,5 +14,6 @@ export const inputField = {
 };
 
 export const detailsMaxWidth = {
+  minWidth: "380px",
   maxWidth: "500px"
 };

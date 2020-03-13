@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PlaylistAdd from "@material-ui/icons/PlaylistAdd";
 import Fab from "@material-ui/core/Fab";
+import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import CompetitionDayCard from "./CompetitionDayCard";
@@ -72,51 +73,55 @@ class CompetitionDetails extends Component {
     const organisationId = organisation ? organisation.id : 0;
 
     return (
-      <div style={headerSpacing}>
+      <div style={{ margin: "20px" }}>
         <CompetitionDetailsDisplay competition={competition} />
-        <hr style={detailsMaxWidth} />
+
         <Grid container justify="center" direction="column" alignItems="center">
+          <Typography component="h1" variant="h5">
+            Competition days:
+          </Typography>
           {competitionDays &&
             competitionDays.map((day, index) => (
               <CompetitionDayCard day={day} id={index + 1} key={index + 1} />
             ))}
-        </Grid>
-        <Can
-          roleId={getUserRole(user)}
-          perform="teams:create"
-          data={{
-            organisationId,
-            competitionOrganisationId: this.props.competition.organisationId
-          }}
-          yes={() => this.renderForm()}
-        />
-        {teams && (
-          <RegisteredTeams
-            teams={teams}
-            history={history}
-            competitionId={competitionId}
+          <Can
+            roleId={getUserRole(user)}
+            perform="teams:create"
+            data={{
+              organisationId,
+              competitionOrganisationId: this.props.competition.organisationId
+            }}
+            yes={() => this.renderForm()}
           />
-        )}
-        {games && teams && (
-          <PlannedGames games={games} history={history} teams={teams} />
-        )}
-        <Can
-          roleId={getUserRole(user)}
-          perform="games:create"
-          yes={() => (
-            <Fab
-              size="small"
-              color="secondary"
-              aria-label="add"
-              style={fabPositioning}>
-              <PlaylistAdd
-                onClick={() =>
-                  history.push(`/competitions/${competitionId}/create-game`)
-                }
-              />
-            </Fab>
+
+          {teams && (
+            <RegisteredTeams
+              teams={teams}
+              history={history}
+              competitionId={competitionId}
+            />
           )}
-        />
+          {games && teams && (
+            <PlannedGames games={games} history={history} teams={teams} />
+          )}
+          <Can
+            roleId={getUserRole(user)}
+            perform="games:create"
+            yes={() => (
+              <Fab
+                size="small"
+                color="secondary"
+                aria-label="add"
+                style={fabPositioning}>
+                <PlaylistAdd
+                  onClick={() =>
+                    history.push(`/competitions/${competitionId}/create-game`)
+                  }
+                />
+              </Fab>
+            )}
+          />
+        </Grid>
       </div>
     );
   }

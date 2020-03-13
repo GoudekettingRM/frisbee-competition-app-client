@@ -37,12 +37,16 @@ export const CompetitionDetailsDisplay = props => {
   return (
     <div style={headerSpacing}>
       <Grid container justify="center" direction="column" alignItems="center">
+        <Typography component="h1" variant="h5">
+          Important dates:
+        </Typography>
         {renderDate("Starts", startDate)}
         {renderDate("Ends", endDate)}
         {renderDate("Team Registration Deadline", teamRegistrationDeadline)}
         {renderDate("Seeding Deadline", seedingDeadline)}
         {renderDate("Players List Deadline", playersListDeadline)}
       </Grid>
+      <hr style={detailsMaxWidth} />
     </div>
   );
 };

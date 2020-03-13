@@ -8,7 +8,12 @@ class ProfilePage extends Component {
   render() {
     const { firstName, lastName, email, organisation } = this.props.user;
     return (
-      <div style={headerSpacing}>
+      <div
+        style={{
+          minWidth: "250px",
+          maxWidth: "500px",
+          margin: "80px auto 0 auto"
+        }}>
         <DataCard
           value={firstName}
           name={"firstName"}

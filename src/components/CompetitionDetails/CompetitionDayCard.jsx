@@ -18,7 +18,7 @@ export default function CompetitionDayCard(props) {
       style={detailsMaxWidth}>
       <Grid item>
         <Typography component="p" variant="subtitle2">
-          Competition Day {id}:{" "}
+          Day {id}:{" "}
         </Typography>
       </Grid>
       <Grid item>
