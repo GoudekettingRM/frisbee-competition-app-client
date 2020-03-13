@@ -17,7 +17,11 @@ export function updateOrganisation(updateData) {
         updateData,
         authorization
       );
-      dispatch(updateOrganisationAction(updatedOrganisationData.data));
+      dispatch(
+        updateOrganisationAction(
+          updatedOrganisationData.data.updatedOrganisation
+        )
+      );
       dispatch(setNewStatusAction(updatedOrganisationData));
     } catch (error) {
       dispatch(setNewStatusAction(error.response));

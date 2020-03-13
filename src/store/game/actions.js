@@ -41,8 +41,8 @@ export function addSpiritScore(spiritScoreData) {
         authorization
       );
       // console.log("gameWithSpirit :", gameWithSpirit);
-      dispatch(updateGameDetailsAction(gameWithSpirit.data));
-      dispatch(setGameDetailsAction(gameWithSpirit.data));
+      dispatch(updateGameDetailsAction(gameWithSpirit.data.updatedGame));
+      dispatch(setGameDetailsAction(gameWithSpirit.data.updatedGame));
       dispatch(setNewStatusAction(gameWithSpirit));
     } catch (error) {
       dispatch(setNewStatusAction(error.response));
@@ -62,7 +62,7 @@ export function scoreGame(scores, gameId) {
         authorization
       );
 
-      dispatch(setGameDetailsAction(scoredGame.data));
+      dispatch(setGameDetailsAction(scoredGame.data.updatedGame));
       dispatch(setNewStatusAction(scoredGame));
     } catch (error) {
       dispatch(setNewStatusAction(error.response));
@@ -82,7 +82,7 @@ export function addGame(gameData) {
         authorization
       );
       // console.log("new game", newGame);
-      dispatch(addNewGameToCompetition(newGame.data));
+      dispatch(addNewGameToCompetition(newGame.data.newGame));
       dispatch(setNewStatusAction(newGame));
     } catch (error) {
       dispatch(setNewStatusAction(error.response));

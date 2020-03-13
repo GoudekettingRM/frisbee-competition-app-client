@@ -27,7 +27,7 @@ export function addTeam(newTeamData) {
         newTeamData,
         authorization
       );
-      dispatch(addNewTeamToCompetition(newTeam.data));
+      dispatch(addNewTeamToCompetition(newTeam.data.team));
       dispatch(setNewStatusAction(newTeam));
     } catch (error) {
       dispatch(setNewStatusAction(error.response));
