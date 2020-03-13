@@ -31,37 +31,47 @@ class Home extends Component {
     ));
   };
 
-  render() {
-    const { competitions, user, classes } = this.props;
+  renderAddCompetitionButton = user => {
+    const { classes } = this.props;
+    return (
+      <Can
+        roleId={getUserRole(user)}
+        perform="competitions:create"
+        yes={() => {
+          return (
+            <Fab
+              size="small"
+              color="secondary"
+              aria-label="add"
+              className={classes.fab}>
+              <AddIcon
+                onClick={() => this.props.history.push("/create-competition")}
+              />
+            </Fab>
+          );
+        }}
+        no={() => null}
+      />
+    );
+  };
 
+  render() {
+    const { competitions, user } = this.props;
+
+    console.log("user details", user);
     if (!competitions.length) {
-      return <div style={headerSpacing}>Loading data...</div>;
+      return (
+        <div style={headerSpacing}>
+          <div>Loading data...</div>
+          {user && this.renderAddCompetitionButton(user)}
+        </div>
+      );
     }
+
     return (
       <div style={headerSpacing}>
         {this.renderCompetitionCards()}
-        {user && (
-          <Can
-            roleId={getUserRole(user)}
-            perform="competitions:create"
-            yes={() => {
-              return (
-                <Fab
-                  size="small"
-                  color="secondary"
-                  aria-label="add"
-                  className={classes.fab}>
-                  <AddIcon
-                    onClick={() =>
-                      this.props.history.push("/create-competition")
-                    }
-                  />
-                </Fab>
-              );
-            }}
-            no={() => null}
-          />
-        )}
+        {user && this.renderAddCompetitionButton(user)}
       </div>
     );
   }
