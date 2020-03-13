@@ -13,10 +13,12 @@ import Logout from "./components/Login-out/Logout";
 import ProfilePage from "./components/Profile/ProfilePage";
 import SignUpPlayer from "./components/SignUp/SignUpPlayer";
 import TeamDetails from "./components/TeamDetails/TeamDetails";
+import { Snack } from "./components/SnackBar/Snack";
 import "./App.css";
 
 function App() {
   const token = useSelector(state => state.session.jwt);
+  const statusCode = useSelector(state => state.status.code);
 
   const protectedRoutes = (Component, routerProps) => {
     return token ? <Component {...routerProps} /> : <Redirect to="/login" />;
@@ -24,7 +26,7 @@ function App() {
   return (
     <div className="App">
       <NavBar />
-
+      {!!statusCode && <Snack />}
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/login" exact component={Login} />

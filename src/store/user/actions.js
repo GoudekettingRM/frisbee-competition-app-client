@@ -1,5 +1,6 @@
 import axios from "axios";
 import { baseUrl, authHeader } from "../../api";
+import { setNewStatusAction } from "../status/actions";
 
 export const SET_SESSION = "users/SET_SESSION_DATA";
 export const REMOVE_SESSION = "users/REMOVE_SESSION_DATA";
@@ -47,8 +48,13 @@ export function login(loginData) {
     try {
       const sessionData = await axios.post(`${baseUrl}/login`, loginData);
 
+      console.log("session data.data login test", sessionData);
+
       dispatch(setSessionAction(sessionData.data));
+      dispatch(setNewStatusAction(sessionData));
     } catch (error) {
+      console.log(error.response);
+      dispatch(setNewStatusAction(error.response));
       throw error;
     }
   };
