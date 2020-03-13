@@ -8,3 +8,12 @@ export const fabPositioning = {
 export const headerSpacing = {
   marginTop: "70px"
 };
+
+export const inputField = {
+  width: "223px"
+};
+
+export const detailsMaxWidth = {
+  minWidth: "380px",
+  maxWidth: "500px"
+};

@@ -5,12 +5,13 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React from "react";
 import { RegisteredTeamCard } from "./RegisteredTeamCard";
+import { detailsMaxWidth } from "../../styles";
 
 export const RegisteredTeams = props => {
   const { teams, history, competitionId } = props;
 
   return (
-    <div>
+    <div style={detailsMaxWidth}>
       <ExpansionPanel>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}

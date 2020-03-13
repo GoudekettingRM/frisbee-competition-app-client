@@ -1,20 +1,28 @@
-.App {
-  text-align: center;
-  font-family: Roboto, monospace;
+@media only screen and (min-width: 201px) {
+  .App {
+    text-align: center;
+    font-family: Roboto, monospace;
+  }
+  body {
+    margin: 0 20px;
+    max-height: 100vh;
+  }
+  .cardContainer {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+  }
+  .cardItem {
+    padding: 0.5rem;
+    margin: 0.2rem;
+  }
+  div.MuiCardContent-root.cardEntityName {
+    padding: 0;
+  }
 }
-body {
-  margin: 0 20px;
-  max-height: 100vh;
-}
-.cardContainer {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-}
-.cardItem {
-  padding: 0.5rem;
-  margin: 0.2rem;
-}
-div.MuiCardContent-root.cardEntityName {
-  padding: 0;
+
+@media only screen and (max-width: 200px) {
+  html {
+    display: none;
+  }
 }

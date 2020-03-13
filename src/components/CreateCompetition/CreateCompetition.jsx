@@ -11,8 +11,9 @@ import { addNewCompetition } from "../../store/competition/actions";
 import Can from "../Can";
 import { headerSpacing } from "../../styles";
 import { validCompetitionDates } from "../../validations/competitionValidations";
-import { Fab } from "@material-ui/core";
+import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { getUserRole } from "../../helper-files/rbac-helpers";
 import { withStyles } from "@material-ui/core";
@@ -108,6 +109,7 @@ class CreateCompetition extends Component {
   dateInput = (label, name) => {
     return (
       <KeyboardDatePicker
+        style={{ width: "223px", margin: "10px auto" }}
         margin="normal"
         label={label}
         format="DD/MM/YYYY"
@@ -121,23 +123,28 @@ class CreateCompetition extends Component {
     return (
       <form onSubmit={this.onSubmit} style={headerSpacing}>
         <div>
-          <TextField
-            style={{ width: "223px" }}
-            name="name"
-            label="Competition name"
-            value={this.state.name}
-            onChange={this.onChange}
-          />
-          <MuiPickersUtilsProvider utils={MomentUtils}>
-            {this.dateInput("Pick start date", "startDate")}
-            {this.dateInput("Pick end date", "endDate")}
-            {this.dateInput(
-              "Pick registration deadline",
-              "teamRegistrationDeadline"
-            )}
-            {this.dateInput("Pick seeding deadline", "seedingDeadline")}
-            {this.dateInput("Pick player list deadline", "playersListDeadline")}
-          </MuiPickersUtilsProvider>
+          <Grid container justify="center" direction="column">
+            <TextField
+              style={{ width: "223px", margin: "0 auto" }}
+              name="name"
+              label="Competition name"
+              value={this.state.name}
+              onChange={this.onChange}
+            />
+            <MuiPickersUtilsProvider utils={MomentUtils}>
+              {this.dateInput("Pick start date", "startDate")}
+              {this.dateInput("Pick end date", "endDate")}
+              {this.dateInput(
+                "Pick registration deadline",
+                "teamRegistrationDeadline"
+              )}
+              {this.dateInput("Pick seeding deadline", "seedingDeadline")}
+              {this.dateInput(
+                "Pick player list deadline",
+                "playersListDeadline"
+              )}
+            </MuiPickersUtilsProvider>
+          </Grid>
         </div>
         <h4 style={{ margin: "30px 0 -10px 0", color: "grey" }}>
           Competition days

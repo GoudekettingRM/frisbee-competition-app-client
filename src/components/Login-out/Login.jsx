@@ -6,14 +6,17 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import { login } from "../../store/user/actions";
+import { headerSpacing } from "../../styles";
 
 const styles = theme => ({
   margin: {
     margin: theme.spacing(2)
   },
   padding: {
-    marginTop: "80px",
-    padding: theme.spacing(1)
+    margin: "0 auto",
+    padding: theme.spacing(1),
+    minWidth: "250px",
+    maxWidth: "500px"
   }
 });
 
@@ -49,7 +52,7 @@ class Login extends Component {
     const { classes } = this.props;
 
     return (
-      <Paper className={classes.padding}>
+      <Paper className={classes.padding} style={headerSpacing}>
         <form className={classes.margin} onSubmit={this.onSubmit}>
           <Grid container spacing={8} alignItems="flex-end">
             <Grid item md={true} sm={true} xs={true}>

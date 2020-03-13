@@ -16,6 +16,7 @@ import { updateOrganisation } from "../../store/organisation/actions";
 
 const useStyles = makeStyles(theme => ({
   padding: {
+    margin: "0 auto",
     padding: theme.spacing(1)
   }
 }));
