@@ -7,18 +7,28 @@ import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuButton from "./MenuButton";
 import { useSelector } from "react-redux";
+import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   appBar: {
     top: 0,
     bottom: "auto",
-    width: "100%"
+    width: "100%",
+    height: "56px"
   },
   grow: {
     flexGrow: 1
   },
   tabLink: {
     display: "block"
+  },
+  title: {
+    fontFamily: "monospace",
+    fontSize: "2rem",
+    marginTop: theme.spacing(0.2),
+    marginBottom: theme.spacing(0.2),
+    whiteSpace: "nowrap",
+    overflow: "hidden"
   }
 }));
 
@@ -37,7 +47,7 @@ const pageTitle = currentProps => {
   const splitPath = pathname.split("/");
 
   const pageTitles = {
-    "": "Home",
+    "": "Ulti - Mate",
     login: "Log in",
     logout: "Log out",
     signup: "Sign up",
@@ -81,9 +91,9 @@ const NavBar = props => {
             ]}
           />
           <div className={classes.grow} />
-          <h3>
+          <Typography component="h3" className={classes.title}>
             {pageTitle({ ...props, user, selectedCompetition, team, game })}
-          </h3>
+          </Typography>
           <div className={classes.grow} />
           {!token ? (
             <MenuButton
