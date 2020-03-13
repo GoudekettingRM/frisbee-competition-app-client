@@ -15,6 +15,14 @@ import { Fab } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import TextField from "@material-ui/core/TextField";
 import { getUserRole } from "../../helper-files/rbac-helpers";
+import { withStyles } from "@material-ui/core";
+
+const styles = theme => ({
+  padding: {
+    marginTop: "70px",
+    padding: theme.spacing(0.75)
+  }
+});
 
 class CreateCompetition extends Component {
   state = {
@@ -110,6 +118,7 @@ class CreateCompetition extends Component {
   };
 
   renderCompetitionForm = () => {
+    const { classes } = this.props;
     return (
       <form onSubmit={this.onSubmit} style={headerSpacing}>
         <div>
@@ -177,4 +186,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = { addNewCompetition };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateCompetition);
+export default withStyles(styles)(
+  connect(mapStateToProps, mapDispatchToProps)(CreateCompetition)
+);
