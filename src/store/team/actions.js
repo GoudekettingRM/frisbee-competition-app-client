@@ -1,5 +1,6 @@
 import axios from "axios";
 import { baseUrl, authHeader } from "../../api";
+import { setNewStatusAction } from "../status/actions";
 
 export const ADD_TEAM_TO_COMPETITION = "teams/ADD_NEW_TEAM_TO_COMPETITION";
 export const SET_SELECTED_TEAM_DETAILS =
@@ -26,8 +27,10 @@ export function addTeam(newTeamData) {
         newTeamData,
         authorization
       );
-      dispatch(addNewTeamToCompetition(newTeam.data));
+      dispatch(addNewTeamToCompetition(newTeam.data.team));
+      dispatch(setNewStatusAction(newTeam));
     } catch (error) {
+      dispatch(setNewStatusAction(error.response));
       throw error;
     }
   };

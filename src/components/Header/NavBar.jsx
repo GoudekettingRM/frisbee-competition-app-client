@@ -11,7 +11,8 @@ import { useSelector } from "react-redux";
 const useStyles = makeStyles(theme => ({
   appBar: {
     top: 0,
-    bottom: "auto"
+    bottom: "auto",
+    width: "100%"
   },
   grow: {
     flexGrow: 1

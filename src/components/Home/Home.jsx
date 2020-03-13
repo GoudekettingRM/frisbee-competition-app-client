@@ -1,12 +1,22 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
-import { getAllCompetitions } from "../../store/competition/actions";
-import CompetitionCard from "./CompetitionCard";
-import { fabPositioning, headerSpacing } from "../../styles";
-import Can from "../Can";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import { getUserRole } from "../../helper-files/rbac-helpers";
+import { getAllCompetitions } from "../../store/competition/actions";
+import { headerSpacing } from "../../styles";
+import Can from "../Can";
+import CompetitionCard from "./CompetitionCard";
+import { withStyles } from "@material-ui/core";
+
+const styles = theme => ({
+  fab: {
+    position: "fixed",
+    zIndex: 1,
+    bottom: theme.spacing(4),
+    right: theme.spacing(3)
+  }
+});
 
 class Home extends Component {
   componentDidMount = () => {
@@ -22,7 +32,7 @@ class Home extends Component {
   };
 
   render() {
-    const { competitions, user } = this.props;
+    const { competitions, user, classes } = this.props;
 
     if (!competitions.length) {
       return <div style={headerSpacing}>Loading data...</div>;
@@ -40,7 +50,7 @@ class Home extends Component {
                   size="small"
                   color="secondary"
                   aria-label="add"
-                  style={fabPositioning}>
+                  className={classes.fab}>
                   <AddIcon
                     onClick={() =>
                       this.props.history.push("/create-competition")
@@ -65,4 +75,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = { getAllCompetitions };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default withStyles(styles)(
+  connect(mapStateToProps, mapDispatchToProps)(Home)
+);

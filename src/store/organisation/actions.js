@@ -1,5 +1,6 @@
 import axios from "axios";
 import { baseUrl, authHeader } from "../../api";
+import { setNewStatusAction } from "../status/actions";
 
 export const UPDATE_USER_ORGANISATION =
   "organisations/UPDATE_ORGANISATION_DATA_FOR_USER";
@@ -16,8 +17,14 @@ export function updateOrganisation(updateData) {
         updateData,
         authorization
       );
-      dispatch(updateOrganisationAction(updatedOrganisationData.data));
+      dispatch(
+        updateOrganisationAction(
+          updatedOrganisationData.data.updatedOrganisation
+        )
+      );
+      dispatch(setNewStatusAction(updatedOrganisationData));
     } catch (error) {
+      dispatch(setNewStatusAction(error.response));
       throw error;
     }
   };
@@ -43,7 +50,9 @@ export function addOrganisation(organsationData) {
       dispatch(
         updateUserWithNewOrganisation(newOrganisation.data.newOrganisation)
       );
+      dispatch(setNewStatusAction(newOrganisation));
     } catch (error) {
+      dispatch(setNewStatusAction(error.response));
       throw error;
     }
   };

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { baseUrl, authHeader } from "../../api";
+import { setNewStatusAction } from "../status/actions";
 
 export const SET_FETCHED_COMPETITIONS =
   "competitions/SET_FETCHED_COMPETITIONS_TO_STORE";
@@ -66,7 +67,9 @@ export function addNewCompetition(competitionData) {
           newCompetition.data.newCompetition
         )
       );
+      dispatch(setNewStatusAction(newCompetition));
     } catch (error) {
+      dispatch(setNewStatusAction(error.response));
       throw error;
     }
   };

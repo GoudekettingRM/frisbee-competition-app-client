@@ -1,5 +1,6 @@
 import axios from "axios";
 import { baseUrl, authHeader } from "../../api";
+import { setNewStatusAction } from "../status/actions";
 
 export const SET_GAME_DETAILS = "games/SET_SELECTED_GAME_DETAILS";
 export const UPDATE_GAME_DETAILS = "games/SET_UPDATED_GAME_DETAILS";
@@ -19,7 +20,9 @@ export function updateSpiritScore(spiritScoreData, id) {
       console.log("Game with updated spirit", gameWithUpdatedSpirit);
       dispatch(updateGameDetailsAction(gameWithUpdatedSpirit.data));
       dispatch(setGameDetailsAction(gameWithUpdatedSpirit.data));
+      dispatch(setNewStatusAction(gameWithUpdatedSpirit));
     } catch (error) {
+      dispatch(setNewStatusAction(error.response));
       throw error;
     }
   };
@@ -38,9 +41,11 @@ export function addSpiritScore(spiritScoreData) {
         authorization
       );
       // console.log("gameWithSpirit :", gameWithSpirit);
-      dispatch(updateGameDetailsAction(gameWithSpirit.data));
-      dispatch(setGameDetailsAction(gameWithSpirit.data));
+      dispatch(updateGameDetailsAction(gameWithSpirit.data.updatedGame));
+      dispatch(setGameDetailsAction(gameWithSpirit.data.updatedGame));
+      dispatch(setNewStatusAction(gameWithSpirit));
     } catch (error) {
+      dispatch(setNewStatusAction(error.response));
       throw error;
     }
   };
@@ -57,8 +62,10 @@ export function scoreGame(scores, gameId) {
         authorization
       );
 
-      dispatch(setGameDetailsAction(scoredGame.data));
+      dispatch(setGameDetailsAction(scoredGame.data.updatedGame));
+      dispatch(setNewStatusAction(scoredGame));
     } catch (error) {
+      dispatch(setNewStatusAction(error.response));
       throw error;
     }
   };
@@ -75,8 +82,10 @@ export function addGame(gameData) {
         authorization
       );
       // console.log("new game", newGame);
-      dispatch(addNewGameToCompetition(newGame.data));
+      dispatch(addNewGameToCompetition(newGame.data.newGame));
+      dispatch(setNewStatusAction(newGame));
     } catch (error) {
+      dispatch(setNewStatusAction(error.response));
       throw error;
     }
   };

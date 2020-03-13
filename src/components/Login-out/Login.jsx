@@ -30,13 +30,16 @@ class Login extends Component {
     });
   };
 
-  onSubmit = event => {
+  onSubmit = async event => {
     event.preventDefault();
-    const { login, token, history } = this.props;
-    login(this.state);
-    if (token) {
+    const { login, history } = this.props;
+    await login(this.state);
+    console.log("This.state", this.state);
+    console.log("token", this.props.token);
+
+    if (this.props.token) {
+      this.setState({ email: "", password: "" });
       history.push("/");
-      this.setState({ email: "", password: "", loginError: false });
     } else {
       this.setState({ email: "", password: "" });
     }
