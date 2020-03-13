@@ -66,7 +66,9 @@ export function addNewCompetition(competitionData) {
           newCompetition.data.newCompetition
         )
       );
+      dispatch(setNewStatusAction(newCompetition));
     } catch (error) {
+      dispatch(setNewStatusAction(error.response));
       throw error;
     }
   };

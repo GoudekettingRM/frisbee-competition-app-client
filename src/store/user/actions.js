@@ -18,7 +18,9 @@ export function updateUser(updateData) {
       );
 
       dispatch(updateUserAction(updatedUserData.data));
+      dispatch(setNewStatusAction(updatedUserData));
     } catch (error) {
+      dispatch(setNewStatusAction(error.response));
       throw error;
     }
   };
@@ -37,7 +39,9 @@ export function signUp(userData) {
       const sessionData = await axios.post(`${baseUrl}/users`, userData);
 
       dispatch(setSessionAction(sessionData.data));
+      dispatch(setNewStatusAction(sessionData));
     } catch (error) {
+      dispatch(setNewStatusAction(error.response));
       throw error;
     }
   };
