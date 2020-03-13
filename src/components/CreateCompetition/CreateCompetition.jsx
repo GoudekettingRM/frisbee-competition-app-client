@@ -118,7 +118,6 @@ class CreateCompetition extends Component {
   };
 
   renderCompetitionForm = () => {
-    const { classes } = this.props;
     return (
       <form onSubmit={this.onSubmit} style={headerSpacing}>
         <div>

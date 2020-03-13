@@ -72,7 +72,7 @@ class GameDetails extends Component {
   render() {
     console.log("Render of game detail:", this.props);
     if (!Object.keys(this.props.game).length) return <div>No data</div>;
-    const { homeTeam, awayTeam, game, user } = this.props;
+    const { homeTeam, awayTeam, game } = this.props;
     const scoresPresent = game.homeTeamScore ? true : false;
 
     return (

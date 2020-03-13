@@ -37,7 +37,7 @@ export const ScoreOrGameStartDetails = props => {
           </em>
           <br />
           <a
-            href={`http://maps.google.com/maps?q=${lat},${lng}`}
+            href={`https://maps.google.com/maps?q=${lat},${lng}`}
             target="_blank"
             rel="noopener noreferrer"
             style={{ textDecoration: "none" }}>

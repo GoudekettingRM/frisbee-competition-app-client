@@ -41,8 +41,8 @@ const pageTitle = currentProps => {
     location: { pathname }
   } = currentProps;
 
-  const homeTeamName = homeTeam ? homeTeam.name : null;
-  const awayTeamName = awayTeam ? awayTeam.name : null;
+  const homeTeamName = homeTeam && homeTeam.name;
+  const awayTeamName = awayTeam && awayTeam.name;
 
   const splitPath = pathname.split("/");
 
