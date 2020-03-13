@@ -26,7 +26,7 @@ export const Snack = () => {
 
   const severity = status200Range(processStatus)
     ? "success"
-    : processStatus >= 400
+    : status400Range(processStatus) || status500Range(processStatus)
     ? "error"
     : "info";
 
@@ -48,7 +48,7 @@ export const Snack = () => {
   };
 
   return (
-    <Snackbar open={open} autoHideDuration={10000} onClose={handleClose}>
+    <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
       <Alert onClose={handleClose} severity={severity}>
         {snackBarText(processStatus, processMessage)}
       </Alert>
