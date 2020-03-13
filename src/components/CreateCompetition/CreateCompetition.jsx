@@ -15,6 +15,7 @@ import { Fab } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import TextField from "@material-ui/core/TextField";
 import { getUserRole } from "../../helper-files/rbac-helpers";
+import { withStyles } from "@material-ui/core";
 
 const styles = theme => ({
   padding: {
