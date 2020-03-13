@@ -2,14 +2,17 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PlaylistAdd from "@material-ui/icons/PlaylistAdd";
 import Fab from "@material-ui/core/Fab";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 import CompetitionDayCard from "./CompetitionDayCard";
 import AddTeamForm from "./AddTeamForm";
 import Can from "../Can";
 import { getOneCompetition } from "../../store/competition/actions";
-import { headerSpacing, fabPositioning } from "../../styles";
+import { headerSpacing, fabPositioning, detailsMaxWidth } from "../../styles";
 import { RegisteredTeams } from "./RegisteredTeams";
 import { PlannedGames } from "./PlannedGames";
 import { getUserRole } from "../../helper-files/rbac-helpers";
+import { CompetitionDetailsDisplay } from "./CompetitionDetailsDisplay";
 
 class CompetitionDetails extends Component {
   state = {
@@ -30,29 +33,6 @@ class CompetitionDetails extends Component {
     });
   };
 
-  renderCompetitionDetails = () => {
-    const {
-      name,
-      startDate,
-      endDate,
-      teamRegistrationDeadline,
-      seedingDeadline,
-      playersListDeadline
-    } = this.props.competition;
-    return (
-      <div>
-        <h1>{name}</h1>
-        <div>
-          <p>Starts: {startDate}</p>
-          <p>Ends: {endDate}</p>
-          <p>Team Registration Deadline: {teamRegistrationDeadline}</p>
-          <p>Seeding Deadline: {seedingDeadline}</p>
-          <p>Players List Deadline: {playersListDeadline}</p>
-        </div>
-      </div>
-    );
-  };
-
   renderForm = () => {
     const { showForm } = this.state;
     const { organisation } = this.props.user;
@@ -63,7 +43,9 @@ class CompetitionDetails extends Component {
     return (
       <div>
         {!showForm && (
-          <button onClick={this.toggleForm}>Register a team!</button>
+          <Button color="primary" onClick={this.toggleForm}>
+            Register a team!
+          </Button>
         )}
         {showForm && (
           <AddTeamForm
@@ -77,21 +59,28 @@ class CompetitionDetails extends Component {
   };
 
   render() {
-    const { competitionDays, teams, games } = this.props.competition;
-    const { organisation } = this.props.user;
-    const { user, history } = this.props;
+    const {
+      competition: { competitionDays, teams, games },
+      user: { organisation },
+      history,
+      match: {
+        params: { competitionId }
+      }
+    } = this.props;
+    const { user, competition } = this.props;
+
     const organisationId = organisation ? organisation.id : 0;
-    const competitionId = this.props.match.params.competitionId;
 
     return (
       <div style={headerSpacing}>
-        {this.renderCompetitionDetails()}
-        <div>
+        <CompetitionDetailsDisplay competition={competition} />
+        <hr style={detailsMaxWidth} />
+        <Grid container justify="center" direction="column" alignItems="center">
           {competitionDays &&
             competitionDays.map((day, index) => (
               <CompetitionDayCard day={day} id={index + 1} key={index + 1} />
             ))}
-        </div>
+        </Grid>
         <Can
           roleId={getUserRole(user)}
           perform="teams:create"
@@ -100,22 +89,17 @@ class CompetitionDetails extends Component {
             competitionOrganisationId: this.props.competition.organisationId
           }}
           yes={() => this.renderForm()}
-          no={() => null}
         />
-        <div>
-          {teams && (
-            <RegisteredTeams
-              teams={teams}
-              history={history}
-              competitionId={competitionId}
-            />
-          )}
-        </div>
-        <div>
-          {games && teams && (
-            <PlannedGames games={games} history={history} teams={teams} />
-          )}
-        </div>
+        {teams && (
+          <RegisteredTeams
+            teams={teams}
+            history={history}
+            competitionId={competitionId}
+          />
+        )}
+        {games && teams && (
+          <PlannedGames games={games} history={history} teams={teams} />
+        )}
         <Can
           roleId={getUserRole(user)}
           perform="games:create"
@@ -127,14 +111,11 @@ class CompetitionDetails extends Component {
               style={fabPositioning}>
               <PlaylistAdd
                 onClick={() =>
-                  this.props.history.push(
-                    `/competitions/${this.props.match.params.competitionId}/create-game`
-                  )
+                  history.push(`/competitions/${competitionId}/create-game`)
                 }
               />
             </Fab>
           )}
-          no={() => null}
         />
       </div>
     );
