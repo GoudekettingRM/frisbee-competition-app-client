@@ -5,9 +5,7 @@ import {
   MuiPickersUtilsProvider
 } from "@material-ui/pickers";
 import Button from "@material-ui/core/Button";
-import DateFnsUtils from "@date-io/date-fns";
-import { withStyles, Typography } from "@material-ui/core";
-import Paper from "@material-ui/core/Paper";
+import MomentUtils from "@date-io/moment";
 import NewCompetitionDay from "./NewCompetitionDay";
 import { addNewCompetition } from "../../store/competition/actions";
 import Can from "../Can";
@@ -16,6 +14,7 @@ import { validCompetitionDates } from "../../validations/competitionValidations"
 import { Fab } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import TextField from "@material-ui/core/TextField";
+import { getUserRole } from "../../helper-files/rbac-helpers";
 
 const styles = theme => ({
   padding: {
@@ -46,14 +45,8 @@ class CreateCompetition extends Component {
     });
   };
   onChangeDate = (newValue, name) => {
-    const month =
-      newValue.getMonth() + 1 < 10
-        ? "0" + (newValue.getMonth() + 1)
-        : newValue.getMonth() + 1;
-    const newDate = `${newValue.getFullYear()}-${month}-${newValue.getDate()}`;
-
     this.setState({
-      [name]: newDate
+      [name]: newValue
     });
   };
 
@@ -116,7 +109,7 @@ class CreateCompetition extends Component {
       <KeyboardDatePicker
         margin="normal"
         label={label}
-        format="dd/MM/yyyy"
+        format="DD/MM/YYYY"
         value={this.state[name]}
         onChange={newDate => this.onChangeDate(newDate, name)}
       />
@@ -126,62 +119,51 @@ class CreateCompetition extends Component {
   renderCompetitionForm = () => {
     const { classes } = this.props;
     return (
-      <Paper className={classes.padding}>
-        <form onSubmit={this.onSubmit}>
-          <div>
-            <TextField
-              style={{ width: "223px" }}
-              name="name"
-              label="Competition name"
-              value={this.state.name}
-              onChange={this.onChange}
-            />
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              {this.dateInput("Pick start date", "startDate")}
-              {this.dateInput("Pick end date", "endDate")}
-              {this.dateInput(
-                "Pick registration deadline",
-                "teamRegistrationDeadline"
-              )}
-              {this.dateInput("Pick seeding deadline", "seedingDeadline")}
-              {this.dateInput(
-                "Pick player list deadline",
-                "playersListDeadline"
-              )}
-            </MuiPickersUtilsProvider>
-          </div>
-          <Typography
-            variant="h6"
-            component="h2"
-            style={{ margin: "20px 0 0 0" }}>
-            Competition days
-          </Typography>
-          <Fab
-            color="secondary"
-            style={{ position: "absolute", right: 20 }}
-            size="small"
-            type="button"
-            onClick={this.addCompetitionDayComponent}>
-            <AddIcon />
-          </Fab>
-          {this.state.competitionDays.filter(day => day !== "removed")}
-          <Button color="primary" type="submit" style={{ margin: "10px" }}>
-            Create
-          </Button>
-        </form>
-      </Paper>
+      <form onSubmit={this.onSubmit} style={headerSpacing}>
+        <div>
+          <TextField
+            style={{ width: "223px" }}
+            name="name"
+            label="Competition name"
+            value={this.state.name}
+            onChange={this.onChange}
+          />
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+            {this.dateInput("Pick start date", "startDate")}
+            {this.dateInput("Pick end date", "endDate")}
+            {this.dateInput(
+              "Pick registration deadline",
+              "teamRegistrationDeadline"
+            )}
+            {this.dateInput("Pick seeding deadline", "seedingDeadline")}
+            {this.dateInput("Pick player list deadline", "playersListDeadline")}
+          </MuiPickersUtilsProvider>
+        </div>
+        <h4 style={{ margin: "30px 0 -10px 0", color: "grey" }}>
+          Competition days
+        </h4>
+        <Fab
+          color="secondary"
+          style={{ position: "absolute", right: 20 }}
+          size="small"
+          type="button"
+          onClick={this.addCompetitionDayComponent}>
+          <AddIcon />
+        </Fab>
+        {this.state.competitionDays.filter(day => day !== "removed")}
+        <Button color="primary" type="submit" style={{ margin: "10px" }}>
+          Create
+        </Button>
+      </form>
     );
   };
 
   render() {
-    console.log("render of create comp", this.state);
+    // console.log("render of create comp", this.state);
 
-    const userRoleId = this.props.organisation
-      ? this.props.organisation.roleId
-      : this.props.user.roleId;
     return (
       <Can
-        roleId={userRoleId}
+        roleId={getUserRole(this.props.user)}
         perform="competitions:create"
         yes={() => this.renderCompetitionForm()}
         no={() => (

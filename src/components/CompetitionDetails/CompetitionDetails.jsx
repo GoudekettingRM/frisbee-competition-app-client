@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import PlaylistAdd from "@material-ui/icons/PlaylistAdd";
 import Fab from "@material-ui/core/Fab";
 import CompetitionDayCard from "./CompetitionDayCard";
@@ -8,7 +7,9 @@ import AddTeamForm from "./AddTeamForm";
 import Can from "../Can";
 import { getOneCompetition } from "../../store/competition/actions";
 import { headerSpacing, fabPositioning } from "../../styles";
-import GameCard from "../GameDetails/GameCard";
+import { RegisteredTeams } from "./RegisteredTeams";
+import { PlannedGames } from "./PlannedGames";
+import { getUserRole } from "../../helper-files/rbac-helpers";
 
 class CompetitionDetails extends Component {
   state = {
@@ -78,14 +79,9 @@ class CompetitionDetails extends Component {
   render() {
     const { competitionDays, teams, games } = this.props.competition;
     const { organisation } = this.props.user;
-    const userRoleId = organisation
-      ? organisation.roleId
-      : this.props.user.roleId;
+    const { user, history } = this.props;
     const organisationId = organisation ? organisation.id : 0;
-
-    if (this.state.redirect) {
-      return <Redirect to={this.state.redirect} />;
-    }
+    const competitionId = this.props.match.params.competitionId;
 
     return (
       <div style={headerSpacing}>
@@ -97,7 +93,7 @@ class CompetitionDetails extends Component {
             ))}
         </div>
         <Can
-          roleId={userRoleId}
+          roleId={getUserRole(user)}
           perform="teams:create"
           data={{
             organisationId,
@@ -107,11 +103,21 @@ class CompetitionDetails extends Component {
           no={() => null}
         />
         <div>
-          <h3>Teams registered:</h3>
-          {teams && teams.map(team => <p key={team.id}>{team.name}</p>)}
+          {teams && (
+            <RegisteredTeams
+              teams={teams}
+              history={history}
+              competitionId={competitionId}
+            />
+          )}
+        </div>
+        <div>
+          {games && teams && (
+            <PlannedGames games={games} history={history} teams={teams} />
+          )}
         </div>
         <Can
-          roleId={userRoleId}
+          roleId={getUserRole(user)}
           perform="games:create"
           yes={() => (
             <Fab
@@ -121,23 +127,15 @@ class CompetitionDetails extends Component {
               style={fabPositioning}>
               <PlaylistAdd
                 onClick={() =>
-                  this.setState({
-                    redirect: `/competitions/${this.props.match.params.competitionId}/create-game`
-                  })
+                  this.props.history.push(
+                    `/competitions/${this.props.match.params.competitionId}/create-game`
+                  )
                 }
               />
             </Fab>
           )}
           no={() => null}
         />
-        <div>
-          <h3>Games:</h3>
-          {games &&
-            teams &&
-            games.map(game => (
-              <GameCard data={game} teams={teams} key={game.id} />
-            ))}
-        </div>
       </div>
     );
   }

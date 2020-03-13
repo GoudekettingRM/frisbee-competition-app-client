@@ -1,18 +1,24 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
-import { Redirect } from "react-router-dom";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getUserRole } from "../../helper-files/rbac-helpers";
 import { getAllCompetitions } from "../../store/competition/actions";
-import CompetitionCard from "./CompetitionCard";
-import { fabPositioning, headerSpacing } from "../../styles";
+import { headerSpacing } from "../../styles";
 import Can from "../Can";
+import CompetitionCard from "./CompetitionCard";
+import { withStyles } from "@material-ui/core";
+
+const styles = theme => ({
+  fab: {
+    position: "fixed",
+    zIndex: 1,
+    bottom: theme.spacing(4),
+    right: theme.spacing(3)
+  }
+});
 
 class Home extends Component {
-  state = {
-    redirect: null
-  };
-
   componentDidMount = () => {
     if (!this.props.competitions.length) {
       this.props.getAllCompetitions();
@@ -26,14 +32,7 @@ class Home extends Component {
   };
 
   render() {
-    const { competitions, user } = this.props;
-    const userRoleId = user.organisation
-      ? user.organisation.roleId
-      : user.roleId;
-
-    if (this.state.redirect) {
-      return <Redirect to={this.state.redirect} />;
-    }
+    const { competitions, user, classes } = this.props;
 
     if (!competitions.length) {
       return <div style={headerSpacing}>Loading data...</div>;
@@ -43,7 +42,7 @@ class Home extends Component {
         {this.renderCompetitionCards()}
         {user && (
           <Can
-            roleId={userRoleId}
+            roleId={getUserRole(user)}
             perform="competitions:create"
             yes={() => {
               return (
@@ -51,10 +50,10 @@ class Home extends Component {
                   size="small"
                   color="secondary"
                   aria-label="add"
-                  style={fabPositioning}>
+                  className={classes.fab}>
                   <AddIcon
                     onClick={() =>
-                      this.setState({ redirect: "/create-competition" })
+                      this.props.history.push("/create-competition")
                     }
                   />
                 </Fab>
@@ -67,21 +66,6 @@ class Home extends Component {
     );
   }
 }
-/*
- {!organisation && (
-                <Link to="/create-organisation">Create Club/Federation</Link>
-              )}
-              <Can
-                roleId={userRoleId}
-                perform="competitions:create"
-                yes={() => {
-                  return (
-                    <Link to="/create-competition">Create Competition</Link>
-                  );
-                }}
-                no={() => null}
-              />
-*/
 
 const mapStateToProps = state => ({
   competitions: state.competitions.all,
@@ -91,4 +75,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = { getAllCompetitions };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default withStyles(styles)(
+  connect(mapStateToProps, mapDispatchToProps)(Home)
+);

@@ -5,9 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import { Redirect } from "react-router";
 import { login } from "../../store/user/actions";
-import { headerSpacing } from "../../styles";
 
 const styles = theme => ({
   margin: {
@@ -23,7 +21,7 @@ class Login extends Component {
   state = {
     email: "",
     password: "",
-    redirect: null
+    loginError: false
   };
 
   onChange = event => {
@@ -32,24 +30,23 @@ class Login extends Component {
     });
   };
 
-  onSubmit = event => {
+  onSubmit = async event => {
     event.preventDefault();
-    this.props.login(this.state);
-    this.setState({
-      email: "",
-      password: "",
-      redirect: "/"
-    });
+    const { login, history } = this.props;
+    await login(this.state);
+    console.log("This.state", this.state);
+    console.log("token", this.props.token);
+
+    if (this.props.token) {
+      this.setState({ email: "", password: "" });
+      history.push("/");
+    } else {
+      this.setState({ email: "", password: "" });
+    }
   };
 
   render() {
-    const { classes, token } = this.props;
-    const { redirect } = this.state;
-
-    if (redirect) return <Redirect to={redirect} />;
-
-    if (token && !redirect)
-      return <div style={headerSpacing}>Login successful </div>;
+    const { classes } = this.props;
 
     return (
       <Paper className={classes.padding}>
@@ -94,9 +91,7 @@ class Login extends Component {
                 style={{ textTransform: "none" }}
                 variant="text"
                 color="primary"
-                onClick={() =>
-                  this.setState({ ...this.state, redirect: "/signup" })
-                }>
+                onClick={() => this.props.history.push("/signup")}>
                 Sign up
               </Button>
             </Grid>
