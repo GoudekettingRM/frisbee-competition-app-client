@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import DataCard from "./DataCard";
-import { headerSpacing } from "../../styles";
 
 class ProfilePage extends Component {
   render() {

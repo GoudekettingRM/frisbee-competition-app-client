@@ -9,7 +9,7 @@ import CompetitionDayCard from "./CompetitionDayCard";
 import AddTeamForm from "./AddTeamForm";
 import Can from "../Can";
 import { getOneCompetition } from "../../store/competition/actions";
-import { headerSpacing, fabPositioning, detailsMaxWidth } from "../../styles";
+import { fabPositioning } from "../../styles";
 import { RegisteredTeams } from "./RegisteredTeams";
 import { PlannedGames } from "./PlannedGames";
 import { getUserRole } from "../../helper-files/rbac-helpers";

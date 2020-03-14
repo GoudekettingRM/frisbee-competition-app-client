@@ -11,8 +11,8 @@ export const RegisteredTeams = props => {
   const { teams, history, competitionId } = props;
 
   return (
-    <div style={detailsMaxWidth}>
-      <ExpansionPanel>
+    <div>
+      <ExpansionPanel style={detailsMaxWidth}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"

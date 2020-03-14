@@ -10,8 +10,8 @@ import { detailsMaxWidth } from "../../styles";
 export const PlannedGames = props => {
   const { games, history, teams } = props;
   return (
-    <div style={detailsMaxWidth}>
-      <ExpansionPanel>
+    <div>
+      <ExpansionPanel style={detailsMaxWidth}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
