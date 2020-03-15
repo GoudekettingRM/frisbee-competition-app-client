@@ -5,6 +5,7 @@ import { setNewStatusAction } from "../status/actions";
 export const SET_SESSION = "users/SET_SESSION_DATA";
 export const REMOVE_SESSION = "users/REMOVE_SESSION_DATA";
 export const UPDATE_USER_DATA = "users/UPDATE_USER_DATA";
+export const ADD_USER_TO_TEAM = "users/ADD_USER_TO_TEAM";
 
 export function updateUser(updateData) {
   return async (dispatch, getState) => {
@@ -23,6 +24,13 @@ export function updateUser(updateData) {
       dispatch(setNewStatusAction(error.response));
       throw error;
     }
+  };
+}
+
+export function addUserToTeamAction(userData) {
+  return {
+    type: ADD_USER_TO_TEAM,
+    payload: userData
   };
 }
 

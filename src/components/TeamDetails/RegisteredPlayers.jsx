@@ -5,15 +5,23 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React from "react";
 import { RegisteredPlayerCard } from "./RegisteredPlayerCard";
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles(theme => ({
+  panelWidth: {
+    margin: "0 auto",
+    minWidth: "250px",
+    maxWidth: "500px"
+  }
+}));
 
 export const RegisteredPlayers = props => {
+  const classes = useStyles();
   const { players } = props;
-
-  console.log("Registered players props", players);
 
   return (
     <div>
-      <ExpansionPanel>
+      <ExpansionPanel className={classes.panelWidth}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
