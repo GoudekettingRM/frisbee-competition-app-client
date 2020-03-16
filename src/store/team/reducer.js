@@ -8,7 +8,7 @@ export default (state = initialState, { type, payload }) => {
     case ADD_USER_TO_TEAM: {
       return {
         ...state,
-        users: [...state.users, payload]
+        users: [...state.users, payload.user]
       };
     }
     case SET_SELECTED_TEAM_DETAILS:

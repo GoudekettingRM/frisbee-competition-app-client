@@ -25,20 +25,26 @@ class TeamDetails extends Component {
     const {
       team,
       getTeam,
+      history,
+      selectedCompetition,
       match: {
-        params: { teamId }
+        params: { teamId, competitionId }
       }
     } = this.props;
-    if (!Object.keys(team).length) {
+
+    if (!Object.keys(selectedCompetition).length) {
+      history.push(`/competitions/${competitionId}`);
+    } else if (!Object.keys(team).length) {
       getTeam(teamId);
     }
   };
 
   joinTeam = async () => {
-    console.log("Joining team");
-
     const {
       user: { team: userTeam },
+      match: {
+        params: { competitionId, teamId }
+      },
       team,
       updateUser,
       addUserToTeamAction
@@ -50,18 +56,29 @@ class TeamDetails extends Component {
 
     if (window.confirm(message)) {
       await updateUser({ teamId: team.id });
-      await addUserToTeamAction(this.props.user);
+
+      await addUserToTeamAction({
+        user: this.props.user,
+        competitionId,
+        teamId
+      });
     } else {
       return null;
     }
   };
 
   render() {
-    const { team, user, classes } = this.props;
+    const {
+      team,
+      user,
+      classes,
+      match: {
+        params: { teamId }
+      }
+    } = this.props;
     if (!Object.keys(team).length) {
       return <div style={headerSpacing}>Loading ...</div>;
     }
-    console.log("team test", team);
 
     return (
       <div style={headerSpacing}>
@@ -69,6 +86,7 @@ class TeamDetails extends Component {
           <Can
             roleId={getUserRole(user)}
             perform="teams:update-join"
+            data={{ userTeamId: user.teamId, teamId: parseInt(teamId) }}
             yes={() => (
               <Fab
                 variant="extended"
@@ -89,7 +107,8 @@ class TeamDetails extends Component {
 
 const mapStateToProps = state => ({
   team: state.team,
-  user: state.session.user
+  user: state.session.user,
+  selectedCompetition: state.competitions.selected
 });
 
 const mapDispatchToProps = { getTeam, updateUser, addUserToTeamAction };

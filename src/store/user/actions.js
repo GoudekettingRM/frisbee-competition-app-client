@@ -6,6 +6,7 @@ export const SET_SESSION = "users/SET_SESSION_DATA";
 export const REMOVE_SESSION = "users/REMOVE_SESSION_DATA";
 export const UPDATE_USER_DATA = "users/UPDATE_USER_DATA";
 export const ADD_USER_TO_TEAM = "users/ADD_USER_TO_TEAM";
+export const REMOVE_USER_FROM_TEAM = "users/REMOVE_USER_FROM_TEAM";
 
 export function updateUser(updateData) {
   return async (dispatch, getState) => {
@@ -30,6 +31,13 @@ export function updateUser(updateData) {
 export function addUserToTeamAction(userData) {
   return {
     type: ADD_USER_TO_TEAM,
+    payload: userData
+  };
+}
+
+export function removeUserFromTeamAction(userData) {
+  return {
+    type: REMOVE_USER_FROM_TEAM,
     payload: userData
   };
 }

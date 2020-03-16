@@ -9,17 +9,15 @@ import {
 
 const rules = {
   [player]: {
-    static: [
-      "players:read",
-      "teams:read",
-      "teams:update-join",
-      "competitions:read",
-      "games:read"
-    ],
+    static: ["players:read", "teams:read", "competitions:read", "games:read"],
     dynamic: {
       "players:update": ({ userId, playerId }) => {
         if (!userId || !playerId) return false;
         return userId === playerId;
+      },
+      "teams:update-join": ({ userTeamId, teamId }) => {
+        if (!userTeamId) return true;
+        return userTeamId !== teamId;
       },
       "players:delete": ({ userId, playerId }) => {
         if (!userId || !playerId) return false;
@@ -28,13 +26,7 @@ const rules = {
     }
   },
   [spiritCaptain]: {
-    static: [
-      "players:read",
-      "teams:read",
-      "teams:update-join",
-      "competitions:read",
-      "games:read"
-    ],
+    static: ["players:read", "teams:read", "competitions:read", "games:read"],
     dynamic: {
       "players:update": ({ userId, playerId }) => {
         if (!userId || !playerId) return false;
@@ -43,6 +35,10 @@ const rules = {
       "players:delete": ({ userId, playerId }) => {
         if (!userId || !playerId) return false;
         return userId === playerId;
+      },
+      "teams:update-join": ({ userTeamId, teamId }) => {
+        if (!userTeamId) return true;
+        return userTeamId !== teamId;
       },
       "games:update-score": ({ homeTeam, awayTeam, user }) => {
         if (!homeTeam || !awayTeam || !user) return false;
@@ -62,13 +58,7 @@ const rules = {
     }
   },
   [teamCaptain]: {
-    static: [
-      "players:read",
-      "teams:read",
-      "teams:update-join",
-      "competitions:read",
-      "games:read"
-    ],
+    static: ["players:read", "teams:read", "competitions:read", "games:read"],
     dynamic: {
       "players:update": ({ userId, playerId }) => {
         if (!userId || !playerId) return false;
@@ -77,6 +67,10 @@ const rules = {
       "players:delete": ({ userId, playerId }) => {
         if (!userId || !playerId) return false;
         return userId === playerId;
+      },
+      "teams:update-join": ({ userTeamId, teamId }) => {
+        if (!userTeamId) return true;
+        return userTeamId !== teamId;
       },
       "teams:update-(un)assign-captains": ({ teamId, userTeamId }) => {
         if (!teamId || !userTeamId) return false;
