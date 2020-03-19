@@ -1,6 +1,6 @@
 # Ulti - Mate
 
-## [Check out the deployed version here!](https://ulti-mate.netlify.com/signup)
+## [Check out the deployed version here!](https://ulti-mate.netlify.com/)
 
 ## What this project is about
 
