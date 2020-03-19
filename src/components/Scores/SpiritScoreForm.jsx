@@ -86,7 +86,8 @@ export class SpiritScoreForm extends Component {
     } = this.props;
 
     const addNewSpiritScore =
-      homeTeamReceivedSpiritScoreId || awayTeamReceivedSpiritScoreId
+      (spiritScoreFor === "home" && homeTeamReceivedSpiritScoreId) ||
+      (spiritScoreFor === "away" && awayTeamReceivedSpiritScoreId)
         ? false
         : true;
 
