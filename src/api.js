@@ -1,4 +1,4 @@
-export const baseUrl = "https://ulti-mate.herokuapp.com";
+export const baseUrl = "http://localhost:4000";
 
 // local: http://localhost:4000
 //https://ulti-mate.herokuapp.com

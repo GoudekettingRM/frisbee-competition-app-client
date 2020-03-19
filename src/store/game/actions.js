@@ -19,7 +19,7 @@ export function updateSpiritScore(spiritScoreData, id) {
       );
       console.log("Game with updated spirit", gameWithUpdatedSpirit);
       dispatch(updateGameDetailsAction(gameWithUpdatedSpirit.data));
-      dispatch(setGameDetailsAction(gameWithUpdatedSpirit.data));
+      dispatch(setGameDetailsAction(gameWithUpdatedSpirit.data.updatedGame));
       dispatch(setNewStatusAction(gameWithUpdatedSpirit));
     } catch (error) {
       dispatch(setNewStatusAction(error.response));
