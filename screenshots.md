@@ -2,20 +2,26 @@
 
 #### Home Page
 
-<img src="https://user-images.githubusercontent.com/56813989/77044202-47a6b880-69bf-11ea-87d3-e85ae85c4e00.png" alt="Home Page Wireframe" height="400px">
+<img width="368" alt="home" src="https://user-images.githubusercontent.com/56813989/77089482-2ae1a380-6a06-11ea-82b5-c62e731bcfff.png">
 
 #### Create a competition page
 
-<img src="https://user-images.githubusercontent.com/56813989/77044209-4b3a3f80-69bf-11ea-9b08-12602e60fd32.png" alt="Create Competition Wireframe" height="400px">
+<img width="366" alt="create-competition" src="https://user-images.githubusercontent.com/56813989/77089470-27e6b300-6a06-11ea-9092-180c5416148e.png">
 
-#### Competition details page
+#### Login
 
-<img src="https://user-images.githubusercontent.com/56813989/77044206-49707c00-69bf-11ea-821e-8e05a7a421c9.png" alt="Competition Details Wireframe" height="400px">
+<img width="367" alt="login" src="https://user-images.githubusercontent.com/56813989/77089475-29b07680-6a06-11ea-8339-e6b948cd7e16.png">
 
-#### Create a user pages
+#### Sign up
 
-<img src="https://user-images.githubusercontent.com/56813989/77044207-4aa1a900-69bf-11ea-9a95-a75d57a14fed.png" alt="Create New User Wireframe" height="400px">
+<img width="368" alt="signup" src="https://user-images.githubusercontent.com/56813989/77089480-2a490d00-6a06-11ea-8316-6821e7f181d8.png">
 
-#### Register a new team page
+#### Game details 
 
-<img src="https://user-images.githubusercontent.com/56813989/77044212-4bd2d600-69bf-11ea-9abc-3df9ebbb08a4.png" alt="Register a New Team Wireframe" height="400px">
+<img width="374" alt="game-details" src="https://user-images.githubusercontent.com/56813989/77089486-2ae1a380-6a06-11ea-9efe-90c346c23f6b.png">
+
+### Add Spirit Score 
+
+<img width="369" alt="add-spirit" src="https://user-images.githubusercontent.com/56813989/77089487-2b7a3a00-6a06-11ea-955e-5473c5338bf4.png">
+
+<img width="367" alt="add-spirit-2" src="https://user-images.githubusercontent.com/56813989/77089488-2b7a3a00-6a06-11ea-8373-797ca1a7fcbc.png">
