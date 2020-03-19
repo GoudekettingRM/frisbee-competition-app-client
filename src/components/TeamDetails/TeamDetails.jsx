@@ -8,7 +8,7 @@ import { headerSpacing } from "../../styles";
 import Can from "../Can";
 import { RegisteredPlayers } from "./RegisteredPlayers";
 import { withStyles } from "@material-ui/core";
-import { updateUser, addUserToTeamAction } from "../../store/user/actions";
+import { updateUser, changeUserTeam } from "../../store/user/actions";
 
 const styles = theme => ({
   fab: {
@@ -41,26 +41,37 @@ class TeamDetails extends Component {
 
   joinTeam = async () => {
     const {
-      user: { team: userTeam },
+      user,
+      user: {
+        team: userTeam,
+        teamId: oldUserTeamId,
+        team: {
+          competitions: {
+            0: { id: oldUserTeamCompetitionId }
+          }
+        }
+      },
       match: {
         params: { competitionId, teamId }
       },
       team,
       updateUser,
-      addUserToTeamAction
+      changeUserTeam
     } = this.props;
 
     const message = userTeam
-      ? `You are currently a registered player of ${userTeam.name}. By joining ${team.name}, you will be removed from ${userTeam.name}.`
+      ? `You are currently a registered player of ${userTeam.name}. By joining ${team.name}, you will be removed from ${userTeam.name}. Are you sure you want to change teams?`
       : `Are you sure you want to join ${team.name}`;
 
     if (window.confirm(message)) {
       await updateUser({ teamId: team.id });
 
-      await addUserToTeamAction({
-        user: this.props.user,
+      await changeUserTeam({
+        user,
+        teamId,
         competitionId,
-        teamId
+        oldUserTeamId,
+        oldUserTeamCompetitionId
       });
     } else {
       return null;
@@ -111,7 +122,7 @@ const mapStateToProps = state => ({
   selectedCompetition: state.competitions.selected
 });
 
-const mapDispatchToProps = { getTeam, updateUser, addUserToTeamAction };
+const mapDispatchToProps = { getTeam, updateUser, changeUserTeam };
 
 export default withStyles(styles)(
   connect(mapStateToProps, mapDispatchToProps)(TeamDetails)

@@ -1,68 +1,82 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Ulti - Mate
 
-## Available Scripts
+## [Check out the deployed version here!](https://ulti-mate.netlify.com/signup)
 
-In the project directory, you can run:
+## What this project is about
 
-### `npm start`
+This is my very first, very own client for a full-stack application that I made, demonstrating my understanding of JavaScript and React/Redux. For more about my goals for this project, checkout **[My Goals](#goals-for-this-project)**
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Table of contents:
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- **[Technologies used](#technologies-used)**
+- **[Goals for this project](#goals-for-this-project)**
+- **[Wireframes for this project](#wireframes-for-this-project)**
+- **[Features built so far overview with pull requests](#features-built-so-far-overview-with-pull-requests)**
+- **[My git workflow](#my-git-workflow)**
+- **[My agile workflow and trello board](#my-agile-workflow-and-trello-board)**
+- **[create-react-app-docs](#create-react-app)**
 
-### `npm test`
+## Technologies used
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### 👀👇 Click links to view some samples in this project 👇👀
 
-### `npm run build`
+- **[React (OOP)](./src/components/CompetitionDetails/AddTeamForm.jsx)**
+- **[React (FP)](./src/components/GameDetails/TeamGameDetails.jsx)**
+- **[Redux](./src/store/user/reducer.js)**
+- **[Redux-Thunk](./src/store/user/actions.js)**
+- **[Rule-Based Access Control (RBAC)](./src/components/rbac-rules.js)**
+- **[RBAC Can component](./src/components/Can.js)**
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Goals for this project:
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+- To practice working on a bigger project
+- To showcase what I have learned during my coding bootcamp at codaisseur.
+- **[To show disciplined git usage](#my-git-workflow)**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Wireframes for this project
 
-### `npm run eject`
+#### Home Page
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<img src="https://user-images.githubusercontent.com/56813989/77044202-47a6b880-69bf-11ea-87d3-e85ae85c4e00.png" alt="Home Page Wireframe" height="400px">
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Create a competition page
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<img src="https://user-images.githubusercontent.com/56813989/77044209-4b3a3f80-69bf-11ea-9b08-12602e60fd32.png" alt="Create Competition Wireframe" height="400px">
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### Competition details page
 
-## Learn More
+<img src="https://user-images.githubusercontent.com/56813989/77044206-49707c00-69bf-11ea-821e-8e05a7a421c9.png" alt="Competition Details Wireframe" height="400px">
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Create a user pages
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<img src="https://user-images.githubusercontent.com/56813989/77044207-4aa1a900-69bf-11ea-9a95-a75d57a14fed.png" alt="Create New User Wireframe" height="400px">
 
-### Code Splitting
+#### Register a new team page
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+<img src="https://user-images.githubusercontent.com/56813989/77044212-4bd2d600-69bf-11ea-9abc-3df9ebbb08a4.png" alt="Register a New Team Wireframe" height="400px">
 
-### Analyzing the Bundle Size
+## Features built so far overview with pull requests
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+#### 👀👇 Click links to view the pull requests 👇👀
 
-### Making a Progressive Web App
+- **[Feat/add game](https://github.com/GoudekettingRM/frisbee-competition-app-client/pull/4)**
+- **[Feat/show and update game](https://github.com/GoudekettingRM/frisbee-competition-app-client/pull/10)**
+- **[Feat/snack bar for feedback](https://github.com/GoudekettingRM/frisbee-competition-app-client/pull/13)**
+- **[Styling](https://github.com/GoudekettingRM/frisbee-competition-app-client/pull/7)**
+- **[Rbac](https://github.com/GoudekettingRM/frisbee-competition-app-client/pull/2)**
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+## My git workflow
 
-### Advanced Configuration
+In this project I try to use:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+- Good commit messages
+- Well named branches
+- Pull requests with summaries
 
-### Deployment
+If you have feedback to improve my git usage: **[please drop me a message!](https://www.linkedin.com/in/robinmgoudeketting/)**
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+## Create React App
 
-### `npm run build` fails to minify
+This project was scaffolded using the create-react-app cli.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+**[The standard create-react-app docs can be found in here](./create-react-app-docs.md)**
