@@ -28,14 +28,39 @@ export function updateUser(updateData) {
   };
 }
 
-export function addUserToTeamAction(userData) {
+export function changeUserTeam({
+  user,
+  newTeamId,
+  newCompetitionId,
+  oldTeamId,
+  oldCompetitionId
+}) {
+  return (dispatch, getState) => {
+    dispatch(
+      addUserToTeamAction({
+        user,
+        competitionId: newCompetitionId,
+        teamId: newTeamId
+      })
+    );
+    dispatch(
+      removeUserFromTeamAction({
+        userId: user.id,
+        teamId: oldTeamId,
+        competitionId: oldCompetitionId
+      })
+    );
+  };
+}
+
+function addUserToTeamAction(userData) {
   return {
     type: ADD_USER_TO_TEAM,
     payload: userData
   };
 }
 
-export function removeUserFromTeamAction(userData) {
+function removeUserFromTeamAction(userData) {
   return {
     type: REMOVE_USER_FROM_TEAM,
     payload: userData

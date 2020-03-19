@@ -8,8 +8,6 @@ const initialState = {
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case SET_NEW_STATUS: {
-      console.log(payload);
-
       return {
         ...state,
         code: payload.status,
