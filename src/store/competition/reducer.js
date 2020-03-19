@@ -5,7 +5,7 @@ import {
 } from "./actions";
 import { ADD_TEAM_TO_COMPETITION } from "../team/actions";
 import { ADD_GAME_TO_COMPETITION, UPDATE_GAME_DETAILS } from "../game/actions";
-import { ADD_USER_TO_TEAM } from "../user/actions";
+import { ADD_USER_TO_TEAM, REMOVE_USER_FROM_TEAM } from "../user/actions";
 
 const initialState = {
   all: [],
@@ -14,6 +14,11 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
+    case REMOVE_USER_FROM_TEAM: {
+      console.log("REEEEEMMOOOOOOOVVEEEE!");
+
+      return state;
+    }
     case ADD_USER_TO_TEAM: {
       const allCompetitionsUpdated = state.all.map(competition => {
         if (competition.id === payload.competitionId) {
