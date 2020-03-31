@@ -1,68 +1,69 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Ulti - Mate
 
-## Available Scripts
+## [Check out the deployed version here!](https://ulti-mate.netlify.com/)
 
-In the project directory, you can run:
+## What this project is about
 
-### `npm start`
+This is my very first, very own client for a full-stack application that I made, demonstrating my understanding of JavaScript and React/Redux. For more about my goals for this project, checkout **[My Goals](#goals-for-this-project)**
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Table of contents:
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- **[Goals for this project](#goals-for-this-project)**
+- **[Wireframes for this project](#wireframes-for-this-project)**
+- **[Technologies used](#technologies-used)**
+- **[Features built so far overview with pull requests](#features-built-so-far-overview-with-pull-requests)**
+- **[Screenshots](#screenshots-of-the-app)**
+- **[My git workflow](#my-git-workflow)**
+- **[My agile workflow and trello board](#my-agile-workflow-and-trello-board)**
+- **[create-react-app-docs](#create-react-app)**
 
-### `npm test`
+## Goals for this project:
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- To practice working on a bigger project
+- To showcase what I have learned during my coding bootcamp at codaisseur.
+- **[To show disciplined git usage](#my-git-workflow)**
 
-### `npm run build`
+## Wireframes for this project
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**[Click here to look at the wireframes I made for this project](./wireframes.md)**
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Technologies used
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### 👀👇 Click links to view some samples in this project 👇👀
 
-### `npm run eject`
+- **[React (OOP)](./src/components/CompetitionDetails/AddTeamForm.jsx)**
+- **[React (FP)](./src/components/GameDetails/TeamGameDetails.jsx)**
+- **[Redux](./src/store/user/reducer.js)**
+- **[Redux-Thunk](./src/store/user/actions.js)**
+- **[Rule-Based Access Control (RBAC)](./src/components/rbac-rules.js)**
+- **[RBAC Can component](./src/components/Can.js)**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Features built so far overview with pull requests
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### 👀👇 Click links to view the pull requests 👇👀
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- **[Feat/add game](https://github.com/GoudekettingRM/frisbee-competition-app-client/pull/4)**
+- **[Feat/show and update game](https://github.com/GoudekettingRM/frisbee-competition-app-client/pull/10)**
+- **[Feat/snack bar for feedback](https://github.com/GoudekettingRM/frisbee-competition-app-client/pull/13)**
+- **[Styling](https://github.com/GoudekettingRM/frisbee-competition-app-client/pull/7)**
+- **[Rbac](https://github.com/GoudekettingRM/frisbee-competition-app-client/pull/2)**
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Screenshots of the app
 
-## Learn More
+**[Click here to look at some screenshots of the final app](./screenshots.md)**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## My git workflow
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+In this project I try to use:
 
-### Code Splitting
+- Good commit messages
+- Well named branches
+- Pull requests with summaries
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+If you have feedback to improve my git usage: **[please drop me a message!](https://www.linkedin.com/in/robinmgoudeketting/)**
 
-### Analyzing the Bundle Size
+## Create React App
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+This project was scaffolded using the create-react-app cli.
 
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+**[The standard create-react-app docs can be found in here](./create-react-app-docs.md)**

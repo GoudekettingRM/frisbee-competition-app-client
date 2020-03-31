@@ -1,0 +1,16 @@
+.game {
+  display: flex;
+  width: 100%;
+  flex-flow: nowrap;
+  margin: 0 auto;
+}
+.MuiCardContent-root {
+  flex: 0 1;
+  margin: auto;
+}
+div.MuiCardContent-root {
+  padding: 0;
+}
+.gameTeam {
+  padding: 10px;
+}
